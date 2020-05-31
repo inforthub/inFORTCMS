@@ -670,9 +670,10 @@ class THelper // extends TElement
      * Remove todos os arquivos, sub-diretorios e seus arquivos
      * de dentro do caminho fornecido.
      * 
-     * @param string $dir Caminho completo para o diretorio a esvaziar.
+     * @param  $dir        string  Caminho completo para o diretorio a esvaziar.
+     * @param  $exclude    array   Nomes a serem mantidos durante o processo de exclusão
      */
-    public static function apagarTudo ($dir)
+    public static function apagarTudo ($dir,$exclude=false)
     {
         // implementar regra para não apagar pastas do sistema
         if (in_array($dir,['../lib','../templates','../admin','/app','/lib','/rest','/vendor','/']) && $dir !== '../images')
@@ -680,6 +681,7 @@ class THelper // extends TElement
         
         if (is_dir($dir))
         {
+            
             $iterator = new \FilesystemIterator($dir);
     
             if ($iterator->valid())
@@ -689,7 +691,18 @@ class THelper // extends TElement
     
                 foreach ( $ri as $file )
                 {
-                    $file->isDir() ?  rmdir($file) : unlink($file);
+                    if ($exclude && is_array($exclude))
+                    {
+                        if ($file->isDir())
+                            rmdir($file);
+                        else
+                        {
+                            if (!in_array(pathinfo($file,PATHINFO_FILENAME),$exclude))
+                                unlink($file);
+                        }
+                    }
+                    else
+                        $file->isDir() ?  rmdir($file) : unlink($file);
                 }
             }
         }

@@ -18,7 +18,7 @@ class Cache
     var $doNotCache = array("admin","click","sitemap0");
 
     // General Config Vars
-    var $cacheDir = "./cache";
+    var $cacheDir = "../cache";
     var $cacheTime = 86400;
     var $caching = false;
     var $cacheFile;

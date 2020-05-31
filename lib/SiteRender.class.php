@@ -172,7 +172,7 @@ class SiteRender extends HtmlBase
     			$this->_replaces['visitas']   = $artigo->visitas;
 
                 // montando meta tags
-                $this->_replaces['meta_tags'] = $this->setMetaTags($pagina);
+                $this->_replaces['meta_tags'] = $this->setMetaTags($artigo);
                 
                 // pegar listagem de artigos relacionados
 
@@ -302,13 +302,14 @@ class SiteRender extends HtmlBase
     				//$link['imagem_alt']    = $post->imagem_alt;
     				//$link['imagem_title']  = $post->imagem_title;
 				}
+				$data_post = new DateTime($post->dt_post);
 				
 				$link['titulo']    = $post->titulo;
 				$link['autor']     = THelper::showUserName($post->usuario_id);
 				$link['data_ex']   = THelper::dataPorExtenso($post->dt_post);
-    			$link['data_d']    = date("d", $post->dt_post);
-    			$link['data_m']    = date("m", $post->dt_post);
-    			$link['data_Y']    = date("Y", $post->dt_post);
+    			$link['data_d']    = $data_post->format('d');
+    			$link['data_m']    = $data_post->format('m');
+    			$link['data_Y']    = $data_post->format('Y');
     			$link['categoria'] = $post->categoria->titulo;
 				$link['btn_link']  = $this->_pref['pref_site_dominio'].'/'.$post->get_fullurl();
                 $link['visitas']   = $post->visitas;

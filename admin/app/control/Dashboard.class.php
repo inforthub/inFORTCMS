@@ -147,7 +147,7 @@ class Dashboard extends TPage
     {
         try
         {
-            THelper::apagarTudo('../cache');
+            THelper::apagarTudo('../cache',['.htaccess']);
             new TMessage('info', 'Cache limpo com sucesso!');
         }
         catch (Exception $e) // in case of exception
