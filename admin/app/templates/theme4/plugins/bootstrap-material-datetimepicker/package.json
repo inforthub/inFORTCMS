@@ -23,7 +23,7 @@
     "test-infra"
   ],
   "dependencies": {
-    "moment": "~2.10.2",
+    "moment": "~2.26.0",
     "bootstrap": "~3.3.4",
     "jquery": "1.12.3",
     "bootstrap-material-design": "~0.3.0"
