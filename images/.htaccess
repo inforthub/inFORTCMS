@@ -1,0 +1,5 @@
+# Don't list directory contents
+IndexIgnore *
+# Disable script execution
+AddHandler cgi-script .php .pl .jsp .asp .sh .cgi
+Options -ExecCGI -Indexes
