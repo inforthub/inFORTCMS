@@ -1,0 +1,35 @@
+#
+SetEnv TZ America/Sao_Paulo
+
+RewriteEngine On
+
+# Verifica se está em ambiente seguro e redireciona se necessário
+#RewriteCond %{HTTPS} !=on
+#RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Redirecionar URLs não-www para www
+#RewriteCond %{HTTP_HOST} !^www\.dominio\.com.br
+#RewriteRule (.*) http://www.dominio.com.br/$1 [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Todo que esta na URL vai para o arquivo index na variável url
+RewriteRule ^(.*)$ index.php?url=$1 [L]
+
+
+# compress text, html, javascript, css, xml:
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+
+# Or, compress certain file types by extension:
+<Files *.html>
+SetOutputFilter DEFLATE
+</Files>

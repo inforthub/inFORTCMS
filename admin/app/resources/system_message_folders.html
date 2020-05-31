@@ -1,0 +1,23 @@
+<!--[main]-->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">_t{Folders}</div>
+    </div>
+    <div class="card-body">
+      <ul class="nav nav-pills nav-stacked">
+        <li>
+            <a generator="adianti" href="index.php?class=SystemMessageForm&method=onClear" style="background: #41a741; border-radius: 6px; color: white !important;"><i class="far fa-file"></i> _t{Compose}</a>
+        </li>
+        <li class="{$class_inbox}">
+            <a generator="adianti" href="index.php?class=SystemMessageList&method=filterInbox"><i class="fa fa-inbox"></i> _t{Inbox}</a>
+        </li>
+        <li class="{$class_sent}">
+            <a generator="adianti" href="index.php?class=SystemMessageList&method=filterSent"><i class="far fa-envelope"></i> _t{Sent}</a>
+        </li>
+        <li class="{$class_archived}">
+            <a generator="adianti" href="index.php?class=SystemMessageList&method=filterArchived"><i class="fa fa-archive"></i> _t{Archived}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+<!--[/main]-->

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu>
+  <menuitem label="Dashboard">
+    <action>Dashboard</action>
+    <icon>fas:grip-horizontal fa-fw</icon>
+  </menuitem>
+  <menuitem label="Site">
+    <icon>fas:tv fa-fw</icon>
+    <menu>
+      <menuitem label="Menu">
+        <action>MenuList</action>
+        <icon>fas:bars fa-fw</icon>
+      </menuitem>
+      <menuitem label="Páginas">
+        <action>PaginaList</action>
+        <icon>far:file-code fa-fw</icon>
+      </menuitem>
+      <menuitem label="Categorias">
+        <action>CategoriaList</action>
+        <icon>far:bookmark fa-fw</icon>
+      </menuitem>
+      <menuitem label="Módulos">
+        <action>ModuloList</action>
+        <icon>fas:cubes fa-fw</icon>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="Blog">
+    <icon>fas:book fa-fw</icon>
+    <menu>
+      <menuitem label="Posts">
+        <action>BlogPostList</action>
+        <icon>far:file-alt fa-fw</icon>
+      </menuitem>
+      <menuitem label="Categorias">
+        <action>BlogCategoriaList</action>
+        <icon>far:bookmark fa-fw</icon>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="Arquivos">
+    <icon>fas:cloud fa-fw</icon>
+    <menu>
+      <menuitem label="Gestão">
+        <action>ArquivosList</action>
+        <icon>far:folder-open fa-fw</icon>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="Configurações">
+    <icon>fas:cogs fa-fw</icon>
+    <menu>
+      <menuitem label="Gerais">
+        <action>ConfiguracoesView</action>
+        <icon>fas:cog fa-fw</icon>
+      </menuitem>
+      <menuitem label="Preferências Globais">
+        <action>PreferenciasForm#method=onEdit</action>
+        <icon>fas:cog fa-fw</icon>
+      </menuitem>
+      <menuitem label="Modelos de Módulos">
+        <action>ModeloModuloList</action>
+        <icon>fas:cube fa-fw</icon>
+      </menuitem>
+      <menuitem label="Templates">
+        <action>TemplateList</action>
+        <icon>fas:puzzle-piece fa-fw</icon>
+      </menuitem>
+      <menuitem label="Mídias Sociais">
+        <action>MidiaList</action>
+        <icon>far:thumbs-up fa-fw</icon>
+      </menuitem>
+      <menuitem label="Gestão de Links">
+        <action>LinkList</action>
+        <icon>fas:location-arrow fa-fw</icon>
+      </menuitem>
+      <menuitem label="Tipo">
+        <action>TipoList</action>
+        <icon>far:flag fa-fw</icon>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="_t{Administration}">
+    <icon>fas:home fa-fw</icon>
+    <menu>
+      <menuitem label="Dashboard">
+        <action>SystemAdministrationDashboard</action>
+        <icon>fas:tachometer-alt fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{Programs}">
+        <action>SystemProgramList</action>
+        <icon>far:file-code fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{Groups}">
+        <action>SystemGroupList</action>
+        <icon>fas:users fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{Units}">
+        <action>SystemUnitList</action>
+        <icon>fas:university fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{Users}">
+        <action>SystemUserList</action>
+        <icon>fas:user fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{Database explorer}">
+        <action>SystemDatabaseExplorer</action>
+        <icon>fas:database fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{SQL Panel}">
+        <action>SystemSQLPanel</action>
+        <icon>fas:table fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{Menu editor}">
+        <action>SystemMenuEditor</action>
+        <icon>far:edit fa-fw</icon>
+      </menuitem>
+      <menuitem label="PHP Info">
+        <action>SystemPHPInfoView</action>
+        <icon>fas:info-circle fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{Preferences}">
+        <action>SystemPreferenceForm#method=onEdit</action>
+        <icon>fas:cog fa-fw</icon>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="_t{Documents}">
+    <icon>far:file-alt fa-fw</icon>
+    <menu>
+      <menuitem label="_t{Send document}">
+        <action>SystemDocumentUploadForm</action>
+        <icon>fas:cloud-upload-alt fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{My documents}">
+        <action>SystemDocumentList</action>
+        <icon>fas:archive fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{Shared with me}">
+        <action>SystemSharedDocumentList</action>
+        <icon>fas:share-alt fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{Categories}">
+        <action>SystemDocumentCategoryFormList</action>
+        <icon>fas:th fa-fw</icon>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="Logs">
+    <icon>fas:desktop fa-fw</icon>
+    <menu>
+      <menuitem label="Dashboard">
+        <action>SystemLogDashboard</action>
+        <icon>fas:tachometer-alt fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{Access Log}">
+        <action>SystemAccessLogList</action>
+        <icon>fas:key fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{Change Log}">
+        <action>SystemChangeLogView</action>
+        <icon>fas:film fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{SQL Log}">
+        <action>SystemSqlLogList</action>
+        <icon>fas:database fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{Request Log}">
+        <action>SystemRequestLogList</action>
+        <icon>fas:globe fa-fw</icon>
+      </menuitem>
+      <menuitem label="_t{PHP Log}">
+        <action>SystemPHPErrorLogView</action>
+        <icon>fas:exclamation-triangle fa-fw</icon>
+      </menuitem>
+      <menuitem label="Session dump">
+        <action>SystemSessionDumpView</action>
+        <icon>fas:code fa-fw</icon>
+      </menuitem>
+    </menu>
+  </menuitem>
+  <menuitem label="Logout">
+    <action>LoginForm#method=onLogout#static=1</action>
+    <icon>fas:sign-out-alt fa-fw</icon>
+  </menuitem>
+</menu>

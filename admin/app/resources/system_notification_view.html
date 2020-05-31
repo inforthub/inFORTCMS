@@ -1,0 +1,56 @@
+<!--[main]-->
+<div class="panel panel-default" style="width: 100%">
+    <div class="panel-heading" style="width: 100%">
+        <div class="panel-title"> _t{Notification} </div>
+    </div>
+    
+    <div class="panel-body" style="width: 100%">
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" style="padding:10px; margin-top: -1px;" id="tab_0">
+                <table style="width:90%">
+                    <tbody class="formdata">
+            
+                        <tr class="">
+                            <td style="font-weight:bold"  align="right">_t{From}</td>
+                            <td style="padding-left:10px" align="left">{$user}</td>
+                        </tr>
+            
+                        <tr class="oddrow">
+                            <td style="font-weight:bold"  align="right">_t{Subject}</td>
+                            <td style="padding-left:10px" align="left">{$subject}</td>
+                        </tr>
+            
+                        <tr class="">
+                            <td style="font-weight:bold"  align="right">_t{Message}</td>
+                            <td style="padding-left:10px" align="left">{$message}</td>
+                        </tr>
+            
+                        <tr class="oddrow">
+                            <td style="font-weight:bold"  align="right">_t{Date}</td>
+                            <td style="padding-left:10px" align="left">{$dt_message}</td>
+                        </tr>
+            
+                        <tr class="">
+                            <td style="font-weight:bold"  align="right">_t{Checked}</td>
+                            <td style="padding-left:10px" align="left">{$checked_string}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-footer" style="width: 100%">
+        <!--[check]-->
+        <a generator="adianti" href="index.php?class=SystemNotificationFormView&method=onExecuteAction&id={$id}" class="btn btn-sm btn-primary">
+            <i class="{$icon}" style="padding-right:4px"></i>
+            {$action_label}
+        </a>
+        <!--[/check]-->
+        <a generator="adianti" href="index.php?class=SystemNotificationList" class="btn btn-default">
+            <i class="fa fa-table blue" style="padding-right:4px"></i>
+            _t{Back to the listing}
+        </a>
+    </div>
+</div>
+<!--[/main]-->

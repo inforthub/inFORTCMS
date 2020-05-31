@@ -1,0 +1,46 @@
+<!--[main]-->
+
+<div class="card" style="width: 100%">
+    <div class="card-header" style="width: 100%">
+        <div class="card-title"> _t{Message} </div>
+    </div>
+    <div class="card-body" style="width: 100%">
+            <div class="form-group row">
+                <div class="col-sm-4 col-form-label"> <label> _t{From} </label> </div>
+                <div class="col-sm-8 col-form-label" style="text-align:left"> <span> {$user} </span> </div>
+                
+                <div class="col-sm-4 col-form-label"> <label> _t{Subject} </label> </div>
+                <div class="col-sm-8 col-form-label" style="text-align:left"> <span> {$subject} </span> </div>
+                
+                <div class="col-sm-4 col-form-label"> <label> _t{Message} </label> </div>
+                <div class="col-sm-8 col-form-label" style="text-align:left"> <span> {$message} </span> </div>
+                
+                <div class="col-sm-4 col-form-label"> <label> _t{Date} </label> </div>
+                <div class="col-sm-8 col-form-label" style="text-align:left"> <span> {$dt_message} </span> </div>
+                
+                <div class="col-sm-4 col-form-label"> <label> _t{Checked} </label> </div>
+                <div class="col-sm-8 col-form-label" style="text-align:left"> <span> {$checked_string} </span> </div>
+            </div>
+    </div>
+    
+    <div class="card-footer" style="width: 100%">
+        <!--[check]-->
+        <a generator="adianti" href="index.php?class=SystemMessageFormView&method=onCheck&id={$id}" class="btn btn-sm btn-primary">
+            <i class="fa fa-archive" style="padding-right:4px"></i>
+            _t{Archive}
+        </a>
+        <!--[/check]-->
+        
+        <!--[recover]-->
+        <a generator="adianti" href="index.php?class=SystemMessageFormView&method=onUnCheck&id={$id}" class="btn btn-sm btn-default">
+            <i class="far fa-envelope green" style="padding-right:4px"></i>
+            _t{Recover}
+        </a>
+        <!--[/recover]-->
+        <a generator="adianti" href="index.php?class=SystemMessageList" class="btn btn-default">
+            <i class="far fa-arrow-alt-circle-left blue" style="padding-right:4px"></i>
+            _t{Back}
+        </a>
+    </div>
+</div>
+<!--[/main]-->

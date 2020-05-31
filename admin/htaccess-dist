@@ -1,0 +1,181 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#Headers when using Apache with CGI/FastCGI
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
+#Adianti Framework Template default routes
+RewriteRule ^system-program-list$ index.php?class=SystemProgramList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^system-program-edit$ index.php?class=SystemProgramForm&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^system-program-ondelete$ index.php?class=SystemProgramList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^system-program-delete$ index.php?class=SystemProgramList&method=Delete&%{QUERY_STRING} [NC]
+
+RewriteRule ^xhr-system-program-list$ engine.php?class=SystemProgramList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-program-ondelete$ engine.php?class=SystemProgramList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-program-delete$ engine.php?class=SystemProgramList&method=Delete&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-program-edit$ engine.php?class=SystemProgramForm&method=onEdit&%{QUERY_STRING} [NC]
+
+
+RewriteRule ^system-group-list$ index.php?class=SystemGroupList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^system-group-edit$ index.php?class=SystemGroupForm&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^system-group-ondelete$ index.php?class=SystemGroupList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^system-group-delete$ index.php?class=SystemGroupList&method=Delete&%{QUERY_STRING} [NC]
+
+RewriteRule ^xhr-system-group-list$ engine.php?class=SystemGroupList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-group-edit$ engine.php?class=SystemGroupForm&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-group-ondelete$ engine.php?class=SystemGroupList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-group-delete$ engine.php?class=SystemGroupList&method=Delete&%{QUERY_STRING} [NC]
+
+
+RewriteRule ^system-unit-list$ index.php?class=SystemUnitList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^system-unit-edit$ index.php?class=SystemUnitForm&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^system-unit-ondelete$ index.php?class=SystemUnitList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^system-unit-delete$ index.php?class=SystemUnitList&method=Delete&%{QUERY_STRING} [NC]
+
+RewriteRule ^xhr-system-unit-list$ engine.php?class=SystemUnitList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-unit-edit$ engine.php?class=SystemUnitForm&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-unit-ondelete$ engine.php?class=SystemUnitList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-unit-delete$ engine.php?class=SystemUnitList&method=Delete&%{QUERY_STRING} [NC]
+
+
+RewriteRule ^system-user-list$ index.php?class=SystemUserList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^system-user-edit$ index.php?class=SystemUserForm&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^system-user-ondelete$ index.php?class=SystemUserList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^system-user-delete$ index.php?class=SystemUserList&method=Delete&%{QUERY_STRING} [NC]
+
+RewriteRule ^xhr-system-user-list$ engine.php?class=SystemUserList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-user-edit$ engine.php?class=SystemUserForm&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-user-ondelete$ engine.php?class=SystemUserList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-user-delete$ engine.php?class=SystemUserList&method=Delete&%{QUERY_STRING} [NC]
+
+
+RewriteRule ^system-database-explorer$ index.php?class=SystemDatabaseExplorer&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-database-explorer$ engine.php?class=SystemDatabaseExplorer&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-sqlpanel$ index.php?class=SystemSQLPanel&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-sqlpanel$ engine.php?class=SystemSQLPanel&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-phpinfo$ index.php?class=SystemPHPInfoView&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-phpinfo$ engine.php?class=SystemPHPInfoView&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-modules$ index.php?class=SystemModulesCheckView&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-modules$ engine.php?class=SystemModulesCheckView&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-preferences$ index.php?class=SystemPreferenceForm&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-preferences$ engine.php?class=SystemPreferenceForm&method=onEdit&%{QUERY_STRING} [NC]
+
+
+RewriteRule ^system-document-upload$ index.php?class=SystemDocumentUploadForm&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-document-upload$ engine.php?class=SystemDocumentUploadForm&%{QUERY_STRING} [NC]
+
+
+RewriteRule ^system-document-list$ index.php?class=SystemDocumentList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^system-document-edit$ index.php?class=SystemDocumentForm&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^system-document-ondelete$ index.php?class=SystemDocumentList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^system-document-delete$ index.php?class=SystemDocumentList&method=Delete&%{QUERY_STRING} [NC]
+
+RewriteRule ^xhr-system-document-list$ engine.php?class=SystemDocumentList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-document-edit$ engine.php?class=SystemDocumentForm&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-document-ondelete$ engine.php?class=SystemDocumentList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-document-delete$ engine.php?class=SystemDocumentList&method=Delete&%{QUERY_STRING} [NC]
+
+
+RewriteRule ^system-document-category-list$ index.php?class=SystemDocumentCategoryFormList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^system-document-category-edit$ index.php?class=SystemDocumentCategoryFormList&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^system-document-category-ondelete$ index.php?class=SystemDocumentCategoryFormList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^system-document-category-delete$ index.php?class=SystemDocumentCategoryFormList&method=Delete&%{QUERY_STRING} [NC]
+
+RewriteRule ^xhr-system-document-category-list$ engine.php?class=SystemDocumentCategoryFormList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-document-category-edit$ engine.php?class=SystemDocumentCategoryFormList&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-document-category-ondelete$ engine.php?class=SystemDocumentCategoryFormList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-document-category-delete$ engine.php?class=SystemDocumentCategoryFormList&method=Delete&%{QUERY_STRING} [NC]
+
+
+RewriteRule ^system-access-log-stat$ index.php?class=SystemAccessLogStats&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-access-log-stat$ engine.php?class=SystemAccessLogStats&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-access-log-list$ index.php?class=SystemAccessLogList&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-access-log-list$ engine.php?class=SystemAccessLogList&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-change-log-list$ index.php?class=SystemChangeLogView&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-change-log-list$ engine.php?class=SystemChangeLogView&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-sql-log-list$ index.php?class=SystemSqlLogList&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-sql-log-list$ engine.php?class=SystemSqlLogList&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-php-log-list$ index.php?class=SystemPHPErrorLogView&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-php-log-list$ engine.php?class=SystemPHPErrorLogView&%{QUERY_STRING} [NC]
+
+
+RewriteRule ^system-shared-document-list$ index.php?class=SystemSharedDocumentList&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-shared-document-list$ engine.php?class=SystemSharedDocumentList&%{QUERY_STRING} [NC]
+
+RewriteRule ^welcome-view$ index.php?class=WelcomeView&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-welcome-view$ engine.php?class=WelcomeView&%{QUERY_STRING} [NC]
+
+RewriteRule ^login-form$ index.php?class=LoginForm&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-login-form$ engine.php?class=LoginForm&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-admin-dashboard$ index.php?class=SystemAdministrationDashboard&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-admin-dashboard$ engine.php?class=SystemAdministrationDashboard&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-log-dashboard$ index.php?class=SystemLogDashboard&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-log-dashboard$ engine.php?class=SystemLogDashboard&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-menu-editor$ index.php?class=SystemMenuEditor&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-menu-editor$ engine.php?class=SystemMenuEditor&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-request-log-list$ index.php?class=SystemRequestLogList&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-request-log-list$ engine.php?class=SystemRequestLogList&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-dump-view$ index.php?class=SystemSessionDumpView&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-dump-view$ engine.php?class=SystemSessionDumpView&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-message-form-view$ index.php?class=SystemMessageFormView&method=onView&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-message-form-view$ engine.php?class=SystemMessageFormView&method=onView&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-message-list-inbox$ index.php?class=SystemMessageList&method=filterInbox&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-message-list-inbox$ engine.php?class=SystemMessageList&method=filterInbox&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-message-list-sent$ index.php?class=SystemMessageList&method=filterSent&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-message-list-sent$ engine.php?class=SystemMessageList&method=filterSent&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-message-list-archived$ index.php?class=SystemMessageList&method=filterArchived&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-message-list-archived$ engine.php?class=SystemMessageList&method=filterArchived&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-notification-form-view$ index.php?class=SystemNotificationFormView&method=onView&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-notification-form-view$ engine.php?class=SystemNotificationFormView&method=onView&%{QUERY_STRING} [NC]
+
+RewriteRule ^system-notification-list$ index.php?class=SystemNotificationList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-system-notification-list$ engine.php?class=SystemNotificationList&method=onReload&%{QUERY_STRING} [NC]
+
+
+#AUTH routes
+RewriteRule ^auth/([A-Za-z0-9]*)/([A-Za-z0-9]*)$ rest.php?class=ApplicationAuthenticationRestService&method=getToken&login=$1&password=$2&%{QUERY_STRING} [NC]
+
+#Application specific routes
+RewriteRule ^contact-edit$ index.php?class=ContactForm&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^contact-list$ index.php?class=ContactList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^contact-ondelete$ index.php?class=ContactList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^contact-delete$ index.php?class=ContactList&method=Delete&%{QUERY_STRING} [NC]
+
+RewriteRule ^xhr-contact-edit$ engine.php?class=ContactForm&method=onEdit&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-contact-list$ engine.php?class=ContactList&method=onReload&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-contact-ondelete$ engine.php?class=ContactList&method=onDelete&%{QUERY_STRING} [NC]
+RewriteRule ^xhr-contact-delete$ engine.php?class=ContactList&method=Delete&%{QUERY_STRING} [NC]
+
+
+
+#RESTFUL routes
+RewriteRule ^contacts/([A-Za-z0-9]*)$ rest.php?class=ContactRestService&method=handle&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^contacts/([A-Za-z-_0-9]*)/([A-Za-z-_0-9]*)$ rest.php?class=ContactRestService&method=$2&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^contacts$ rest.php?class=ContactRestService&method=handle&%{QUERY_STRING} [NC]
+
+RewriteRule ^users/([A-Za-z0-9]*)$ rest.php?class=SystemUserRestService&method=handle&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^users/([A-Za-z-_0-9]*)/([A-Za-z-_0-9]*)$ rest.php?class=SystemUserRestService&method=$2&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^users$ rest.php?class=SystemUserRestService&method=handle&%{QUERY_STRING} [NC]
+
+RewriteRule ^user-groups/([A-Za-z0-9]*)$ rest.php?class=SystemUserGroupRestService&method=handle&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^user-groups/([A-Za-z-_0-9]*)/([A-Za-z-_0-9]*)$ rest.php?class=SystemUserGroupRestService&method=$2&id=$1&%{QUERY_STRING} [NC]
+RewriteRule ^user-groups$ rest.php?class=SystemUserGroupRestService&method=handle&%{QUERY_STRING} [NC]

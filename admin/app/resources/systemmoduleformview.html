@@ -1,0 +1,33 @@
+<!--[main]-->
+<div class="panel panel-default" style="width: 100%;margin-bottom:3px">
+    <div class="panel-heading" style="width: 100%">
+        <div class="panel-title"> SystemModule </div>
+    </div>
+    <div class="panel-body" style="width: 100%">
+        <div class="form-horizontal">
+            <div class="form-group row">
+                <div class="col-sm-4 control-label">
+                    <label class="bold"> Id </label>
+                </div>
+                <div class="col-sm-8" style="padding-top:7px">
+                    <label> {$id} </label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-4 control-label">
+                    <label class="bold"> Name </label>
+                </div>
+                <div class="col-sm-8" style="padding-top:7px">
+                    <label> {$name} </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer" style="width: 100%">
+        <a generator="adianti" href="index.php?class=SystemModuleForm&method=onEdit&id={$id}&key={$id}" class="btn btn-default">
+            <span class="fa fa-pencil-square-o"></span>
+            Edit
+        </a>
+    </div>
+</div>
+<!--[/main]-->

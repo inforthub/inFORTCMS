@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Administração - inFORT CMS</title>
+    <meta charset="utf-8">
+    <link rel="manifest" href="manifest.json?appver=701">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="apple-touch-icon" sizes="180x180" href="app/images/icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    {LIBRARIES}
+    {HEAD}
+    
+    <script src="app/lib/include/admin-all.min.js?appver=701" type="text/javascript"></script>
+    <link href="app/lib/include/admin.min.css?appver=701" rel="stylesheet" type="text/css" media="screen">
+    
+    <link href="app/templates/{template}/plugins/node-waves/waves.css" rel="stylesheet" />
+    <link href="app/templates/{template}/plugins/animate-css/animate.css" rel="stylesheet" />
+    <link href="app/templates/{template}/css/style.css" rel="stylesheet">
+    <link href="app/templates/{template}/css/themes/all-themes.css" rel="stylesheet" />
+    <link href="app/templates/{template}/css/sweetalert.css" rel="stylesheet">
+    
+    <link href="app/templates/{template}/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet"/>
+    <script src="app/templates/{template}/plugins/moment/moment-with-locales.min.js" type="text/javascript"></script>
+    <script src="app/templates/{template}/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js" type="text/javascript"></script>
+    
+    
+    <script>
+    $(function() {
+        update_notifications_menu();
+        update_messages_menu();
+        
+        // setInterval( update_messages_menu, 5000);
+        // setInterval( update_notifications_menu, 5000);
+        
+        __adianti_set_language('{lang}');
+        __adianti_set_debug({debug});
+    });
+    
+    function update_messages_menu() {
+        $.get('engine.php?class=MessageList&theme=theme4', function(data) {
+            $('#envelope_messages').html(data);
+        });
+    }
+    
+    function update_notifications_menu() {
+        $.get('engine.php?class=NotificationList&theme=theme4', function(data) {
+            $('#envelope_notifications').html(data);
+        });
+    }
+    
+    $.get('engine.php?class=SearchInputBox', function(data) {
+        $('#envelope_search').html(data);
+    });
+    </script>
+</head>
+
+<body class="theme-{skin}">
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="preloader">
+                <div class="spinner-layer pl-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <p id="page-loader-message">Carregando...</p>
+        </div>
+    </div>
+    <!-- #END# Page Loader -->
+    
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <div class="search-icon">
+            <i class="material-icons">search</i>
+        </div>
+
+        <div id="envelope_search">
+        </div>
+        <div class="close-search">
+            <i class="material-icons">close</i>
+        </div>
+    </div>
+    <!-- #END# Search Bar -->
+
+
+
+    <nav class="nav navbar navbar-expand-lg navbar-dark " style="z-index:999">
+        <a href="javascript:void(0);" class="bars"></a>
+        <a class="navbar-brand" href="index.php"><img src="app/images/favicon.png" class="icon"> inFORT CMS - Administração</a>
+        <i style="cursor:pointer" class="fas fa-columns white" onclick="$('body').toggleClass('ls-closed');"></i>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbartoggle" aria-controls="navbartoggle" aria-expanded="false" aria-label="Toggle navigation">
+          <i style="transform: rotate(90deg);" class="material-icons">compare_arrows</i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbartoggle">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                <!-- Call Search -->
+                <li style="height: 40px;padding-top: 10px;" >
+                    <a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a>
+                </li>
+                <!-- #END# Call Search -->
+                <!-- Notifications -->
+		 <li>
+                      <a generator="adianti" href="index.php?class=SystemSupportForm">
+                          <i class="material-icons">help_outline</i>
+                      </a>
+                 </li>
+                 <li class="dropdown messages-menu" id="envelope_messages">
+                     <!-- /.dropdown-messages -->
+                 </li>
+                 
+                 <li class="dropdown notifications-menu" id="envelope_notifications">
+                     <!-- /.dropdown-messages -->
+                 </li>
+
+                 <li><a title="Log out" generator="adianti" href="index.php?class=LoginForm&method=onLogout&static=1" data-close="true"><i class="material-icons">exit_to_app</i></a></li>
+		 <li>
+                     <a href="../" target="_blank" title="Ir para Homepage">
+                         <i class="material-icons">home</i>
+                     </a>
+                 </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- #Top Bar -->
+    <section>
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- User Info -->
+            <div class="user-info">
+                <div class="image">
+                    <img src="app/images/photos/{login}.jpg" onError="this.onerror=null;this.src='app/templates/{template}/images/user.webp';" width="48" height="48" alt="{username}" />
+                </div>
+                <div class="info-container">
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{username}</div>
+                    <div class="email">{usermail}</div>
+                    <div class="btn-group user-helper-dropdown">
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="index.php?class=SystemProfileView"><i class="material-icons">person</i>_t{Profile}</a></li>
+                            <li role="seperator" class="divider"></li>
+                            <li><a href="index.php?class=SystemMessageList&method=filterInbox"><i class="material-icons">email</i>_t{Messages}</a></li>
+                            <li><a href="index.php?class=SystemNotificationList"><i class="material-icons">notifications</i>_t{Notifications}</a></li>
+                            <li role="seperator" class="divider"></li>
+                            <li><a href="index.php?class=LoginForm&method=reloadPermissions&static=1"><i class="material-icons">cached</i>_t{Reload}</a></li>
+                            <li><a generator="adianti" href="index.php?class=LoginForm&method=onLogout&static=1"><i class="material-icons">input</i>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- #User Info -->
+            <!-- Menu -->
+            <div class="menu">
+                {MENU}
+            </div>
+            <!-- #Menu -->
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    &copy; inFORT CMS v{cms_version} | <a href="https://www.infort.eti.br" target="_blank"  title="Desenvolvido por inFORT"><img class="logo_rodape" src="app/images/logo-infort.svg"></a>
+                    <!--[IFADMIN]-->
+                    <a title="PHP Module" style="cursor:pointer; color: teal !important" generator="adianti" href="index.php?class=SystemModulesCheckView"> <i class="fa fa-code" aria-hidden="true"></i> </a> &nbsp;&nbsp;
+                    <span title="Debug Console" style="cursor:pointer; color: teal !important" onclick="Adianti.showDebugPanel()"> <i class="fa fa-window-maximize" aria-hidden="true"></i> </span>
+                    <!--[/IFADMIN]-->
+                </div>
+            </div>
+            <!-- #Footer -->
+        </aside>
+        <!-- #END# Left Sidebar -->
+    </section>
+
+    <section class="content content-wrapper">
+        <div class="container-fluid">
+            <div id="adianti_div_content">
+            </div>
+        </div>
+        <div id="adianti_online_content"></div>
+        <div id="adianti_online_content2"></div>
+        
+        <div id="adianti_right_panel" class="right-panel"></div>
+        <div id="adianti_bottom_panel" class="bottom-panel"></div>
+    </section>
+    
+      <div id="adianti_debug_panel" class="debug-panel">
+          <i onclick="Adianti.hideDebugPanel()" class="fa fa-times" aria-hidden="true" title="_t{Close}"></i>
+          <span > Request URL </span>
+          <span > Request Data </span>
+          <div id="request_url_panel"> </div>
+          <div id="request_data_panel"> </div>
+      </div>
+      
+    <!-- Select Plugin Js -->
+    <script src="app/templates/{template}/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="app/templates/{template}/plugins/node-waves/waves.js"></script>
+    <script src="app/templates/{template}/js/admin.js"></script>
+    <script src="app/templates/{template}/js/custom.js"></script>
+    <script src="app/templates/{template}/js/sweetalert.min.js"></script>
+    
+</body>
+</html>

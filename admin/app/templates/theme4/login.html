@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Painel de Administração - inFORT CMS</title>
+    <meta charset="utf-8">
+    <link rel="manifest" href="manifest.json?appver=701">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="apple-touch-icon" sizes="180x180" href="app/images/icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    {LIBRARIES}
+    {HEAD}
+    
+    <link href="app/templates/{template}/plugins/node-waves/waves.css" rel="stylesheet" />
+    <link href="app/templates/{template}/plugins/animate-css/animate.css" rel="stylesheet" />
+    <link href="app/templates/{template}/css/style.css" rel="stylesheet">
+    <link href="app/templates/{template}/css/themes/all-themes.css" rel="stylesheet" />
+    <link href="app/lib/include/admin.min.css?appver=701" rel="stylesheet" type="text/css" media="screen">
+    <style>
+    html
+    {
+        height: unset;
+    }
+    </style>
+  </head>
+  <body class="login-page ls-closed" style="margin-right: auto;">
+        <!-- Page Loader -->
+        <div class="page-loader-wrapper">
+            <div class="loader">
+                <div class="preloader">
+                    <div class="spinner-layer pl-red">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+                <p>Carregando...</p>
+            </div>
+        </div>
+        <!-- #END# Page Loader -->
+        
+        <div class="logo text-center" >
+            <img src="app/images/logo.svg" title="inFORT CMS" alt="inFORT CMS">
+        </div>
+        
+        <div id="wrapper" style="width:90%;margin:auto;margin-top:10px">
+            <!-- Navigation -->
+    
+            <div id="adianti_div_content"></div>
+            <div id="adianti_online_content"></div>
+            <div id="adianti_online_content2"></div>
+            
+        </div>
+        <div style="text-align:center">
+            <!--[CREATE-ACCOUNT]--> <a href="index.php?class=SystemRegistrationForm"><i class="fa fa-user-plus green" aria-hidden="true"></i> _t{Create account}</a> <!--[/CREATE-ACCOUNT]-->
+            &nbsp;&nbsp;
+            <!--[RESET-PASSWORD]--> <a href="index.php?class=SystemRequestPasswordResetForm"><i class="fa fa-eraser orange" aria-hidden="true"></i> _t{Reset password}</a> <!--[/RESET-PASSWORD]-->
+        </div>
+        
+        <a class="little-float-button bg-orange" title="PHP Modules" href="index.php?class=SystemModulesCheckView" style="pointer-events: auto;">
+            <i class="fa fa-cog internal-float-button"></i>
+        </a>
+        
+        <!-- /#wrapper -->
+        
+        <script src="app/templates/{template}/js/admin-login.js"></script>
+    </body>
+</html>

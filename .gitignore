@@ -1,0 +1,6 @@
+admin/lib/
+admin/vendor/
+admin/tmp/
+admin/app/database/
+admin/app/output/
+images/
