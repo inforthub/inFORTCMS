@@ -15,8 +15,8 @@ O inFORTCMS foi construído pensando no usuário final, aquela pessoa que não t
 
 Toda essa facilidade só será permitida através da tela de criação de "Modelos HTML", onde o programador prepara trechos de código HTML que pode ser usado na criação das páginas ou dos módulos.
 
-O inFORTCMS foi desenvolvido utilizando como base o Adianti Template, que é um grande gabarito para a criação de novos projetos. Para saber mais sobre o Adianti Framework e sobre o Atianti Template, acesse:
-    * <a href="https://adianti.com.br/framework" target="_blank" rel="noopener">Adianti Framework</a>
+O inFORTCMS foi desenvolvido utilizando como base o Adianti Template, que é um grande gabarito para a criação de novos projetos. Para saber mais sobre o Adianti Framework e sobre o Adianti Template, acesse:<br>
+    * <a href="https://adianti.com.br/framework" target="_blank" rel="noopener">Adianti Framework</a><br>
     * <a href="https://adianti.com.br/framework-template" target="_blank" rel="noopener">Adianti Template</a>
 
 
@@ -72,5 +72,5 @@ O inFORTCMS foi desenvolvido utilizando como base o Adianti Template, que é um 
 
 ## Meta
 
-inFORT – [@inforthub] – contato@infort.eti.br
+inFORT – [@inforthub] – contato@infort.eti.br<br>
 Distribuído sob a Licença Pública Geral GNU (GPLv3) 
