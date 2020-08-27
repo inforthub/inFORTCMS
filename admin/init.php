@@ -24,7 +24,8 @@ define('PATH', dirname(__FILE__));
 define('LANG', $ini['general']['language']);
 
 // constantes do CMS
-//define('CMS_VERSION', $ini['cms']['version']);
+define('CMS_SALTKEY', $ini['cms']['saltkey']);
+define('CMS_VERSION', $ini['cms']['version']);
 define('CMS_IMAGE_PATH', $ini['cms']['image_path']);
 
 // custom session name

@@ -2,10 +2,12 @@
 /**
  * THelper Class
  *
- * @version    1.3
- * @package    util
- * @author     André Ricardo Fort
- * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ * @version     1.0
+ * @package     util
+ * @subpackage  lib
+ * @author      André Ricardo Fort
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class THelper // extends TElement
 {
@@ -66,8 +68,6 @@ class THelper // extends TElement
      */
     public static function numeroPorExtenso( $valor = 0, $moeda = FALSE, $bolPalavraFeminina = FALSE )
     {
-    	//$valor = self::moedaToFloat( $valor );
-    
     	$singular = NULL;
     	$plural = NULL;
     
@@ -168,7 +168,13 @@ class THelper // extends TElement
     }
     
 	
-	function imageCreateFromAny($filepath)
+	/***********************************
+	 ***********************************/
+	
+	/**
+	 * 
+	 */
+	private static function imageCreateFromAny($filepath)
 	{
         $type = exif_imagetype($filepath); // [] if you don't have exif you could use getImageSize()
         $allowedTypes = array(
@@ -206,37 +212,16 @@ class THelper // extends TElement
 	 */
 	public static function toWebP($file, $alvo)
 	{
-        $type = exif_imagetype($file); // [] if you don't have exif you could use getImageSize()
-        $allowedTypes = array(
-            1,  // [] gif
-            2,  // [] jpg
-            3,  // [] png
-            6   // [] bmp
-        );
-        switch ($type)
-        {
-            case 1 :
-                $srcImg = imageCreateFromGif($file);
-                break;
-            case 2 :
-                $srcImg = imageCreateFromJpeg($file);
-                break;
-            case 3 :
-                $srcImg = imageCreateFromPng($file);
-                break;
-            case 6 :
-                $srcImg = imageCreateFromBmp($file);
-                break;
-        }
-
-        $im = imagecreatetruecolor(imagesx($srcImg), imagesy($srcImg));
-        imagecopy($im, $srcImg, 0, 0, 0, 0, imagesx($srcImg), imagesy($srcImg));
+        $img = self::imageCreateFromAny($file);
+        imagepalettetotruecolor($img);
+        imagealphablending($img, true);
+        imagesavealpha($img, true);
 
         // salvamos a imagem convertida, com 80% de qualidade
-        $ret = imagewebp($im, $alvo, 80);
+        $ret = imagewebp($img, $alvo, 80);
         
         // liberamos a memória
-        imagedestroy($im);
+        imagedestroy($img);
         
         if (!$ret)
         {
@@ -337,21 +322,9 @@ class THelper // extends TElement
 	 */
 	public static function criarThumbnail($imageDirectory, $imageName, $thumbDirectory, $thumbWidth)
 	{
-        $explode = explode(".", $imageName);
-        $filetype = $explode[1];
-    
-        if ($filetype == 'jpg') {
-            $srcImg = imagecreatefromjpeg("$imageDirectory/$imageName");
-        } else
-        if ($filetype == 'jpeg') {
-            $srcImg = imagecreatefromjpeg("$imageDirectory/$imageName");
-        } else
-        if ($filetype == 'png') {
-            $srcImg = imagecreatefrompng("$imageDirectory/$imageName");
-        } else
-        if ($filetype == 'gif') {
-            $srcImg = imagecreatefromgif("$imageDirectory/$imageName");
-        }
+        $target = pathinfo($imageName);
+
+        $srcImg = self::imageCreateFromAny($imageDirectory.'/'.$imageName);
     
         $origWidth = imagesx($srcImg);
         $origHeight = imagesy($srcImg);
@@ -362,19 +335,20 @@ class THelper // extends TElement
         $thumbImg = imagecreatetruecolor($thumbWidth, $thumbHeight);
         imagecopyresized($thumbImg, $srcImg, 0, 0, 0, 0, $thumbWidth, $thumbHeight, $origWidth, $origHeight);
     
-        if ($filetype == 'jpg') {
-            imagejpeg($thumbImg, "$thumbDirectory/$imageName");
-        } else
-        if ($filetype == 'jpeg') {
-            imagejpeg($thumbImg, "$thumbDirectory/$imageName");
-        } else
-        if ($filetype == 'png') {
-            imagepng($thumbImg, "$thumbDirectory/$imageName");
-        } else
-        if ($filetype == 'gif') {
-            imagegif($thumbImg, "$thumbDirectory/$imageName");
+        switch ($target['extension'])
+        {
+            case 'jpg':
+            case 'jpeg':
+                imagejpeg($thumbImg, $thumbDirectory.'/'.$imageName);
+                break;
+            case 'png':
+                imagepng($thumbImg, $thumbDirectory.'/'.$imageName);
+                break;
+            case 'gif':
+                imagegif($thumbImg, $thumbDirectory.'/'.$imageName);
+                break;
         }
-        
+
         imagedestroy($thumbImg);
     }
     
@@ -477,7 +451,7 @@ class THelper // extends TElement
      */
     public static function divBootstrap($object, $col = '6')
     {
-        $div = TElement::tag('div', $object, ['class'=>'col-lg-'.$col]);
+        $div = TElement::tag('div', $object, ['class'=>'col-sm-'.$col]);
         return $div;
     }
     
@@ -612,7 +586,7 @@ class THelper // extends TElement
     /**Jornal Folha de Araçoiaba
      * Determina a plataforma atual do usuário
      */
-    public function get_platform($user_agent)
+    public static function get_platform($user_agent)
 	{
 		$platforms = array(
         	'windows nt 10.0'               => 'Windows 10',
@@ -795,8 +769,38 @@ class THelper // extends TElement
         try
         {
             TTransaction::open('sistema');
-            Trafego::registrar();
+            
+            $url = (isset($_GET['url']) ? '/'.$_GET['url'] : '/');
+            $link = Link::findURL($url);
+            if ( $link )
+            {
+                // se o link existir, registra
+                Trafego::registrar();
+                
+                // contabiliza a visualização
+                $link->updateVisita();
+            }
+            
             TTransaction::close();
+        }
+        catch (Exception $e)
+        {
+            return FALSE;
+            TTransaction::rollback();
+        }
+    }
+    
+    /**
+     * Conta o numero de sitemaps gerados e retorna o total e seus nomes de link 
+     */
+    public static function countSitemap()
+    {
+        try
+        {
+            TTransaction::open('sistema');
+            $sitemap = Link::countSitemap();
+            TTransaction::close();
+            return $sitemap;
         }
         catch (Exception $e)
         {

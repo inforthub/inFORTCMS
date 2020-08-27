@@ -10,8 +10,11 @@ use Cocur\Slugify\Slugify;
  * File Save Trait
  *
  * @version    1.0
- * @package    base
+ * @package    util
+ * @subpackage lib
  * @author     André Ricardo Fort
+ * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  * @author     Nataniel Rabaioli
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -163,23 +166,7 @@ trait AppFileSaveTrait
                 $srcImg = imagecreatefromgif($imageName);
                 break;
         }
-        /*
-        $explode = explode(".", $imageName);
-        $filetype = $explode[1];
-    
-        if ($filetype == 'jpg') {
-            $srcImg = imagecreatefromjpeg("$imageDirectory/$imageName");
-        } else
-        if ($filetype == 'jpeg') {
-            $srcImg = imagecreatefromjpeg("$imageDirectory/$imageName");
-        } else
-        if ($filetype == 'png') {
-            $srcImg = imagecreatefrompng("$imageDirectory/$imageName");
-        } else
-        if ($filetype == 'gif') {
-            $srcImg = imagecreatefromgif("$imageDirectory/$imageName");
-        }
-        */
+
         $origWidth = imagesx($srcImg);
         $origHeight = imagesy($srcImg);
     
@@ -202,25 +189,12 @@ trait AppFileSaveTrait
                 imagegif($thumbImg, $imageName);
                 break;
         }
-        /*
-        if ($filetype == 'jpg') {
-            imagejpeg($thumbImg, "$thumbDirectory/$imageName");
-        } else
-        if ($filetype == 'jpeg') {
-            imagejpeg($thumbImg, "$thumbDirectory/$imageName");
-        } else
-        if ($filetype == 'png') {
-            imagepng($thumbImg, $imageName);
-        } else
-        if ($filetype == 'gif') {
-            imagegif($thumbImg, $imageName);
-        }
-        */
+
         imagedestroy($thumbImg);
     }
     
 	/**
-     * Transforma uma string em url-amigavel usando URLify.
+     * Transforma uma string em url-amigavel usando Slugify.
      * @param $str    string a ser analizada
      */
     public static function urlAmigavel($str)

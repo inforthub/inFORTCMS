@@ -1,0 +1,82 @@
+	  <div class="position-relative">
+      <section class="section section-lg section-shaped">
+        <!-- Background circles -->
+        <div class="shape shape-style-1 shape-dark">
+          <span class="span-150"></span>
+          <span class="span-50"></span>
+          <span class="span-50"></span>
+          <span class="span-75"></span>
+          <span class="span-100"></span>
+          <span class="span-75"></span>
+          <span class="span-50"></span>
+          <span class="span-100"></span>
+          <span class="span-50"></span>
+          <span class="span-100"></span>
+        </div>
+        <div class="container shape-container d-flex align-items-center">
+          <div class="col px-0">
+            <div class="row align-items-center justify-content-center">
+              <div class="col-lg-6 text-center text-white">
+                <h1 class="display-3 text-white">{titulo}</h1>
+                {titulotexto}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- SVG separator -->
+        <div class="separator separator-bottom separator-skew zindex-100">
+          <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+          </svg>
+        </div>
+      </section>
+    </div>
+    
+    <section class="section section-lg">
+      <div class="container">
+        <div class="row mt--200">
+          <div class="col-lg-12">
+          
+            <div class="card bg-gradient-secondary shadow">
+                <div class="card-body p-lg-5">
+                    <img src="{imagem}" alt="{imagem_alt}" title="{imagem_title}" class="card-img-top">
+                    {social_buttons}
+        		    
+        	        <div class="lead">{texto}</div>
+        	        <hr>
+        	        <h5>Compartilhe</h5>
+        	        {social_buttons}
+                </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section bg-secondary">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+              <h3 class="display-3">{titulo_links}</h3>
+              <hr>
+              <div class="row">
+
+                <div class="col-md-6 mb-md-0">
+                    <ul class="alt">
+                        {links_artigos}
+					    <li><a href="{link}">{titulo}</a></li>
+					    {/links_artigos}
+					</ul>
+                </div>
+                <div class="col-md-6 mb-md-0">
+                  <div class="card card-lift--hover shadow border-0 mb-3">
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/{video}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  </div>
+                </div>
+
+              </div>
+          </div>
+        </div>
+      </div>
+    </section>

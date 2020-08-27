@@ -1,7 +1,13 @@
 <?php
 /**
  * FormMensagem Active Record
- * @author  <your-name-here>
+ *
+ * @version    1.0
+ * @package    model
+ * @subpackage site
+ * @author     André Ricardo Fort
+ * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class FormMensagem extends TRecord
 {

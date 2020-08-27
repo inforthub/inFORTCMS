@@ -6,7 +6,8 @@
  * @package     control
  * @subpackage  site
  * @author      André Ricardo Fort
- * @copyright   Copyright (c) 2020 (https://www.infort.eti.br)
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class CategoriaList extends TPage
 {
@@ -46,6 +47,9 @@ class CategoriaList extends TPage
         $this->form = new BootstrapFormBuilder('form_search_Categoria');
         $this->form->setFormTitle('Categoria');
         $this->form->setFieldSizes('100%');
+        
+        // expand button
+        $this->form->addExpandButton('','fas:expand',false);
 
         // create the form fields
         $titulo    = new TEntry('titulo');

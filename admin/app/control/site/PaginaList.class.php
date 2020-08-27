@@ -6,7 +6,7 @@
  * @package     control
  * @subpackage  site
  * @author      André Ricardo Fort
- * @copyright   Copyright (c) 2019 (https://www.infort.eti.br)
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
  *
  */
 class PaginaList extends TPage
@@ -49,6 +49,8 @@ class PaginaList extends TPage
         $this->form->setFormTitle('Páginas');
         $this->form->setFieldSizes('100%');
         
+        // expand button
+        $this->form->addExpandButton('','fas:expand',false);
 
         // create the form fields
         $titulo    = new TEntry('titulo');

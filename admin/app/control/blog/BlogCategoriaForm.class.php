@@ -4,9 +4,10 @@
  *
  * @version     1.0
  * @package     control
- * @subpackage  site
+ * @subpackage  blog
  * @author      André Ricardo Fort
- * @copyright   Copyright (c) 2020 (https://www.infort.eti.br)
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class BlogCategoriaForm extends TWindow
 {
@@ -156,10 +157,6 @@ class BlogCategoriaForm extends TWindow
             if (empty($object->dt_post))
             {
                 $object->dt_post = date('Y-m-d H:i:s');
-            }
-            else
-            {
-                $object->dt_edicao = date('Y-m-d H:i:s');
             }
                         
             if (empty($object->visitas))

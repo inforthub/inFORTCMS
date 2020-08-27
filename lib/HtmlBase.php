@@ -27,18 +27,18 @@ class HtmlBase
         {
             TTransaction::open('sistema');
             
-            $template = Template::where('padrao','=','t')->load();
+            $template = Template::where('padrao','=','t')->first();
             
             // site
             $replaces['root']     = $this->_pref['pref_site_dominio'];
             $replaces['url']      = $this->_url;
-            $replaces['theme']    = $template[0]->nome_fisico; //$template[0]->nome_fisico;
+            $replaces['theme']    = $template->nome_fisico; //$template[0]->nome_fisico;
             $replaces['nome']     = $this->_pref['pref_site_nome'];
             $replaces['language'] = $this->_pref['pref_site_language'];
             
             // social
             $replaces['social']         = Midia::getArrayMidias();
-            $replaces['social_buttons'] = file_get_contents(ROOT.'/templates/'.$replaces['theme'].'/partial/social_buttons.html');
+            $replaces['social_buttons'] = file_get_contents(ROOT.'/templates/'.$replaces['theme'].'/partials/social_buttons.html');
             
             $replaces['instagram_token']  = $this->_pref['pref_instagram_token'];
             $replaces['instagram_userid'] = $this->_pref['pref_instagram_userid'];
@@ -55,7 +55,6 @@ class HtmlBase
             $replaces['contato_estado']   = $this->_pref['pref_emp_estado'];
             $replaces['contato_pais']     = $this->_pref['pref_emp_pais'];
             $replaces['contato_postal']   = $this->_pref['pref_emp_postal'];
-            $replaces['contato_maps']     = $this->_pref['pref_emp_maps'];
             $replaces['contato_cnpj']     = $this->_pref['pref_emp_cnpj'];
             
             // página
@@ -65,24 +64,17 @@ class HtmlBase
             $replaces['pagina']       = '';
             $replaces['meta_tags']    = '';
             $replaces['header_class'] = '';
+            $replaces['buscar-action']  = $this->_pref['pref_site_dominio'].$this->_url;
             
             
             // parseando os scripts da template
             $parse = new TParser;
             $replaces['social_buttons'] = $parse->parse_string( $replaces['social_buttons'], $replaces );
-            $replaces['scripts_head']   = $parse->parse_string( $template[0]->script_head, $replaces );
-            $replaces['scripts_body']   = $parse->parse_string( $template[0]->script_body, $replaces );
+            $replaces['scripts_head']   = $parse->parse_string( $template->script_head, $replaces );
+            $replaces['scripts_body']   = $parse->parse_string( $template->script_body, $replaces );
             
             // injetando script para captura dos clicks
-            $replaces['scripts_body']   .= "
-            <script type=\"text/javascript\">
-				window.onload = function() {
-					jQuery('body').on('click','a', function(){
-						var atual = window.location.href;
-						jQuery.post('".$this->_pref['pref_site_dominio']."/click',{ref:this.href,url:atual});
-					});
-				};
-            </script>";
+            $replaces['scripts_body']   .= "<script type=\"text/javascript\">window.onload = function() {jQuery('body').on('click','a', function(){var atual = window.location.href; jQuery.post('".$this->_pref['pref_site_dominio']."/click',{ref:this.href,url:atual});});};</script>";
             
             // outros
             $replaces['&nbsp;'] = ' ';
@@ -91,6 +83,9 @@ class HtmlBase
             
             // criando o menu do site
             $this->renderMenu();
+            
+            // renderiando as posições da template
+            $this->renderPosicoes($template->getPosicoes());
             
             TTransaction::close();
         }
@@ -126,6 +121,13 @@ class HtmlBase
         return $base->getReplaces();
     }
     
+    /**
+     * Retorna um array com a galeria de imagens do um artigo
+     */
+    public function getGaleria()
+    {
+        //$obj = 
+    }
     
     /**
      * Renderiza o menu
@@ -145,7 +147,22 @@ class HtmlBase
         {
             $this->_replaces['menu'] = $ret;
         }
-        
+    }
+    
+    /**
+     * Renderiza todas as posições da template
+     */
+    public function renderPosicoes($posicoes)
+    {
+        if (is_array($posicoes) && !empty($posicoes))
+        {
+            $parse = new TParser;
+            foreach( $posicoes as $posicao )
+            {
+                $html = ($posicao->ativo == 't') ? Modulo::getHTMLbyPosition($posicao->nome) : null;
+                $this->_replaces['$'.$posicao->nome] = $parse->parse_string( $html, $this->_replaces );
+            }
+        }
     }
     
     /**
@@ -157,11 +174,11 @@ class HtmlBase
         if (empty($object->country_iso))
         {
             // pegamos os dados da região baseado no endereço da empresa
-                $object->country_iso = 'BR';
-                $object->region_iso  = 'SP';
-                $object->placename   = 'Araçoiaba da Serra';
-                $object->geo_lat     = '-23.5033899';
-                $object->geo_lng     = '-47.6170597';
+            $object->country_iso = 'BR';
+            $object->region_iso  = empty($this->_pref['pref_emp_estado']) ? '' : $this->_pref['pref_emp_estado'];
+            $object->placename   = empty($this->_pref['pref_emp_cidade']) ? '' : $this->_pref['pref_emp_cidade'];
+            $object->geo_lat     = empty($this->_pref['pref_emp_geolat']) ? '' : $this->_pref['pref_emp_geolat'];
+            $object->geo_lng     = empty($this->_pref['pref_emp_geolong']) ? '' : $this->_pref['pref_emp_geolong'];
         }
         
         $url = ($this->_url != '/') ? $this->_url : '';
@@ -216,7 +233,7 @@ class HtmlBase
 		$tags .= '<meta name="twitter:image" content="'.$this->_pref['pref_site_dominio'].'/images/favicon.png">';
 		$tags .= '<meta name="twitter:url" content="'.$this->_pref['pref_site_dominio'].$url.'"/>';
 		
-		// Meta Tags para cache
+		// Meta Tags para cache ( tags descontinuadas - sem efeito )
 		//$tags .= '<meta http-equiv="cache-control" content="public" />';
 		//$tags .= '<meta http-equiv="pragma" content="public" />';
 		

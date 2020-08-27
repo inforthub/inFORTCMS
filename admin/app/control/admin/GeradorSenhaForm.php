@@ -2,16 +2,15 @@
 /**
  * GeradorSenha Form
  *
- * @version    1.0
- * @package    util
- * @author     André Ricardo Fort
- * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ * @version     1.0
+ * @package     control
+ * @subpackage  admin
+ * @author      André Ricardo Fort
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
-
 class GeradorSenhaForm extends TWindow
 {
-    //protected $form;
-    
     /**
      * Form constructor
      * @param $param Request

@@ -2,11 +2,12 @@
 /**
  * LinkList Listing
  *
- * @version    1.0
- * @package    control
- * @subpackage configuracoes
- * @author     André Ricardo Fort
- * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ * @version     1.0
+ * @package     control
+ * @subpackage  configuracoes
+ * @author      André Ricardo Fort
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class LinkList extends TPage
 {
@@ -41,6 +42,9 @@ class LinkList extends TPage
         $this->form = new BootstrapFormBuilder('form_search_Link');
         $this->form->setFormTitle('Gestão de Links');
         $this->form->setFieldSizes('100%');
+        
+        // expand button
+        $this->form->addExpandButton('','fas:expand',false);
 
 
         // create the form fields

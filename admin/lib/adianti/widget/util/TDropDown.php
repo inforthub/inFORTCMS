@@ -9,7 +9,7 @@ use Adianti\Widget\Util\TImage;
 /**
  * TDropDown Widget
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    widget
  * @subpackage util
  * @author     Pablo Dall'Oglio
@@ -26,7 +26,7 @@ class TDropDown extends TElement
      * @param $title Dropdown title
      * @param $icon  Dropdown icon
      */
-    public function __construct($label, $icon = NULL, $use_caret = TRUE, $title = '', $height = null)
+    public function __construct($label, $icon = NULL, $use_caret = FALSE, $title = '', $height = null)
     {
         parent::__construct('div');
         $this->{'class'} = 'btn-group';
@@ -51,7 +51,7 @@ class TDropDown extends TElement
         if ($use_caret)
         {
             $span = new TElement('span');
-            $span->{'class'} = 'caret';
+            $span->{'class'} = 'fa fa-chevron-down';
             $span->{'style'} = 'margin-left: 3px';
             $button->add($span);
         }
@@ -208,5 +208,13 @@ class TDropDown extends TElement
         $li = new TElement('li');
         $li->{'class'} = 'divider';
         $this->elements->add($li);
+    }
+    
+    /**
+     * Clear child elements
+     */
+    public function clearItems()
+    {
+        $this->elements->clearChildren();
     }
 }

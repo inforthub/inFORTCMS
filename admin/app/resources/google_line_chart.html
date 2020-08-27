@@ -1,6 +1,5 @@
 <!--[main]-->
 <div id="chart_line_div_{$uniqid}" class="chart" style="width: {$width}; height: {$height};"> <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>Loading </div>
-
 <script>
 $(function() {
     if (typeof Adianti.chartsQueue == 'undefined')
@@ -21,6 +20,7 @@ $(function() {
         var data = google.visualization.arrayToDataTable( {$data|raw} );
         var options = {
           title : '{$title}',
+          legend: {position: '{$poslegend}', maxLines: 3},
           vAxis: {title: '{$ytitle}'},
           hAxis: {title: '{$xtitle}'},
           seriesType: 'lines'

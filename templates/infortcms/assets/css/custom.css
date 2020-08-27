@@ -1,0 +1,168 @@
+/* Edições inFORT */
+
+
+.separator-bottom svg {
+    bottom: -1px;
+}
+
+/* Social Icons */
+
+.btn-whatsapp
+{
+    color: #fff;
+    border-color: #24d366;
+    background-color: #24d366;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+}
+.btn-whatsapp:hover
+{
+    color: #fff;
+    border-color: #24d366;
+    background-color: #24d366;
+}
+.btn-whatsapp:focus,
+.btn-whatsapp.focus
+{
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08), 0 0 0 0 rgba(36, 211, 102, .5);
+}
+.btn-whatsapp.disabled,
+.btn-whatsapp:disabled
+{
+    color: #fff;
+    border-color: #24d366;
+    background-color: #24d366;
+}
+.btn-whatsapp:not(:disabled):not(.disabled):active,
+.btn-whatsapp:not(:disabled):not(.disabled).active,
+.show > .btn-whatsapp.dropdown-toggle
+{
+    color: #fff;
+    border-color: #24d366;
+    background-color: #1fa04f;
+}
+.btn-whatsapp:not(:disabled):not(.disabled):active:focus,
+.btn-whatsapp:not(:disabled):not(.disabled).active:focus,
+.show > .btn-whatsapp.dropdown-toggle:focus
+{
+    box-shadow: none, 0 0 0 0 rgba(36, 211, 102, .5);
+}
+
+.btn-tumblr
+{
+    color: #fff;
+    border-color: #3c5a77;
+    background-color: #3c5a77;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+}
+.btn-tumblr:hover
+{
+    color: #fff;
+    border-color: #3c5a77;
+    background-color: #3c5a77;
+}
+.btn-tumblr:focus,
+.btn-tumblr.focus
+{
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08), 0 0 0 0 rgba(60, 90, 119, .5);
+}
+.btn-tumblr.disabled,
+.btn-tumblr:disabled
+{
+    color: #fff;
+    border-color: #3c5a77;
+    background-color: #3c5a77;
+}
+.btn-tumblr:not(:disabled):not(.disabled):active,
+.btn-tumblr:not(:disabled):not(.disabled).active,
+.show > .btn-tumblr.dropdown-toggle
+{
+    color: #fff;
+    border-color: #3c5a77;
+    background-color: #2d4358;
+}
+.btn-tumblr:not(:disabled):not(.disabled):active:focus,
+.btn-tumblr:not(:disabled):not(.disabled).active:focus,
+.show > .btn-tumblr.dropdown-toggle:focus
+{
+    box-shadow: none, 0 0 0 0 rgba(60, 90, 119, .5);
+}
+
+.btn-linkedin
+{
+    color: #fff;
+    border-color: #0079b6;
+    background-color: #0079b6;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+}
+.btn-linkedin:hover
+{
+    color: #fff;
+    border-color: #0079b6;
+    background-color: #0079b6;
+}
+.btn-linkedin:focus,
+.btn-linkedin.focus
+{
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08), 0 0 0 0 rgba(0, 121, 182, .5);
+}
+.btn-linkedin.disabled,
+.btn-linkedin:disabled
+{
+    color: #fff;
+    border-color: #0079b6;
+    background-color: #0079b6;
+}
+.btn-linkedin:not(:disabled):not(.disabled):active,
+.btn-linkedin:not(:disabled):not(.disabled).active,
+.show > .btn-linkedin.dropdown-toggle
+{
+    color: #fff;
+    border-color: #0079b6;
+    background-color: #00689c;
+}
+.btn-linkedin:not(:disabled):not(.disabled):active:focus,
+.btn-linkedin:not(:disabled):not(.disabled).active:focus,
+.show > .btn-linkedin.dropdown-toggle:focus
+{
+    box-shadow: none, 0 0 0 0 rgba(0, 121, 182, .5);
+}
+
+.btn-reddit
+{
+    color: #fff;
+    border-color: #f36621;
+    background-color: #f36621;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+}
+.btn-reddit:hover
+{
+    color: #fff;
+    border-color: #f36621;
+    background-color: #f36621;
+}
+.btn-reddit:focus,
+.btn-reddit.focus
+{
+    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08), 0 0 0 0 rgba(243, 102, 33, .5);
+}
+.btn-reddit.disabled,
+.btn-reddit:disabled
+{
+    color: #fff;
+    border-color: #f36621;
+    background-color: #f36621;
+}
+.btn-reddit:not(:disabled):not(.disabled):active,
+.btn-reddit:not(:disabled):not(.disabled).active,
+.show > .btn-reddit.dropdown-toggle
+{
+    color: #fff;
+    border-color: #f36621;
+    background-color: #d85e23;
+}
+.btn-reddit:not(:disabled):not(.disabled):active:focus,
+.btn-reddit:not(:disabled):not(.disabled).active:focus,
+.show > .btn-reddit.dropdown-toggle:focus
+{
+    box-shadow: none, 0 0 0 0 rgba(243, 102, 33, .5);
+}

@@ -32,7 +32,9 @@ class SystemSqlLogService implements AdiantiLoggerInterface
         // avoid log of log
         if ($dbname !== 'log' AND (in_array(substr($message,0,6), array('INSERT', 'UPDATE', 'DELETE') ) ) )
         {
-            $time = date("Y-m-d H:i:s");
+            $info = TTransaction::getDatabaseInfo();
+            $date_mask = (in_array($info['type'], ['sqlsrv', 'dblib', 'mssql'])) ? 'Ymd H:i:s' : 'Y-m-d H:i:s';
+            $time = date($date_mask);
             
             if ($open_transaction)
             {

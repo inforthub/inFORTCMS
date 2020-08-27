@@ -2,11 +2,11 @@
 /**
  * TipoList Listing
  *
- * @version    1.0
- * @package    control
- * @subpackage configuracoes
- * @author     André Ricardo Fort
- * @copyright  Copyright (c) 2019 (https://www.infort.eti.br)
+ * @version     1.0
+ * @package     control
+ * @subpackage  configuracoes
+ * @author      André Ricardo Fort
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
  *
  */
 class TipoList extends TPage
@@ -40,6 +40,8 @@ class TipoList extends TPage
         $this->form->setFormTitle('Tipo');
         $this->form->setFieldSizes('100%');
         
+        // expand button
+        $this->form->addExpandButton('','fas:expand',false);
 
         // create the form fields
         $nome = new TEntry('nome');

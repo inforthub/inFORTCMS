@@ -9,7 +9,7 @@ use ReflectionMethod;
 /**
  * Structure to encapsulate an action
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    control
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -38,7 +38,11 @@ class TAction
         
         if (!empty($parameters))
         {
-            $this->setParameters($parameters);
+            // does not override the action
+            unset($parameters['class']);
+            unset($parameters['method']);
+            
+            $this->param = $parameters;
         }
     }
     
@@ -106,6 +110,8 @@ class TAction
         // does not override the action
         unset($parameters['class']);
         unset($parameters['method']);
+        unset($parameters['static']);
+        
         $this->param = $parameters;
     }
     

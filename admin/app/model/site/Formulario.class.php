@@ -1,7 +1,13 @@
 <?php
 /**
  * Formulario Active Record
- * @author  <your-name-here>
+ *
+ * @version    1.0
+ * @package    model
+ * @subpackage site
+ * @author     André Ricardo Fort
+ * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class Formulario extends TRecord
 {
@@ -98,7 +104,7 @@ class Formulario extends TRecord
             
             // formatando a mensagem
 			$msg  = '<h2><b>Formulário de Contato</b></h2>';
-			$msg .= '<p>Email originado do site da <b>Clínica Paraíso</b> em '.date('d-m-Y').' às '.date('H:i:s').'</p><hr>';
+			$msg .= '<p>Email originado do site <b>'.$preferences['pref_site_dominio'].'</b> em '.date('d-m-Y').' às '.date('H:i:s').'</p><hr>';
 			$msg .= '<p><b>Nome:</b> '.$param["nome"].'<br />';
 			$msg .= '<b>Email:</b> '.$param["email"].'<br />';
 			$msg .= '<b>Telefone:</b> '.$param["telefone"].'<br />';

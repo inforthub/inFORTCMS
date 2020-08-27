@@ -24,6 +24,5 @@ $start->run();
 
 // Terminando o cache
 $cache->end();
-//$cache->purge_all();
 
 chdir('..');

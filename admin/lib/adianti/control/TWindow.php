@@ -3,11 +3,12 @@ namespace Adianti\Control;
 
 use Adianti\Control\TAction;
 use Adianti\Widget\Container\TJQueryDialog;
+use Adianti\Widget\Base\TScript;
 
 /**
  * Window Container (JQueryDialog wrapper)
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    control
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -174,6 +175,22 @@ class TWindow extends TPage
     public function setCloseAction(TAction $action)
     {
         $this->wrapper->setCloseAction($action);
+    }
+    
+    /**
+     * Block UI
+     */
+    public static function blockUI($timeout = null)
+    {
+        TScript::create('tjquerydialog_block_ui()', true, $timeout);
+    }
+    
+    /**
+     * Unblock UI
+     */
+    public static function unBlockUI($timeout = null)
+    {
+        TScript::create('tjquerydialog_unblock_ui()', true, $timeout);
     }
     
     /**

@@ -2,11 +2,11 @@
 /**
  * MenuForm Form
  *
- * @version     1.1
+ * @version     1.0
  * @package     control
  * @subpackage  site
  * @author      André Ricardo Fort
- * @copyright   Copyright (c) 2020 (https://www.infort.eti.br)
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
  *
  */
 class MenuForm extends TWindow
@@ -64,8 +64,6 @@ class MenuForm extends TWindow
         $ativo->setUseButton();
         $tipo->setLayout('horizontal');
         $menu_pai_id->enableSearch();
-        //$artigo_id->setEditable(FALSE);
-        //$artigo_id->enableSearch();
         $id->setEditable(FALSE);
         
         // definindo o tamanho dos campos
@@ -73,7 +71,6 @@ class MenuForm extends TWindow
         $ativo->setSize(80);
         
         // criando eventos
-        //$titulo->setExitAction( new TAction([$this,'onChangeTitulo']) );
         $artigo_id->setChangeAction( new TAction([$this,'onChangeArtigo']) );
         
         // defininda as validações
@@ -96,7 +93,7 @@ class MenuForm extends TWindow
         $this->form->addFields( [$ordem] );
          
         // create the form actions
-        $this->addActionButton(_t('Send'), new TAction([$this, 'onSave']), 'fa:save','btn-primary');
+        $this->addActionButton(_t('Save'), new TAction([$this, 'onSave']), 'fa:save','btn-primary');
         $this->addActionButton(_t('New'), new TAction([$this, 'onEdit']), 'fa:eraser red');
         $this->form->addHeaderActionLink( _t('Close'),  new TAction([__CLASS__, 'onClose'], ['static'=>'1']), 'fa:times red');
         
@@ -116,18 +113,6 @@ class MenuForm extends TWindow
         $btn->class = 'btn btn-sm '.$class.' waves-effect';
 
         return $btn;
-    }
-    
-    /**
-     * Preenche o campo URL com o título
-     * @param $param Request
-     *
-    public static function onChangeTitulo( $param )
-    {
-        $obj = new StdClass;
-        $obj->url = THelper::urlAmigavel( $param['titulo'] );
-        
-        TForm::sendData('form_Menu',$obj);
     }
     
     /**

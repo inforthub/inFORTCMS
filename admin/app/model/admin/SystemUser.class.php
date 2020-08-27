@@ -302,7 +302,8 @@ class SystemUser extends TRecord
     public static function authenticate($login, $password)
     {
         $user = self::newFromLogin($login);
-        if (!hash_equals($user->password, md5($password)))
+        //if (!hash_equals($user->password, md5($password)))
+        if (!hash_equals($user->password, self::createHashString($password)))
         {
             //throw new Exception(_t('Wrong password'));
             throw new Exception(_t('Incorrect Username or Password'));
@@ -422,7 +423,7 @@ class SystemUser extends TRecord
      *
      * @return string Hash string.
      */
-    public static function createHashString($password, $algoritm = 'sha256', $key = MEGAMEI_SALTKEY)
+    public static function createHashString($password, $algoritm = 'sha256', $key = CMS_SALTKEY)
     {
         $context = hash_init($algoritm, HASH_HMAC, $key);
         hash_update($context, $password);

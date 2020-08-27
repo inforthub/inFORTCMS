@@ -1,11 +1,13 @@
 <?php
 /**
  * TGeoPlugin Class
- * 
+ *
  * @version    1.0
- * @package    lib
+ * @package    util
+ * @subpackage lib
  * @author     André Ricardo Fort
  * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class TGeoPlugin
 {
@@ -18,9 +20,9 @@ class TGeoPlugin
 	public function __construct()
 	{
 		// configurando os servidores de busca
-		$this->hosts[] = "http://ip-api.com/json/{IP}";
-		$this->hosts[] = "https://ip.seeip.org/geoip/{IP}";
-		//$hosts[] = "http://www.geoplugin.net/php.gp?ip={IP}";
+		$this->hosts[] = "http://ip-api.com/json/{IP}";              // limite de 45 requisições por minuto
+		$this->hosts[] = "https://ip.seeip.org/geoip/{IP}";          // uso livre, dados pouco confiáveis
+		$this->hosts[] = "http://www.geoplugin.net/json.gp?ip={IP}"; // limite de 120 requisições por minuto
 	}
 	
 	/**
@@ -35,8 +37,19 @@ class TGeoPlugin
 		{
 			$geo = json_decode($data);
 			
-			// padronizando o campo da regiao
-			$geo->region = (isset($geo->regionName)) ? $geo->regionName : $geo->region;
+			// padronizando o campos
+			if (isset($geo->geoplugin_region))
+			{
+			    $geo->region  = $geo->geoplugin_region;
+			    $geo->city    = $geo->geoplugin_city;
+			    $geo->country = $geo->geoplugin_countryName;
+			}
+			else if (isset($geo->regionName))
+			{
+			    $geo->region = $geo->regionName;
+			}
+			
+			//$geo->region = (isset($geo->regionName)) ? $geo->regionName : $geo->region;
 		}
 		else
 		{
@@ -47,15 +60,11 @@ class TGeoPlugin
 	}
 	
 	/**
-	 * 
+	 * Executa a busca
 	 */
 	private function fetch($ip)
 	{
-		$opts = array('https'=>array(
-				'method'=>"GET", 
-				'timeout'=>2, 
-				'ignore_errors'=> true
-				));  
+		$opts = array('https'=>['method'=>"GET",'timeout'=>2,'ignore_errors'=> true]);  
 		$context = stream_context_create($opts);
 		
 		// escolhe um host randomicamente faz o parse no IP

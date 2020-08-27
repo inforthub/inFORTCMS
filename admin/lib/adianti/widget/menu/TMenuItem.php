@@ -9,7 +9,7 @@ use Adianti\Widget\Util\TImage;
 /**
  * MenuItem Widget
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    widget
  * @subpackage menu
  * @author     Pablo Dall'Oglio

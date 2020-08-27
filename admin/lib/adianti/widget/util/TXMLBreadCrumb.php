@@ -10,7 +10,7 @@ use Exception;
 /**
  * XMLBreadCrumb
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    widget
  * @subpackage util
  * @author     Pablo Dall'Oglio

@@ -2,7 +2,7 @@ function tfieldlist_reset_fields(row, clear_fields)
 {
     var uniqid = parseInt(Math.random() * 100000000);
     $(row).attr('id', uniqid);
-    var fields = $(row).find('input,select');
+    var fields = $(row).find('input,select,div');
     var newids = [];
     
     $.each(fields, function(index, field)
@@ -127,12 +127,31 @@ function tfieldlist_reset_fields(row, clear_fields)
             else if (field_component =='thidden')
             {
                 $(field).attr('id', new_id);
-                if (clear_fields) {
+                if ($(field).attr('uniqid') == 'true') {
+                    $(field).val(parseInt(Math.random() * 10000000000));
+                }
+                else if (clear_fields) {
                     $(field).val('');
                 }
                 
                 var re = new RegExp(field_id, 'g');
                 tfieldlist_execute_scripts(parent, 'thidden', function(script_content) {
+                    script_content = script_content.replace(re, new_id);
+                    return script_content;
+                });
+            }
+            else if (field_component =='tpicture')
+            {
+                $(field).attr('id', new_id);
+                if ($(field).attr('uniqid') == 'true') {
+                    $(field).val(parseInt(Math.random() * 10000000000));
+                }
+                else if (clear_fields) {
+                    $(field).html('');
+                }
+                
+                var re = new RegExp(field_id, 'g');
+                tfieldlist_execute_scripts(parent, 'tpicture', function(script_content) {
                     script_content = script_content.replace(re, new_id);
                     return script_content;
                 });
@@ -302,10 +321,26 @@ function tfieldlist_clear_rows(name, start, length)
     });
 }
 
+function tfieldlist_get_last_row_data(generator)
+{
+    var values = {};
+    values.index = $(generator).closest('table').find('tbody tr:last').index();
+    
+    $(generator).closest('table').find('tbody tr:last').find('[name]').each(function(k,v) {
+        var attribute_name  = $(v).attr('name');
+        attribute_name = attribute_name.replace('[]', '');
+        values[ attribute_name ] = $(v).val();
+    });
+    
+    return values;
+}
+
 function tfieldlist_get_row_data(generator)
 {
     var values = {};
     values.index = $(generator).closest('tr').index();
+    
+    values[ '_row_id' ] = $(generator).closest('tr').attr('id');
     
     $(generator).closest('tr').find('[name]').each(function(k,v) {
         var attribute_name  = $(v).attr('name');

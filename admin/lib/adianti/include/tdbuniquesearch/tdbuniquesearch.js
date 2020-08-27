@@ -1,7 +1,14 @@
-function tdbuniquesearch_set_value( form_name, field, value )
+function tdbuniquesearch_set_value( form_name, field, value, callback )
 {
     setTimeout(function() {
-        var select = $("[name="+field+"]");
+        if (field.substr(0,1) == '#')
+        {
+            var select = $(field);
+        }
+        else
+        {
+            var select = $("[name="+field+"]");
+        }
         var hash   = select.data('select2').options.options.hash;
         var url    = select.data('select2').options.options.ajax.url + "&hash=" + hash + "&value=" + value + "&onlyidsearch=1";
         
@@ -26,6 +33,11 @@ function tdbuniquesearch_set_value( form_name, field, value )
                       var data = [];
                       data.push(item[0]);
                       select.val(data).trigger('change.select2');
+                  }
+                  
+                  if (typeof callback == 'function')
+                  {
+                      callback();
                   }
               }
               else

@@ -3,10 +3,11 @@
 /**
  * TParser Class
  *
- * @version     1.0
- * @package     widget
- * @subpackage  template
- * @author      André Ricardo Fort
+ * @version    1.0
+ * @package    util
+ * @subpackage lib
+ * @author     André Ricardo Fort
+ * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
  *
  *         		Adaptado do CodeIgniter
  * @author		EllisLab Dev Team

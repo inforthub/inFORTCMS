@@ -19,10 +19,6 @@
         <action>CategoriaList</action>
         <icon>far:bookmark fa-fw</icon>
       </menuitem>
-      <menuitem label="Módulos">
-        <action>ModuloList</action>
-        <icon>fas:cubes fa-fw</icon>
-      </menuitem>
     </menu>
   </menuitem>
   <menuitem label="Blog">
@@ -38,12 +34,28 @@
       </menuitem>
     </menu>
   </menuitem>
-  <menuitem label="Arquivos">
+  <menuitem label="Gestão">
     <icon>fas:cloud fa-fw</icon>
     <menu>
-      <menuitem label="Gestão">
+      <menuitem label="Imagens">
         <action>ArquivosList</action>
         <icon>far:folder-open fa-fw</icon>
+      </menuitem>
+      <menuitem label="Templates">
+        <action>TemplateList</action>
+        <icon>fas:puzzle-piece fa-fw</icon>
+      </menuitem>
+      <menuitem label="Mídias Sociais">
+        <action>MidiaList</action>
+        <icon>fas:share-alt fa-fw</icon>
+      </menuitem>
+      <menuitem label="Módulos">
+        <action>ModuloList</action>
+        <icon>fas:cubes fa-fw</icon>
+      </menuitem>
+      <menuitem label="Modelos HTML">
+        <action>ModeloHtmlList</action>
+        <icon>fas:code fa-fw</icon>
       </menuitem>
     </menu>
   </menuitem>
@@ -58,18 +70,6 @@
         <action>PreferenciasForm#method=onEdit</action>
         <icon>fas:cog fa-fw</icon>
       </menuitem>
-      <menuitem label="Modelos de Módulos">
-        <action>ModeloModuloList</action>
-        <icon>fas:cube fa-fw</icon>
-      </menuitem>
-      <menuitem label="Templates">
-        <action>TemplateList</action>
-        <icon>fas:puzzle-piece fa-fw</icon>
-      </menuitem>
-      <menuitem label="Mídias Sociais">
-        <action>MidiaList</action>
-        <icon>far:thumbs-up fa-fw</icon>
-      </menuitem>
       <menuitem label="Gestão de Links">
         <action>LinkList</action>
         <icon>fas:location-arrow fa-fw</icon>
@@ -77,6 +77,10 @@
       <menuitem label="Tipo">
         <action>TipoList</action>
         <icon>far:flag fa-fw</icon>
+      </menuitem>
+      <menuitem label="Robots.txt">
+        <action>RobotsForm#method=onEdit</action>
+        <icon>fas:robot fa-fw</icon>
       </menuitem>
     </menu>
   </menuitem>

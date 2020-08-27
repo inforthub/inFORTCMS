@@ -1,170 +1,168 @@
 <!--[main]-->
-        <div class="container-fluid">
-            <div class="row clearfix">
-                <div class="col-xs-12 col-sm-3">
-                    <div class="card profile-card">
-                        <div class="profile-header">&nbsp;</div>
-                        <div class="profile-body">
-                            <div class="image-area">
-                                <img src="app/images/photos/{$login}.jpg" alt="{$name}" onerror="this.onerror=null;this.src='app/templates/theme4/images/user.webp';"/>
-                            </div>
-                            <div class="content-area">
-                                <h3>{$name}</h3>
-                                <p>{$email}</p>
-                                
-                            </div>
+        <div class="row clearfix">
+            <div class="col-xs-12 col-sm-3">
+                <div class="card profile-card">
+                    <div class="profile-header">&nbsp;</div>
+                    <div class="profile-body">
+                        <div class="image-area">
+                            <img src="app/images/photos/{$login}.jpg" alt="{$name}" onerror="this.onerror=null;this.src='app/images/user.webp';"/>
                         </div>
-                        
-                        <div class="profile-footer">
-                        <!--
-                            <ul>
-                                <li>
-                                    <span>Followers</span>
-                                    <span>1.234</span>
-                                </li>
-                                <li>
-                                    <span>Following</span>
-                                    <span>1.201</span>
-                                </li>
-                                <li>
-                                    <span>Friends</span>
-                                    <span>14.252</span>
-                                </li>
-                            </ul>
-                            <button class="btn btn-primary btn-lg waves-effect btn-block">FOLLOW</button>
-                            -->
-                            <a class="btn btn-primary btn-lg waves-effect btn-block" href="index.php?class=LoginForm&method=reloadPermissions&static=1">_t{Reload}</a>
+                        <div class="content-area">
+                            <h3>{$name}</h3>
+                            <p>{$email}</p>
+                            
                         </div>
                     </div>
-
+                    
+                    <div class="profile-footer">
                     <!--
-                    <div class="card card-about-me">
-                        <div class="header">
-                            <h2>Dados do Usuário</h2>
-                        </div>
-                        <div class="body">
-                            <ul>
-                                <li>
-                                    <div class="title">
-                                        <i class="material-icons">library_books</i>
-                                        Education
-                                    </div>
-                                    <div class="content">
-                                        B.S. in Computer Science from the University of Tennessee at Knoxville
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="title">
-                                        <i class="material-icons">location_on</i>
-                                        Location
-                                    </div>
-                                    <div class="content">
-                                        {$endereco}
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="title">
-                                        <i class="material-icons">edit</i>
-                                        Skills
-                                    </div>
-                                    <div class="content">
-                                        <span class="label bg-red">UI Design</span>
-                                        <span class="label bg-teal">JavaScript</span>
-                                        <span class="label bg-blue">PHP</span>
-                                        <span class="label bg-amber">Node.js</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="title">
-                                        <i class="material-icons">notes</i>
-                                        Description
-                                    </div>
-                                    <div class="content">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.
-                                    </div>
-                                </li>
-                            </ul>
-                      r  </div>
+                        <ul>
+                            <li>
+                                <span>Followers</span>
+                                <span>1.234</span>
+                            </li>
+                            <li>
+                                <span>Following</span>
+                                <span>1.201</span>
+                            </li>
+                            <li>
+                                <span>Friends</span>
+                                <span>14.252</span>
+                            </li>
+                        </ul>
+                        <button class="btn btn-primary btn-lg waves-effect btn-block">FOLLOW</button>
+                        -->
+                        <a class="btn btn-primary waves-effect btn-block" href="index.php?class=LoginForm&method=reloadPermissions&static=1">_t{Reload}</a>
                     </div>
-                    -->
                 </div>
-                <div class="col-xs-12 col-sm-9">
-                    <div class="card panel">
-                        <div class="card-body panel-body">
-                            <div>
-                                <ul class="nav nav-tabs nav-justified" role="tablist">
-                                    <li role="presentation" class="active nav-item"><a href="#empresa" aria-controls="home" role="tab" data-toggle="tab" class="nav-link active">Dados do Usuário</a></li>
-                                    <li role="presentation" class=" nav-item"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab" class="nav-link ">Configurações</a></li>
-                                </ul>
 
-                                <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane fade in active" id="empresa">
-                                        <div class="panel panel-default panel-post">
-                                            <div class="panel-heading">
-                                                <div class="media">
-                                                    <div class="media-left">
-                                                        <a href="#">
-                                                            <img src="app/images/photos/{$login}.jpg" alt="{$name}" onerror="this.onerror=null;this.src='app/templates/theme4/images/user.webp';"/>
-                                                        </a>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h4 class="media-heading">
-                                                            {$name}
-                                                        </h4>
-                                                        {$email}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel-body">
-                                                <div class="post">
-                                                    <div class="post-heading">
-                                                        <h3 class="profile-username">Olá {$name}</h3>
-                                                        
-                                                    </div>
-                                                    <div class="post-content">
-                                                        <p>Login: <b>{$login}</b></p>
-                                                        <p>E-mail: <b>{$email}</b></p>
-                                                        <p>Nível de Acesso: <b>{$groupnames}</b></p>
-                                                        <p>_t{Front page}: <b>{$frontpage}</b></p>
-                                                        <p>Total de Logins: <b>{$log_user}</b></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--
-                                            <div class="panel-footer">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#">
-                                                            <i class="material-icons">thumb_up</i>
-                                                            <span>12 Likes</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <i class="material-icons">comment</i>
-                                                            <span>5 Comments</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <i class="material-icons">share</i>
-                                                            <span>Share</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            -->
-                                        </div>
-                                    </div>
-                                    
-                                    <div role="tabpanel" class="tab-pane fade in" id="settings">
-                                        <div class="caixa bg-red">
-                                            Preencha os campos abaixo e confirme para alterar os seus dados.<br>A senha deve ter ao menos 6 caracteres.
-                                        </div>
-                                        {$form}
-                                    </div>
-
+                <!--
+                <div class="card card-about-me">
+                    <div class="header">
+                        <h2>Dados do Usuário</h2>
+                    </div>
+                    <div class="body">
+                        <ul>
+                            <li>
+                                <div class="title">
+                                    <i class="material-icons">library_books</i>
+                                    Education
                                 </div>
+                                <div class="content">
+                                    B.S. in Computer Science from the University of Tennessee at Knoxville
+                                </div>
+                            </li>
+                            <li>
+                                <div class="title">
+                                    <i class="material-icons">location_on</i>
+                                    Location
+                                </div>
+                                <div class="content">
+                                    {$endereco}
+                                </div>
+                            </li>
+                            <li>
+                                <div class="title">
+                                    <i class="material-icons">edit</i>
+                                    Skills
+                                </div>
+                                <div class="content">
+                                    <span class="label bg-red">UI Design</span>
+                                    <span class="label bg-teal">JavaScript</span>
+                                    <span class="label bg-blue">PHP</span>
+                                    <span class="label bg-amber">Node.js</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="title">
+                                    <i class="material-icons">notes</i>
+                                    Description
+                                </div>
+                                <div class="content">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.
+                                </div>
+                            </li>
+                        </ul>
+                  r  </div>
+                </div>
+                -->
+            </div>
+            <div class="col-xs-12 col-sm-9">
+                <div class="card panel">
+                    <div class="card-body panel-body">
+                        <div>
+                            <ul class="nav nav-tabs nav-justified" role="tablist">
+                                <li role="presentation" class="active nav-item"><a href="#empresa" aria-controls="home" role="tab" data-toggle="tab" class="nav-link active">Dados do Usuário</a></li>
+                                <li role="presentation" class=" nav-item"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab" class="nav-link ">Configurações</a></li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade in active" id="empresa">
+                                    <div class="panel panel-default panel-post">
+                                        <div class="panel-heading">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <a href="#">
+                                                        <img src="app/images/photos/{$login}.jpg" alt="{$name}" onerror="this.onerror=null;this.src='app/templates/theme4/images/user.webp';"/>
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading">
+                                                        {$name}
+                                                    </h4>
+                                                    {$email}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="post">
+                                                <div class="post-heading">
+                                                    <h3 class="profile-username">Olá {$name}</h3>
+                                                    
+                                                </div>
+                                                <div class="post-content">
+                                                    <p>Login: <b>{$login}</b></p>
+                                                    <p>E-mail: <b>{$email}</b></p>
+                                                    <p>Nível de Acesso: <b>{$groupnames}</b></p>
+                                                    <p>_t{Front page}: <b>{$frontpage}</b></p>
+                                                    <p>Total de Logins: <b>{$log_user}</b></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--
+                                        <div class="panel-footer">
+                                            <ul>
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="material-icons">thumb_up</i>
+                                                        <span>12 Likes</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="material-icons">comment</i>
+                                                        <span>5 Comments</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="material-icons">share</i>
+                                                        <span>Share</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        -->
+                                    </div>
+                                </div>
+                                
+                                <div role="tabpanel" class="tab-pane fade in" id="settings">
+                                    <div class="caixa bg-red">
+                                        Preencha os campos abaixo e confirme para alterar os seus dados.<br>A senha deve ter ao menos 6 caracteres.
+                                    </div>
+                                    {$form}
+                                </div>
+
                             </div>
                         </div>
                     </div>

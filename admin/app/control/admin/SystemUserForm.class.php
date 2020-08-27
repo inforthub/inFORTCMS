@@ -89,18 +89,19 @@ class SystemUserForm extends TPage
         $this->form->addFields( [new TFormSeparator(_t('Groups'))] );
         $this->form->addFields( [$groups] );
         
-        $search = new TEntry('search');
-        $search->placeholder = _t('Search');
-        $search->style = 'width:50%;margin-left: 4px; border-radius: 4px';
-        
         $this->program_list = new TCheckList('program_list');
         $this->program_list->setIdColumn('id');
         $this->program_list->addColumn('id',    'ID',    'center',  '10%');
-        $this->program_list->addColumn('name', _t('Name') . $search->getContents(),    'left',   '50%');
+        $col_name    = $this->program_list->addColumn('name', _t('Name'),    'left',   '50%');
         $col_program = $this->program_list->addColumn('controller', _t('Menu path'),    'left',   '40%');
         $col_program->enableAutoHide(500);
         $this->program_list->setHeight(150);
         $this->program_list->makeScrollable();
+        
+        $col_name->enableSearch();
+        $search_name = $col_name->getInputSearch();
+        $search_name->placeholder = _t('Search');
+        $search_name->style = 'width:50%;margin-left: 4px; border-radius: 4px';
         
         $col_program->setTransformer( function($value, $object, $row) {
             $menuparser = new TMenuParser('menu.xml');
@@ -111,8 +112,6 @@ class SystemUserForm extends TPage
                 return implode(' &raquo; ', $paths);
             }
         });
-        
-        $this->program_list->enableSearch($search, 'name');
         
         $this->form->addFields( [new TFormSeparator(_t('Programs'))] );
         $this->form->addFields( [$this->program_list] );
@@ -178,7 +177,8 @@ class SystemUserForm extends TPage
                 if( $object->password !== $param['repassword'] )
                     throw new Exception(_t('The passwords do not match'));
                 
-                $object->password = md5($object->password);
+                $object->password = SystemUser::createHashString( $object->password );
+                //$object->password = md5($object->password);
             }
             else
             {

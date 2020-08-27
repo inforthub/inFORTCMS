@@ -6,7 +6,7 @@
  * @package     model
  * @subpackage  estatisticas
  * @author      André Ricardo Fort
- * @copyright   Copyright (c) 2020 (https://www.infort.eti.br)
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
  *
  */
 class Click extends TRecord
@@ -77,10 +77,13 @@ class Click extends TRecord
 
 		if (!empty($ref))
 		{
-            // consultamos os dados no GEO
-            //$geoplugin = new geoPlugin();
-    		//$geo = $geoplugin->locate($ip);
     		$geo = null;
+    		if ( $ip <> '::1' && $ip <> '127.0.0.1' )
+            {
+                // consultamos os dados no GEO
+                $geoplugin = new TGeoPlugin();
+        		$geo = $geoplugin->locate($ip);
+            }
     		
     		// verificar outros formatos de whatsapp
     		$whats = substr($ref, 0, 36); //36 -13
@@ -88,8 +91,8 @@ class Click extends TRecord
     		{
     		    $ref = 'https://wa.me/'. substr($ref, 36, 13); // pegamos só os numeros
     		}
-    		//https://api.whatsapp.com/send?phone=5511991346446
-    		//https://wa.me/5511991346446
+    		//https://api.whatsapp.com/send?phone=5511988889999
+    		//https://wa.me/5511988889999
  		    
     		$midia = Midia::findURL($ref); //Midia::where('url','=',$ref)->first();
     		

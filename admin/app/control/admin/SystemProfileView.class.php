@@ -5,6 +5,7 @@
  * @version    1.0
  * @package    control
  * @subpackage admin
+ * @author     André Ricardo Fort
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
  * @license    http://www.adianti.com.br/framework-license
@@ -18,9 +19,10 @@ class SystemProfileView extends TPage
         parent::__construct();
         
         // criando o formulário
-        $this->form        = new BootstrapFormBuilder('form_PerfilUser');
+        $this->form = new BootstrapFormBuilder('form_PerfilUser');
         $this->form->setFieldSizes('100%');
         $this->form->setColumnClasses(2,['col-sm-3','col-sm-9']);
+        $this->form->enableCSRFProtection();
         
         // Mudando a cor do cabeçalho
         $this->form->setProperty('class','perfil');
@@ -58,7 +60,7 @@ class SystemProfileView extends TPage
         
         // criando os botões
         $btn = $this->form->addAction(_t('Save'), new TAction(array($this, 'onSave')), 'fa:save');
-        $btn->class = 'btn btn-primary btn-lg waves-effect';
+        $btn->class = 'btn btn-primary waves-effect';
 
         
         $html = new THtmlRenderer('app/resources/system_profile.html');
@@ -80,16 +82,8 @@ class SystemProfileView extends TPage
             $replaces['email'] = $user->email;
             
             TTransaction::open('log');
-            //$replaces['log_user'] = SystemAccessLog::countStatsByLogin($user->login);
             $replaces['log_user'] = SystemAccessLog::where('login','=',TSession::getValue('login'))->count();
             TTransaction::close();
-            
-            //$empresa = Empresa::newFromUser($user->id);
-            /*
-            // dados da empresa
-            $replaces['razao_social']  = 
-            $replaces['nome_fantasia'] = 
-            */
             
             // formulário
             $replaces['form'] = $this->form;
@@ -133,7 +127,8 @@ class SystemProfileView extends TPage
                     throw new Exception(_t('The passwords do not match'));
                 }
                 
-                $user->password = md5($object->password1);
+                $user->password = SystemUser::createHashString( $object->password1 );
+                //$user->password = md5($object->password1);
             }
             else
             {

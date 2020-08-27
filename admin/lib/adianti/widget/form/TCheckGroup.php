@@ -16,7 +16,7 @@ use Exception;
 /**
  * A group of CheckButton's
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    widget
  * @subpackage form
  * @author     Pablo Dall'Oglio
@@ -388,6 +388,11 @@ class TCheckGroup extends TField implements AdiantiWidgetInterface
         else
         {
             echo '</div>';
+        }
+        
+        if (!empty($this->getAfterElement()))
+        {
+            $this->getAfterElement()->show();
         }
     }
 }

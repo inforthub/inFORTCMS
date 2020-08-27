@@ -5,10 +5,10 @@
  *
  * @version     1.0
  * @package     widget
- * @subpackage  util
+ * @subpackage  lib
  * @author      André Ricardo Fort
- * @copyright   Copyright (c) 2019 inFORT (http://www.infort.eti.br)
- * @license     https://www.infort.eti.br/cms-infort-license
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class TTextSourceCode extends TText
 {
@@ -38,7 +38,7 @@ class TTextSourceCode extends TText
     }
     
     /**
-     *
+     * 
      */
     private function detectMode($file)
     {

@@ -224,26 +224,25 @@ function tentry_autocomplete_by_name(field, list, options)
 function tentry_numeric_mask(field, decimals, decimal_sep, thousand_sep)
 {
     var selector = 'input[name="'+field+'"]';
+
     if ($('#'+field).length >0) {
-        var selector = '#'+field
+        var selector = '#'+field;
     }
-    
-    if (Adianti.numericMaskLibrary == 'iMask') {
-        $(selector).iMask({
-                type : 'number',
-                decDigits   : decimals,
-                decSymbol   : decimal_sep,
-                groupSymbol : thousand_sep
-        });
-        
-        if ($(selector).prop('readonly') == true) {
-            $(selector).off('keydown');
-        }
-    }
-    else {
-        var decimals_zeros = '0'.repeat(decimals);
-        $(selector).mask("#"+thousand_sep+"##0"+decimal_sep+decimals_zeros, {reverse: true});
-    }
+
+    $(selector).maskMoney({
+        prefix: '',
+        suffix: '',
+        affixesStay: true,
+        thousands: thousand_sep,
+        decimal: decimal_sep,
+        precision: decimals,
+        allowZero: false,
+        allowNegative: true,
+        formatOnBlur: false,
+        reverse: false,
+        selectAllOnFocus: false,
+        allowEmpty: false,
+    });
 }
 
 function tentry_get_data_by_id(field_id)
@@ -255,8 +254,8 @@ function tentry_get_data_by_id(field_id)
         var dec_sep = nmask.substring(1,2);
         var tho_sep = nmask.substring(2,3);
         var value   = $('#'+field_id).val();
-        value = value.replace(tho_sep, '');
-        value = value.replace(dec_sep, '.');
+        value = value.split(tho_sep).join('');
+        value = value.split(dec_sep).join('.');
         return value;
     }
     else

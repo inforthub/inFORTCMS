@@ -329,7 +329,7 @@ function __adianti_load_page(page, callback)
         
         __adianti_run_before_loads(url);
         
-        if (url.indexOf('&static=1') > 0)
+        if ( (url.indexOf('&static=1') > 0) || (url.indexOf('?static=1') > 0) )
         {
             $.get(url)
             .done(function(data) {
@@ -642,7 +642,13 @@ function __adianti_show_toast(type, message, place, icon)
     }
     
     if (typeof icon !== 'undefined') {
-        options['icon'] = 'fa ' + icon.replace(':', '-');
+        var icon_prefix = icon.substring(0,3);
+        if (['far', 'fas', 'fal', 'fad', 'fab'].includes(icon_prefix)) {
+            options['icon'] = icon_prefix + ' fa-' + icon.substring(4);
+        }
+        else {
+            options['icon'] = 'fa ' + icon.replace(':', '-');
+        }
     }
     
     iziToast[type]( options );
@@ -651,13 +657,17 @@ function __adianti_show_toast(type, message, place, icon)
 /**
  * Closes blockUI dialog
  */
-function __adianti_unblock_ui()
+function __adianti_unblock_ui(force)
 {
-    if (typeof $.blockUI == 'function')
-    {
-        Adianti.blockUIConter = Adianti.blockUIConter -1;
-        if (Adianti.blockUIConter <= 0)
-        {
+    if (typeof $.blockUI == 'function') {
+        if (typeof force == 'undefined') {
+            Adianti.blockUIConter = Adianti.blockUIConter -1;
+            if (Adianti.blockUIConter <= 0) {
+                $.unblockUI( { fadeIn: 0, fadeOut: 0 } );
+                Adianti.blockUIConter = 0;
+            }
+        }
+        else if (force == true) {
             $.unblockUI( { fadeIn: 0, fadeOut: 0 } );
             Adianti.blockUIConter = 0;
         }
@@ -694,7 +704,7 @@ function __adianti_post_data(form, action)
     
     __adianti_run_before_posts(url);
     
-    if (url.indexOf('&static=1') > 0 || (action.substring(0,4) == 'xhr-'))
+    if ( (url.indexOf('&static=1') > 0) || (url.indexOf('?static=1') > 0) || (action.substring(0,4) == 'xhr-'))
     {
         $.post(url, data)
         .done(function(result) {
@@ -838,6 +848,7 @@ function __adianti_post_lookup(form, action, field, callback) {
     formdata.push({name: '_field_name', value: field_obj.attr('name')});
     formdata.push({name: '_form_name',  value: form});
     formdata.push({name: '_field_data', value: $.param(field_obj.data(), true)});
+    formdata.push({name: '_field_data_json', value: JSON.stringify(__adianti_query_to_json($.param(field_obj.data(), true)))});
     formdata.push({name: 'key',         value: field_obj.val()}); // for BC
     formdata.push({name: 'ajax_lookup', value: 1});
     
@@ -1016,16 +1027,6 @@ function __adianti_process_popover()
             }, {'static': '0'});
         }
     }).attr('processed', true);
-    
-    $('body').on('click', function (e) {
-        //$('.tooltip').hide();
-        if (!$(e.target).is('[popover="true"]') && !$(e.target).parents('.popover').length > 0) {
-            // avoid closing dropdowns inside popover (colorpicker, datepicker) when they are outside popover DOM
-            if (!$(e.target).parents('.dropdown-menu').length > 0) {
-                $('.popover').popover('hide');
-            }
-        }
-    });
 }
 
 /**
@@ -1033,7 +1034,7 @@ function __adianti_process_popover()
  */
 function __adianti_show_popover(element, title, message, placement, custom_options)
 {
-    var standard_options = {trigger:"manual", title:title, html: true, content:message, placement:placement, sanitizeFn : function(d) { return d }};
+    var standard_options = {trigger:"manual", title:title || '', html: true, content:message, placement:placement, sanitizeFn : function(d) { return d }};
     var options = standard_options;
     
     if (typeof custom_options !== undefined)
@@ -1067,7 +1068,7 @@ $(function() {
                     ];
             
                     if (typeof $element.attr('titside') === "undefined" || valid_placements.indexOf($element.attr('titside')) === -1) {
-                        return 'auto';
+                        return 'top';
                     }
                     else {
                         return $(element).attr("titside");
@@ -1108,32 +1109,56 @@ $(document).ajaxComplete(function ()
     
     if (typeof $().DataTable == 'function')
     {
-        $('table[datatable="true"]:not(.dataTable)').DataTable( {
+        var dt_options = {
             responsive: true,
             paging: false,
             searching: false,
             ordering:  false,
             info: false
-        });
+        };
+        
+        if (typeof Adianti.language !== 'undefined')
+        {
+            dt_options['language'] = {};
+            dt_options['language']['url'] = 'lib/jquery/i18n/datatables/'+Adianti.language+'.json';
+        }
+        
+        $('table[datatable="true"]:not(.dataTable)').DataTable( dt_options );
     }
 });
 
-/**
- * Override the default page loader
- */
-$( document ).on( 'click', '[generator="adianti"]', function()
-{
-   __adianti_load_page($(this).attr('href'));
-   return false;
-});
-
-/**
- * Override the default page loader for new windows
- */
-$( document ).on( 'click', '[generator="adianti2"]', function()
-{
-   __adianti_load_page2($(this).attr('href'));
-   return false;
+$( document ).ready(function() {
+    /**
+     * Override the default page loader
+     */
+    $( document ).on( 'click', '[generator="adianti"]', function()
+    {
+       __adianti_load_page($(this).attr('href'));
+       return false;
+    });
+    
+    /**
+     * Override the default page loader for new windows
+     */
+    $( document ).on( 'click', '[generator="adianti2"]', function()
+    {
+       __adianti_load_page2($(this).attr('href'));
+       return false;
+    });
+    
+    /**
+     * Close tooltips on click
+     */
+    $('body').on('click', function (e) {
+        $('.tooltip.show').tooltip('hide');
+        
+        if (!$(e.target).is('[popover="true"]') && !$(e.target).parents('.popover').length > 0) {
+            // avoid closing dropdowns inside popover (colorpicker, datepicker) when they are outside popover DOM
+            if (!$(e.target).parents('.dropdown-menu').length > 0) {
+                $('.popover').popover('hide');
+            }
+        }
+    });
 });
 
 /**

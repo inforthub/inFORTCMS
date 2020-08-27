@@ -24,9 +24,14 @@ class AdiantiRestServer
         try
         {
             $response = AdiantiCoreApplication::execute($class, $method, $request, 'rest');
+            array_walk_recursive($response, ['AdiantiStringConversion', 'assureUnicode']);
             return json_encode( array('status' => 'success', 'data' => $response));
         }
         catch (Exception $e)
+        {
+            return json_encode( array('status' => 'error', 'data' => $e->getMessage()));
+        }
+        catch (Error $e)
         {
             return json_encode( array('status' => 'error', 'data' => $e->getMessage()));
         }

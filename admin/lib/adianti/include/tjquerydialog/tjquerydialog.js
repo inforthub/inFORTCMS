@@ -36,3 +36,17 @@ function tjquerydialog_start( id, modal, draggable, resizable, width, height, to
 	    $( id ).closest('.ui-dialog').css({ left: left+'px' });
 	}
 }
+
+function tjquerydialog_block_ui()
+{
+    $( document ).ready(function() {
+        $('.ui-dialog').css('pointer-events', 'none');
+        $('.ui-dialog-content').css('opacity', '0.5');
+    });
+}
+
+function tjquerydialog_unblock_ui()
+{
+    $('.ui-dialog').css('pointer-events', 'all');
+    $('.ui-dialog-content').css('opacity', '');
+}

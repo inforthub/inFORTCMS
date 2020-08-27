@@ -4,9 +4,10 @@
  *
  * @version    1.0
  * @package    widget
- * @author     inFORT
- * @author     André Ricardo Fort <andre [at] infort.eti.br>
- * @license    http://www.adianti.com.br/framework-license
+ * @subpackage lib
+ * @author     André Ricardo Fort
+ * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class TKnob extends TElement
 {

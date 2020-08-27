@@ -2,11 +2,11 @@
 /**
  * MenuList Listing
  *
- * @version     1.1
+ * @version     1.0
  * @package     control
  * @subpackage  site
  * @author      André Ricardo Fort
- * @copyright   Copyright (c) 2020 (https://www.infort.eti.br)
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
  *
  */
 class MenuList extends TPage
@@ -42,6 +42,8 @@ class MenuList extends TPage
         $this->form->setFormTitle('Menu');
         $this->form->setFieldSizes('100%');
         
+        // expand button
+        $this->form->addExpandButton('','fas:expand',false);
         
         // create the form fields
         $titulo = new TEntry('titulo');

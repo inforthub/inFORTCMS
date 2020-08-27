@@ -11,11 +11,12 @@ use Adianti\Widget\Template\THtmlRenderer;
 use Adianti\Widget\Form\TButton;
 
 use stdClass;
+use ApplicationTranslator;
 
 /**
  * Card
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    widget
  * @subpackage util
  * @author     Pablo Dall'Oglio
@@ -185,26 +186,14 @@ class TCardView extends TElement
     {
         if (!empty($this->templatePath))
         {
-            if (!empty($this->itemDatabase))
-            {
-                TTransaction::open($this->itemDatabase);
-            }
-            
             $html = new THtmlRenderer($this->templatePath);
             $html->enableSection('main');
+            $html->enableTranslation();
             $html = AdiantiTemplateHandler::replace($html->getContents(), $item);
             
-            if (!empty($this->itemDatabase))
-            {
-                TTransaction::close();
-            }
             return $html;
         }
         
-        if (!empty($this->itemDatabase))
-        {
-            TTransaction::open($this->itemDatabase);
-        }
         $titleField   = $this->titleField;
         $contentField = $this->contentField;
         $colorField   = $this->colorField;
@@ -212,12 +201,12 @@ class TCardView extends TElement
         $item_wrapper              = new TElement('div');
         $item_wrapper->{'class'}   = 'panel card panel-default card-item';
         
-        if (!empty($item->$colorField))
+        if ($colorField && $item->$colorField)
         {
             $item_wrapper->{'style'}   = 'border-top: 3px solid '.$item->$colorField;
         }
         
-        if (!empty($item->$titleField))
+        if ($titleField && $item->$titleField)
         {
             $item_title = new TElement('div');
             $item_title->{'class'} = 'panel-heading card-header card-item-title';
@@ -231,7 +220,7 @@ class TCardView extends TElement
             $item_title->add(AdiantiTemplateHandler::replace($this->titleTemplate, $item));
         }
         
-        if (!empty($item->$contentField))
+        if ($contentField && $item->$contentField)
         {
             $item_content = new TElement('div');
             $item_content->{'class'} = 'panel-body card-body card-item-content';
@@ -242,7 +231,9 @@ class TCardView extends TElement
         {
             $item_content = new TElement('div');
             $item_content->{'class'} = 'panel-body card-body card-item-content';
-            $item_content->add(AdiantiTemplateHandler::replace($this->itemTemplate, $item));
+            $item_template = ApplicationTranslator::translateTemplate($this->itemTemplate);
+            $item_template = AdiantiTemplateHandler::replace($item_template, $item);
+            $item_content->add($item_template);
         }
         
         if (!empty($item_title))
@@ -301,11 +292,7 @@ class TCardView extends TElement
         {
             $item_wrapper->add($this->renderItemActions($item));
         }
-
-        if (!empty($this->itemDatabase))
-        {
-            TTransaction::close();
-        }
+        
         return $item_wrapper;
     }
     
@@ -356,7 +343,7 @@ class TCardView extends TElement
                 else
                 {
                     $icon                = new TImage($action->icon);
-                    $icon->{'style'}     = 'cursor:pointer;margin-right:4px;';
+                    $icon->{'style'}    .= ';cursor:pointer;margin-right:4px;';
                     $icon->{'title'}     = $action->label;
                     $icon->{'generator'} = 'adianti';
                     $icon->{'href'}      = $url;
@@ -377,9 +364,19 @@ class TCardView extends TElement
     {
         if ($this->items)
         {
+            if (!empty($this->itemDatabase))
+            {
+                TTransaction::open($this->itemDatabase);
+            }
+            
             foreach ($this->items as $item)
             {
                 $this->add($this->renderItem($item));
+            }
+            
+            if (!empty($this->itemDatabase))
+            {
+                TTransaction::close();
             }
         }
         

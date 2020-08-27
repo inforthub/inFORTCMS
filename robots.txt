@@ -1,5 +1,0 @@
-User-Agent: *
-Disallow: /admin
-Disallow: /lib
-
-Sitemap: https://www.tictacbrinquedosetendas.com.br/sitemap0

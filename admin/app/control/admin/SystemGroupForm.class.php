@@ -44,18 +44,19 @@ class SystemGroupForm extends TPage
         $this->form->addFields( [new TLabel('ID')], [$id]);
         $this->form->addFields( [new TLabel(_t('Name'))], [$name]);
         
-        $search_program = new TEntry('search');
-        $search_program->placeholder = _t('Search');
-        $search_program->style = 'margin-left: 4px; border-radius: 4px';
-        
         $this->program_list = new TCheckList('program_list');
         $this->program_list->setIdColumn('id');
         $this->program_list->addColumn('id',    'ID',    'center',  '10%');
-        $this->program_list->addColumn('name', _t('Name') . $search_program->getContents(),    'left',   '50%');
+        $col_name    = $this->program_list->addColumn('name', _t('Name'),    'left',   '50%');
         $col_program = $this->program_list->addColumn('controller', _t('Menu path'),    'left',   '40%');
         $col_program->enableAutoHide(500);
         $this->program_list->setHeight(350);
         $this->program_list->makeScrollable();
+        
+        $col_name->enableSearch();
+        $search_program = $col_name->getInputSearch();
+        $search_program->placeholder = _t('Search');
+        $search_program->style = 'margin-left: 4px; border-radius: 4px';
         
         $col_program->setTransformer( function($value, $object, $row) {
             $menuparser = new TMenuParser('menu.xml');
@@ -67,23 +68,19 @@ class SystemGroupForm extends TPage
             }
         });
         
-        $this->program_list->enableSearch($search_program, 'name');
-        
-        $search_user = new TEntry('search');
-        $search_user->placeholder = _t('Search');
-        $search_user->style = 'margin-left: 4px; border-radius: 4px';
-        
         $this->user_list = new TCheckList('user_list');
         $this->user_list->setIdColumn('id');
         $this->user_list->addColumn('id',    'ID',    'center',  '10%');
-        $this->user_list->addColumn('name', _t('Name') . $search_user->getContents(),    'left',   '90%');
+        $col_user = $this->user_list->addColumn('name', _t('Name'),    'left',   '90%');
         $this->user_list->setHeight(350);
         $this->user_list->makeScrollable();
         
-        $this->user_list->enableSearch($search_user, 'name');
+        $col_user->enableSearch();
+        $search_user = $col_user->getInputSearch();
+        $search_user->placeholder = _t('Search');
+        $search_user->style = 'margin-left: 4px; border-radius: 4px';
         
         $subform = new BootstrapFormBuilder;
-        //$subform->setFieldSizes('100%');
         $subform->setProperty('style', 'border:none; box-shadow:none');
         
         $subform->appendPage( _t('Programs') );

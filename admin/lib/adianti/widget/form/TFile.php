@@ -15,7 +15,7 @@ use Exception;
 /**
  * FileChooser widget
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    widget
  * @subpackage form
  * @author     Nataniel Rabaioli
@@ -28,6 +28,7 @@ class TFile extends TField implements AdiantiWidgetInterface
     protected $id;
     protected $height;
     protected $completeAction;
+    protected $errorAction;
     protected $uploaderClass;
     protected $placeHolder;
     protected $extensions;
@@ -56,6 +57,7 @@ class TFile extends TField implements AdiantiWidgetInterface
         $this->seed = APPLICATION_NAME . ( !empty($ini['general']['seed']) ? $ini['general']['seed'] : 's8dkld83kf73kf094' );
         $this->imageGallery = false;
         $this->popover = false;
+        $this->tag->{'widget'} = 'tfile';
     }
     
     /**
@@ -215,19 +217,29 @@ class TFile extends TField implements AdiantiWidgetInterface
         $hdFileName->setValue( $this->value );
         
         $complete_action = "'undefined'";
+        $error_action = "'undefined'";
         
         // verify if the widget is editable
         if (parent::getEditable())
         {
-            if (isset($this->completeAction))
+            if (isset($this->completeAction) || isset($this->errorAction))
             {
                 if (!TForm::getFormByName($this->formName) instanceof TForm)
                 {
                     throw new Exception(AdiantiCoreTranslator::translate('You must pass the ^1 (^2) as a parameter to ^3', __CLASS__, $this->name, 'TForm::setFields()') );
                 }
-                
+            }
+            
+            if (isset($this->completeAction))
+            {
                 $string_action = $this->completeAction->serialize(FALSE);
                 $complete_action = "function() { __adianti_post_lookup('{$this->formName}', '{$string_action}', '{$this->id}', 'callback'); tfile_update_download_link('{$this->name}') }";
+            }
+            
+            if (isset($this->errorAction))
+            {
+                $string_action = $this->errorAction->serialize(FALSE);
+                $error_action = "function() { __adianti_post_lookup('{$this->formName}', '{$string_action}', '{$this->id}', 'callback'); }";
             }
         }
         else
@@ -284,11 +296,11 @@ class TFile extends TField implements AdiantiWidgetInterface
         $imageGallery = json_encode(['enabled'=> $this->imageGallery ? '1' : '0', 'width' => $this->galleryWidth, 'height' => $this->galleryHeight]);
         $popover = json_encode(['enabled' => $this->popover ? '1' : '0', 'title' => $this->poptitle, 'content' => base64_encode($this->popcontent)]);
         
-        TScript::create(" tfile_start( '{$this->tag-> id}', '{$div-> id}', '{$action}', {$complete_action}, $fileHandling, '$imageGallery', '$popover');");
+        TScript::create(" tfile_start( '{$this->tag-> id}', '{$div-> id}', '{$action}', {$complete_action}, {$error_action}, $fileHandling, '$imageGallery', '$popover');");
     }
     
     /**
-     * Define the action to be executed when the user leaves the form field
+     * Define the action to be executed when upload is finished
      * @param $action TAction object
      */
     function setCompleteAction(TAction $action)
@@ -296,6 +308,23 @@ class TFile extends TField implements AdiantiWidgetInterface
         if ($action->isStatic())
         {
             $this->completeAction = $action;
+        }
+        else
+        {
+            $string_action = $action->toString();
+            throw new Exception(AdiantiCoreTranslator::translate('Action (^1) must be static to be used in ^2', $string_action, __METHOD__));
+        }
+    }
+    
+    /**
+     * Define the action to be executed when some error occurs
+     * @param $action TAction object
+     */
+    function setErrorAction(TAction $action)
+    {
+        if ($action->isStatic())
+        {
+            $this->errorAction = $action;
         }
         else
         {

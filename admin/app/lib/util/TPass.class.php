@@ -4,8 +4,9 @@
  *
  * @version    1.0
  * @package    util
+ * @subpackage lib
  * @author     André Ricardo Fort
- * @copyright  Copyright (c) 2019 inFORT (https://www.infort.eti.br)
+ * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
  */
 class TPass
 {
@@ -28,7 +29,7 @@ class TPass
     
     
     /**
-     * Método privado gerador de códigos aleatórios
+     * Método gerador de códigos aleatórios
      */
     public static function makePass($tam, $maiusculas = true, $numeros = true, $simbolos = false)
     {

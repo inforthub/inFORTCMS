@@ -1,7 +1,13 @@
 <?php
 /**
  * Comentario Active Record
- * @author  <your-name-here>
+ *
+ * @version    1.0
+ * @package    model
+ * @subpackage site
+ * @author     André Ricardo Fort
+ * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class Comentario extends TRecord
 {
@@ -33,8 +39,6 @@ class Comentario extends TRecord
         $criteria = new TCriteria;
         $criteria->add(new TFilter('artigo_id', '=', $post_id));
         return Comentario::getObjects($criteria);
-        //$repos = new TRepository('Comentario');
-        //return $repos->load($criteria);
     }
     
     /**
@@ -45,8 +49,6 @@ class Comentario extends TRecord
         $criteria = new TCriteria;
         $criteria->add(new TFilter('resposta_id', '=', $id));
         return Comentario::getObjects($criteria);
-        //$repos = new TRepository('Comentario');
-        //return $repos->load($criteria);
     }
 
 

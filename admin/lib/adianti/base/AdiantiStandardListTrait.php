@@ -24,7 +24,7 @@ use Dompdf\Dompdf;
 /**
  * Standard List Trait
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    base
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)

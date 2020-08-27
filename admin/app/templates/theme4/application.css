@@ -423,7 +423,7 @@ table.table[widget="tchecklist"]>tbody>tr>td:first-child
     color:black !important;
 }
 
-/** Charts **/
+/** Charts **
 .chart
 {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -885,6 +885,7 @@ input[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + lab
 .tfield_disabled, .panel form[type="bootstrap"] input.tfield_disabled
 {
     background: #eee;
+    background-image: none !important;
 }
 
 [data-toggle="buttons"]>.btn input[type="radio"], [data-toggle="buttons"]>.btn-group>.btn input[type="radio"], [data-toggle="buttons"]>.btn input[type="checkbox"], [data-toggle="buttons"]>.btn-group>.btn input[type="checkbox"]
@@ -1345,8 +1346,6 @@ a.nav-link:not(.active):hover {
 }
 
 
-
-
 @media (max-width: 500px) {
     .ls-closed section.content {
         margin-left: 0 !important;
@@ -1549,12 +1548,13 @@ body.theme-blue-grey > section > aside.sidebar > div.user-info
 
 @media (max-width:767px)
 {
+    /*
     .card,
     .perfil {
         margin-left: -15px;
         margin-right: -15px;
     }
-    
+    */
     .ui-dialog .panel .panel-body {
         padding: 0;
     }

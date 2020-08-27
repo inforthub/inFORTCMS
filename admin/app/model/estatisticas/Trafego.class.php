@@ -6,7 +6,7 @@
  * @package     model
  * @subpackage  estatisticas
  * @author      André Ricardo Fort
- * @copyright   Copyright (c) 2020 (https://www.infort.eti.br)
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
  *
  */
 class Trafego extends TRecord
@@ -34,6 +34,22 @@ class Trafego extends TRecord
     }
     
     /**
+     * Pegamos o tráfego filtrado pelo campo e pelo período
+     * @param    $campo - pagina, cidade, regiao, pais, navegador, referencia, plataforma
+     */
+    public static function porCampo($campo, $param = '-30 days', $limit = '10')
+    {
+        $periodo = date("Y-m-d H:i:s", strtotime($param));
+        
+        $conn  = TTransaction::get(); // obtém a conexão
+        $query = $conn->query("SELECT ".$campo.", COUNT(id) as views FROM trafego WHERE (dt_acesso >= '".$periodo."') GROUP BY ".$campo." ORDER BY views DESC LIMIT ".$limit);
+		$result = $query->fetchALL(PDO::FETCH_OBJ);
+		
+		return $result;
+    }
+    
+    
+    /**
      * Método estático que registra um acesso
      */
     public static function registrar()
@@ -41,8 +57,15 @@ class Trafego extends TRecord
         $uri        = filter_input(INPUT_SERVER,'REQUEST_URI',FILTER_DEFAULT);
 		$ip         = THelper::get_ip_address();
 		$user_agent = filter_input(INPUT_SERVER, 'HTTP_USER_AGENT');
-        //var_dump('Antes '.$uri . ' -- ' .$_GET['url']);
-        if ( !in_array($uri, ['/click','/sitemap0']) && $ip <> '::1' )
+		/*
+		$geturl     = $_GET['url'];
+		
+		$sitemap      = THelper::countSitemap();
+        $naoRegistrar = array_merge(['admin','click'],$sitemap['links']);
+        
+        $explode = explode('/',$uri);
+        */
+        if ( $ip <> '::1' && $ip <> '127.0.0.1' )
         {
             // verifica se não é um robô antes de registrar os dados
     		$botRegexPattern = "(googlebot\/|Googlebot\-Mobile|Googlebot\-Image|Google favicon|Mediapartners\-Google|bingbot|slurp|java|wget|curl|Commons\-HttpClient|Python\-urllib|libwww|httpunit|nutch|phpcrawl|msnbot|jyxobot|FAST\-WebCrawler|FAST Enterprise Crawler|biglotron|teoma|convera|seekbot|gigablast|exabot|ngbot|ia_archiver|GingerCrawler|webmon |httrack|webcrawler|grub\.org|UsineNouvelleCrawler|antibot|netresearchserver|speedy|fluffy|bibnum\.bnf|findlink|msrbot|panscient|yacybot|AISearchBot|IOI|ips\-agent|tagoobot|MJ12bot|dotbot|woriobot|yanga|buzzbot|mlbot|yandexbot|purebot|Linguee Bot|Voyager|CyberPatrol|voilabot|baiduspider|citeseerxbot|spbot|twengabot|postrank|turnitinbot|scribdbot|page2rss|sitebot|linkdex|Adidxbot|blekkobot|ezooms|dotbot|Mail\.RU_Bot|discobot|heritrix|findthatfile|europarchive\.org|NerdByNature\.Bot|sistrix crawler|ahrefsbot|Aboundex|domaincrawler|wbsearchbot|summify|ccbot|edisterbot|seznambot|ec2linkfinder|gslfbot|aihitbot|intelium_bot|facebookexternalhit|yeti|RetrevoPageAnalyzer|lb\-spider|sogou|lssbot|careerbot|wotbox|wocbot|ichiro|DuckDuckBot|lssrocketcrawler|drupact|webcompanycrawler|acoonbot|openindexspider|gnam gnam spider|web\-archive\-net\.com\.bot|backlinkcrawler|coccoc|integromedb|content crawler spider|toplistbot|seokicks\-robot|it2media\-domain\-crawler|ip\-web\-crawler\.com|siteexplorer\.info|elisabot|proximic|changedetection|blexbot|arabot|WeSEE:Search|niki\-bot|CrystalSemanticsBot|rogerbot|360Spider|psbot|InterfaxScanBot|Lipperhey SEO Service|CC Metadata Scaper|g00g1e\.net|GrapeshotCrawler|urlappendbot|brainobot|fr\-crawler|binlar|SimpleCrawler|Livelapbot|Twitterbot|cXensebot|smtbot|bnf\.fr_bot|A6\-Indexer|ADmantX|Facebot|Twitterbot|OrangeBot|memorybot|AdvBot|MegaIndex|SemanticScholarBot|ltx71|nerdybot|xovibot|BUbiNG|Qwantify|archive\.org_bot|Applebot|TweetmemeBot|crawler4j|findxbot|SemrushBot|yoozBot|lipperhey|y!j\-asr|Domain Re\-Animator Bot|AddThis|YisouSpider|BLEXBot|YandexBot|SurdotlyBot|AwarioRssBot|FeedlyBot|Barkrowler|Gluten Free Crawler|Cliqzbot)";
@@ -85,11 +108,14 @@ class Trafego extends TRecord
                 
                 if(!isset($robot['buscador']))
                 {
-                
-                    // consultamos os dados no GEO
-                    $geoplugin = new TGeoPlugin();
-            		$geo = $geoplugin->locate($ip);
-            		//$geo = null;
+                    $geo = null;
+                    
+                    if ( !empty(THelper::getPreferences('pref_site_trafego')) )
+                    {
+                        // consultamos os dados no GEO
+                        $geoplugin = new TGeoPlugin();
+                		$geo = $geoplugin->locate($ip);
+            		}
             		
             		// prepara a zona (sempre UTF-8)
                     setlocale( LC_TIME, 'pt_BR.UTF-8', 'pt_BR', 'pt_BR.utf-8', 'portuguese' );
@@ -109,9 +135,6 @@ class Trafego extends TRecord
             		$trafego->store();
                 }
             }
-            
-            // registrando uma visita no artigo
-            var_dump('Dentro '.$uri . ' -- ' .$_GET['url']);
         }
     }
     

@@ -6,6 +6,7 @@
  * @package    control
  * @author     André Ricardo Fort
  * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class Dashboard extends TPage
 {
@@ -13,7 +14,7 @@ class Dashboard extends TPage
      * Class constructor
      * Creates the page
      */
-    function __construct()
+    public function __construct($param)
     {
         parent::__construct();
         
@@ -23,9 +24,9 @@ class Dashboard extends TPage
         $titulo = TElement::tag('div','<h2>DASHBOARD</h2>',['class'=>'block-header']);
         
         // Criando InfoBox
-        $info1 = $this->TInfoBox('Site',$stats->get_stats('Site'),'fas:tv','info-box-3 bg-red hover-zoom-effect');
-        $info2 = $this->TInfoBox('Blog',$stats->get_stats('Blog'),'fas:book','info-box-3 bg-teal hover-zoom-effect');
-        $info3 = $this->TInfoBox('Artigos',$stats->get_stats('News'),'far:file-alt','info-box-3 bg-light-blue hover-zoom-effect');
+        $info1 = $this->TInfoBox('Páginas de Site',$stats->get_stats('Site'),'fas:tv','info-box-3 bg-red hover-zoom-effect');
+        $info2 = $this->TInfoBox('Páginas de Blog',$stats->get_stats('Blog'),'fas:book','info-box-3 bg-teal hover-zoom-effect');
+        $info3 = $this->TInfoBox('Midias Ativas',$stats->get_stats('Midias'),'fas:share-alt','info-box-3 bg-light-blue hover-zoom-effect');
         $info4 = $this->TInfoBox('Total de Páginas',$stats->get_stats('All'),'fas:globe-americas','info-box-3 bg-cyan hover-zoom-effect');
         $tag1 = TElement::tag('div', $info1, ['class'=>'col-lg-3 col-md-3 col-sm-6 col-xs-12']);
         $tag2 = TElement::tag('div', $info2, ['class'=>'col-lg-3 col-md-3 col-sm-6 col-xs-12']);
@@ -44,7 +45,6 @@ class Dashboard extends TPage
         /*****************************
          * 1- Site
          * 2- Blog
-         * 3- News
          *****************************/
         
         if ( in_array('1',$acesso) )
@@ -55,11 +55,11 @@ class Dashboard extends TPage
             $body->class = 'body text-center';
             $body->add( $this->btnAPP('Menu',['MenuList','onReload'], 'fas:bars') );
             $body->add( $this->btnAPP('Páginas',['PaginaList','onReload'], 'far:file-code') );
-            $body->add( $this->btnAPP('Módulos',['ModuloList','onReload'], 'fas:cubes') );
+            $body->add( $this->btnAPP('Categorias',['CategoriaList','onReload'], 'far:bookmark') );
             $body->add( $this->btnAPP('Limpar Cache',[$this,'limparCache'], 'fas:database') );
             $site->add($body);
             
-            $vbox->add( TElement::tag('div',$site,['class'=>'col-xs-12 col-sm-6 col-md-6 col-lg-6']) );
+            $vbox->add( TElement::tag('div',$site,['class'=>'col-sm-6']) );
         }
         
         if ( in_array('2',$acesso) )
@@ -68,27 +68,63 @@ class Dashboard extends TPage
             $blog = TElement::tag('div', TElement::tag('div','<h2>BLOG</h2>',['class'=>'header']), ['class'=>'card']);
             $body = new TElement('div');
             $body->class = 'body text-center';
-            $body->add( $this->btnAPP('Categorias',['BlogCategoriaList','onReload'], 'far:bookmark') );
             $body->add( $this->btnAPP('Posts',['BlogPostList','onReload'], 'far:file-alt') );
+            $body->add( $this->btnAPP('Categorias',['BlogCategoriaList','onReload'], 'far:bookmark') );
             $blog->add($body);
             
-            $vbox->add( TElement::tag('div',$blog,['class'=>'col-xs-12 col-sm-6 col-md-6 col-lg-6']) );
+            $vbox->add( TElement::tag('div',$blog,['class'=>'col-sm-6']) );
         }
+        
         /*
-        if ( in_array('3',$acesso) )
-        {
-            // botões do News
-            $blog = TElement::tag('div', TElement::tag('div','<h2>Notícias</h2>',['class'=>'header']), ['class'=>'card']);
-            $body = new TElement('div');
-            $body->class = 'body text-center';
-            $body->add( $this->btnAPP('Artigos',['NewsList','onReload'], 'far:file-alt') );
-            $body->add( $this->btnAPP('Categorias',['NewsCategoriaList','onReload'], 'far:bookmark') );
-            $body->add( $this->btnAPP('Região',['CidadeList','onReload'], 'fas:city') );
-            $blog->add($body);
-            
-            $vbox->add( TElement::tag('div',$blog,['class'=>'col-xs-12 col-sm-6 col-md-6 col-lg-6']) );
-        }
+            $param['periodo'] = '-30 days';
+            $param['limit']   = '20';
         */
+        
+        // carregando estatísticas gráficas
+        
+        $graficos = new TElement('div');
+        $graficos->class = 'row clearfix';
+        
+        // visualizações diárias (30 dias)
+        $div = TElement::tag('div', TElement::tag('div','<h2>Visualizações diárias (30 dias)</h2>',['class'=>'header']), ['class'=>'card']);
+        $div->add( new TrafegoDiaView($param) );
+        $graficos->add(TElement::tag('div',$div,['class'=>'col-sm-12']));
+        
+        // visualizações por hora (30 dias)
+        $div = TElement::tag('div', TElement::tag('div','<h2>Visualizações por hora (30 dias)</h2>',['class'=>'header']), ['class'=>'card']);
+        $div->add( new TrafegoHoraView($param) );
+        $graficos->add(TElement::tag('div',$div,['class'=>'col-sm-12']));
+        
+        // totais
+        $graficos->add( TElement::tag('div', new TrafegoTotaisView(false),['class'=>'col-sm-12']) );
+        
+        // tráfego por plataformas
+        $div = TElement::tag('div', TElement::tag('div','<h2>Tráfego por Plataformas (30 dias)</h2>',['class'=>'header']), ['class'=>'card']);
+        $div->add( new TrafegoPlataformaView($param) );
+        $graficos->add(TElement::tag('div',$div,['class'=>'col-sm-6']));
+        
+        // tráfego por navegadores
+        $div = TElement::tag('div', TElement::tag('div','<h2>Tráfego por Navegadores (30 dias)</h2>',['class'=>'header']), ['class'=>'card']);
+        $div->add( new TrafegoNavegadorView($param) );
+        $graficos->add(TElement::tag('div',$div,['class'=>'col-sm-6']));
+        
+        
+        
+        
+        // carregando listagens
+        
+        $listagem = new TElement('div');
+        $listagem->class = 'row clearfix';
+        
+        $listagem->add( TElement::tag('div', new TrafegoPaginaView($param),['class'=>'col-md-6']) );
+        $listagem->add( TElement::tag('div', new TrafegoReferenciaView($param),['class'=>'col-md-6']) );
+        
+        if ( !empty(THelper::getPreferences('pref_site_trafego')) )
+        {
+            $listagem->add( TElement::tag('div', new TrafegoCidadeView($param),['class'=>'col-md-6 col-lg-4']) );
+            $listagem->add( TElement::tag('div', new TrafegoRegiaoView($param),['class'=>'col-md-6 col-lg-4']) );
+            $listagem->add( TElement::tag('div', new TrafegoPaisView($param),['class'=>'col-md-6 col-lg-4']) );
+        }
         
         // limpando toda a sessão
         THelper::clearSession();
@@ -97,6 +133,8 @@ class Dashboard extends TPage
         parent::add($titulo);
         parent::add($infobox);
         parent::add($vbox);
+        parent::add($graficos);
+        parent::add($listagem);
     }
     
     /**

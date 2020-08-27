@@ -20,6 +20,7 @@ $(function() {
         var data = google.visualization.arrayToDataTable( {$data|raw} );
         var options = {
           title : '{$title}',
+          legend: {position: '{$poslegend}', maxLines: 3},
           vAxis: {title: '{$ytitle}'},
           hAxis: {title: '{$xtitle}'},
           seriesType: 'bars'
@@ -28,7 +29,6 @@ $(function() {
         var chart = new google.visualization.BarChart(document.getElementById('chart_bar_div_{$uniqid}'));
         chart.draw(data, options);
     };
-    
     
     if (Adianti.chartsQueue.length == 0) {
         Adianti.chartsQueue.push( render_bar_chart );

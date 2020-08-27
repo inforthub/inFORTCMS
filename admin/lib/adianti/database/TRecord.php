@@ -20,7 +20,7 @@ use ArrayIterator;
 /**
  * Base class for Active Records
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    database
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -67,7 +67,7 @@ abstract class TRecord implements IteratorAggregate
     /**
      * Returns iterator
      */
-    public function getIterator()
+    public function getIterator ()
     {
         return new ArrayIterator( $this->data );
     }
@@ -457,6 +457,18 @@ abstract class TRecord implements IteratorAggregate
         $content = str_replace('/', ' / ', $content);
         $content = str_replace('(', ' ( ', $content);
         $content = str_replace(')', ' ) ', $content);
+        
+        // fix sintax for operator followed by signal
+        foreach (['+', '-', '*', '/'] as $operator)
+        {
+            foreach (['+', '-'] as $signal)
+            {
+                $content = str_replace(" {$operator} {$signal} ", " {$operator} {$signal}", $content);
+                $content = str_replace(" {$operator}  {$signal} ", " {$operator} {$signal}", $content);
+                $content = str_replace(" {$operator}   {$signal} ", " {$operator} {$signal}", $content);
+            }
+        }
+        
         $parser = new Parser;
         $content = $parser->evaluate(substr($content,1));
         return $content;
@@ -510,6 +522,8 @@ abstract class TRecord implements IteratorAggregate
         
         // check if the object has an ID or exists in the database
         $pk = $this->getPrimaryKey();
+        $createdat = $this->getCreatedAtColumn();
+        $updatedat = $this->getUpdatedAtColumn();
         
         if (method_exists($this, 'onBeforeStore'))
         {
@@ -526,6 +540,16 @@ abstract class TRecord implements IteratorAggregate
                 if ((defined("{$class}::IDPOLICY")) AND (constant("{$class}::IDPOLICY") == 'serial'))
                 {
                     unset($this->$pk);
+                }
+                else if ((defined("{$class}::IDPOLICY")) AND (constant("{$class}::IDPOLICY") == 'uuid'))
+                {
+                    $this->$pk = sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+                                    mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+                                    mt_rand( 0, 0xffff ),
+                                    mt_rand( 0, 0x0fff ) | 0x4000,
+                                    mt_rand( 0, 0x3fff ) | 0x8000,
+                                    mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+                                );
                 }
                 else
                 {
@@ -558,10 +582,11 @@ abstract class TRecord implements IteratorAggregate
                 }
             }
             
-            $createdat = $this->getCreatedAtColumn();
             if (!empty($createdat))
             {
-                $sql->setRowData($createdat, date('Y-m-d H:i:s'));
+                $info = TTransaction::getDatabaseInfo();
+                $date_mask = (in_array($info['type'], ['sqlsrv', 'dblib', 'mssql'])) ? 'Ymd H:i:s' : 'Y-m-d H:i:s';
+                $sql->setRowData($createdat, date($date_mask));
             }
         }
         else
@@ -599,12 +624,19 @@ abstract class TRecord implements IteratorAggregate
                 }
             }
             
-            $updated = $this->getUpdatedAtColumn();
-            if (!empty($updated))
+            if (!empty($createdat))
             {
-                $sql->setRowData($updated, date('Y-m-d H:i:s'));
+                $sql->unsetRowData($createdat);
+            }
+            
+            if (!empty($updatedat))
+            {
+                $info = TTransaction::getDatabaseInfo();
+                $date_mask = (in_array($info['type'], ['sqlsrv', 'dblib', 'mssql'])) ? 'Ymd H:i:s' : 'Y-m-d H:i:s';
+                $sql->setRowData($updatedat, date($date_mask));
             }
         }
+        
         // get the connection of the active transaction
         if ($conn = TTransaction::get())
         {

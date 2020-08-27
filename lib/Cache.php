@@ -1,21 +1,19 @@
 <?php
-
 /**
  * Cache Class
  *
- * @version     1.2
+ * @version     1.0
  * @package     lib
  * @author      André Ricardo Fort
  * @copyright   Copyright (c) 2020 (https://www.infort.eti.br)
  *
  */
-
 require 'TinyHtmlMinifier.php';
 
 class Cache
 {
     // Pages you do not want to Cache:
-    var $doNotCache = array("admin","click","sitemap0");
+    var $doNotCache = array("admin","click");
 
     // General Config Vars
     var $cacheDir = "../cache";
@@ -30,21 +28,24 @@ class Cache
     
     /*
      * Time
-     * 3600 = 1 hora
-     * 10800 = 3 horas
-     * 21600 = 6 horas
-     * 43200 = 12 horas
-     * 86400 = 24 horas / 1 dia
-     * 604800 = 7 dias
+     * 3600    = 1 hora
+     * 10800   = 3 horas
+     * 21600   = 6 horas
+     * 43200   = 12 horas
+     * 86400   = 24 horas / 1 dia
+     * 604800  = 7 dias
      * 1296000 = 15 dias
      * 2592000 = 30 dias
      */
 
     function __construct()
     {
-        $this->cacheControl = THelper::getPreferences('cache_control');
+        $this->cacheControl = THelper::getPreferences('pref_cache_control');
         if (!empty($this->cacheControl))
         {
+            $sitemap = THelper::countSitemap();
+            $this->doNotCache = array_merge(['admin','click'],$sitemap['links']);
+            
             $this->cacheFile = base64_encode($_SERVER['REQUEST_URI']);
             $this->cacheFileName = $this->cacheDir.'/'.$this->cacheFile.'.txt';
             $this->cacheLogFile = $this->cacheDir."/log.txt";

@@ -7,7 +7,7 @@ use Exception;
 /**
  * Basic HTTP Client request
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    core
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -39,7 +39,7 @@ class AdiantiHttpClient
        
         $defaults = array(
             CURLOPT_URL => $url,
-            CURLOPT_HEADER => true,
+            CURLOPT_HEADER => false,
             CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYHOST => false,

@@ -4,8 +4,10 @@
  *
  * @version    1.0
  * @package    util
+ * @subpackage lib
  * @author     André Ricardo Fort
- * @copyright  Copyright (c) 2020 inFORT Ltd. (https://www.infort.eti.br)
+ * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class TStats
 {
@@ -19,14 +21,7 @@ class TStats
         try
         {
             TTransaction::open('sistema');
-            //TTransaction::setLogger(new TLoggerSTD); // standard output
-            /*
-            $this->stats['site']   = Link::where('tipo','=',1)->count();
-            $this->stats['blog']   = Link::where('tipo','=',2)->count();
-            $this->stats['artigo'] = Link::where('tipo','=',3)->where('destino','like','GeoConteudo%')->count();
-            $this->stats['geo']    = Link::where('tipo','=',3)->count(); 
-                                   //Link::where('tipo','=',3)->where('destino','like','GeoLocal%')->count();
-            */
+
             // contando os links baseados nos módulos ativos
             $tipo = Tipo::where('ativo','=','t')->load();
             foreach ($tipo as $module)
@@ -36,6 +31,7 @@ class TStats
             
             // pegando tudo
             $this->stats['All'] = Link::countObjects();
+            $this->stats['Midias'] = Midia::where('ativo','=','t')->count();
             
             TTransaction::close();
         }

@@ -4,9 +4,9 @@
  *
  * @version     1.0
  * @package     control
- * @subpackage  site
+ * @subpackage  blog
  * @author      André Ricardo Fort
- * @copyright   Copyright (c) 2019 (https://www.infort.eti.br)
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
  *
  */
 class BlogPostList extends TPage
@@ -49,6 +49,8 @@ class BlogPostList extends TPage
         $this->form->setFormTitle('Listagem de Posts');
         $this->form->setFieldSizes('100%');
         
+        // expand button
+        $this->form->addExpandButton('','fas:expand',false);
 
         // create the form fields
         $titulo     = new TEntry('titulo');
@@ -139,7 +141,6 @@ class BlogPostList extends TPage
         $this->pageNavigation = new TPageNavigation;
         $this->pageNavigation->enableCounters();
         $this->pageNavigation->setAction(new TAction([$this, 'onReload']));
-        //$this->pageNavigation->setWidth($this->datagrid->getWidth());
 
 
         // vertical box container

@@ -9,7 +9,7 @@ use Exception;
 /**
  * Provides an Interface to create an INSERT statement
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    database
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -40,6 +40,18 @@ class TSqlInsert extends TSqlStatement
         if (is_scalar($value) OR is_null($value))
         {
             $this->columnValues[$column] = $value;
+        }
+    }
+    
+    /**
+     * Unset row data
+     * @param $column   Name of the database column
+     */
+    public function unsetRowData($column)
+    {
+        if (isset($this->columnValues[$column]))
+        {
+            unset($this->columnValues[$column]);
         }
     }
     

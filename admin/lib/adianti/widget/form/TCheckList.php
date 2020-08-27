@@ -4,13 +4,16 @@ namespace Adianti\Widget\Form;
 use Adianti\Widget\Base\TScript;
 use Adianti\Widget\Datagrid\TDataGrid;
 use Adianti\Widget\Datagrid\TDataGridColumn;
+use Adianti\Database\TTransaction;
+use Adianti\Database\TCriteria;
 use Adianti\Wrapper\BootstrapDatagridWrapper;
+use Adianti\Widget\Wrapper\AdiantiDatabaseWidgetTrait;
 use Adianti\Validator\TFieldValidator;
 
 /**
  * Checklist
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    widget
  * @subpackage form
  * @author     Pablo Dall'Oglio
@@ -26,6 +29,10 @@ class TCheckList implements AdiantiWidgetInterface
     protected $name;
     protected $value;
     protected $validations;
+    protected $checkColumn;
+    protected $checkAllButton;
+    
+    use AdiantiDatabaseWidgetTrait;
     
     /**
      * Construct method
@@ -44,6 +51,7 @@ class TCheckList implements AdiantiWidgetInterface
         $check->{'onclick'} = "tchecklist_select_all(this, '{$id}')";
         $check->{'style'} = 'cursor:pointer';
         $check->setProperty('class', 'filled-in');
+        $this->checkAllButton = $check;
         
         $label = new TLabel('');
         $label->{'style'} = 'margin:0';
@@ -51,12 +59,29 @@ class TCheckList implements AdiantiWidgetInterface
         $check->after($label);
         $label->{'for'} = $check->getId();
         
-        
-        $this->datagrid->addColumn( new TDataGridColumn('check',   $check->getContents(),   'center',  '1%') );
+        $this->checkColumn = $this->datagrid->addColumn( new TDataGridColumn('check',   $check->getContents(),   'center',  '1%') );
         
         $this->setName($name);
         $this->value = [];
         $this->fields = [];
+    }
+    
+    /**
+     * Change Id
+     */
+    public function setId($id)
+    {
+        $this->checkAllButton->{'onclick'} = "tchecklist_select_all(this, '{$id}')";
+        $this->checkColumn->setLabel( $this->checkAllButton->getContents() );
+        $this->datagrid->setId($id);
+    }
+    
+    /**
+     * Disable check all button
+     */
+    public function disableCheckAll()
+    {
+        $this->checkColumn->setLabel('');
     }
     
     /**
@@ -90,13 +115,20 @@ class TCheckList implements AdiantiWidgetInterface
         {
             foreach ($items as $item)
             {
+                $item->{'check'}->setValue(null);
+                $position = $this->datagrid->getRowIndex( $id_column, $item->$id_column );
+                if (is_int($position))
+                {
+                    $row = $this->datagrid->getRow($position);
+                    $row->{'className'} = '';
+                }
+                
                 if ($this->value)
                 {
                     if (in_array($item->$id_column, $this->value))
                     {
                         $item->{'check'}->setValue('on');
                         
-                        $position = $this->datagrid->getRowIndex( $id_column, $item->$id_column );
                         if (is_int($position))
                         {
                             $row = $this->datagrid->getRow($position);
@@ -192,6 +224,16 @@ class TCheckList implements AdiantiWidgetInterface
                 $this->addItem($object);
             }
         }
+    }
+    
+    /**
+     * Fill with model objects
+     */
+    public function fillWith($database, $model, $key, $ordercolumn = NULL, TCriteria $criteria = NULL)
+    {
+        TTransaction::open($database);
+        $this->addItems( $this->getObjectsFromModel($database, $model, $key, $ordercolumn, $criteria) );
+        TTransaction::close();
     }
     
     /**

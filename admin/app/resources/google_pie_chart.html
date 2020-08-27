@@ -20,6 +20,7 @@ $(function() {
         var data = google.visualization.arrayToDataTable( {$data|raw} );
         var options = {
           title : '{$title}',
+          legend: {position: '{$poslegend}', maxLines: 3},
           vAxis: {title: '{$ytitle}'},
           hAxis: {title: '{$xtitle}'},
           seriesType: 'bars'

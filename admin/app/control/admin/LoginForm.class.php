@@ -27,6 +27,7 @@ class LoginForm extends TPage
         // creates the form
         $this->form = new BootstrapFormBuilder('form_login');
         $this->form->setFormTitle( 'Acesso Restrito' );
+        $this->form->enableCSRFProtection();
         
         // create the form fields
         $login = new TEntry('login');

@@ -2,7 +2,7 @@
 /**
  * Route
  *
- * @version     1.4
+ * @version     1.0
  * @package     lib
  * @author      André Ricardo Fort
  * @copyright   Copyright (c) 2020 (https://www.infort.eti.br)
@@ -118,9 +118,6 @@ class Route
                     //$destino = explode(':',$link->destino);
                     //$classe  = $link->system_modules->nome . 'Render';
                     
-                    // contabiliza a visualização
-                    $link->updateVisita();
-                    
                     $pagina = new SiteRender($this->_url);
                     $replaces = $pagina->render( $link->get_artigo() );
                     
@@ -129,8 +126,6 @@ class Route
                     
                     // rederiza a página
                     echo $parse->parse_string($layout_content, $replaces);
-                    
-                    
                 }
                 else
                 {

@@ -4,7 +4,7 @@ namespace Adianti\Widget\Base;
 /**
  * Base class for all HTML Elements
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    widget
  * @subpackage base
  * @author     Pablo Dall'Oglio
@@ -147,6 +147,17 @@ class TElement
         {
             // store the property's value
             $this->properties[$name] = $value;
+        }
+    }
+    
+    /**
+     * Set element properties
+     */
+    public function setProperties($properties)
+    {
+        foreach ($properties as $property => $value)
+        {
+            $this->properties[$property] = $value;
         }
     }
     

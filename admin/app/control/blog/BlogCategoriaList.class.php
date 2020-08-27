@@ -4,9 +4,10 @@
  *
  * @version     1.0
  * @package     control
- * @subpackage  site
+ * @subpackage  blog
  * @author      André Ricardo Fort
- * @copyright   Copyright (c) 2020 (https://www.infort.eti.br)
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class BlogCategoriaList extends TPage
 {
@@ -46,6 +47,9 @@ class BlogCategoriaList extends TPage
         $this->form = new BootstrapFormBuilder('form_search_BlogCategoria');
         $this->form->setFormTitle('Categoria do Blog');
         $this->form->setFieldSizes('100%');
+        
+        // expand button
+        $this->form->addExpandButton('','fas:expand',false);
 
         // create the form fields
         $titulo    = new TEntry('titulo');

@@ -4,7 +4,7 @@ namespace Adianti\Core;
 /**
  * Class map
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    core
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -65,6 +65,7 @@ class AdiantiClassMap
         $classPath['TMinValueValidator']         = 'lib/adianti/validator/TMinValueValidator.php';
         $classPath['TNumericValidator']          = 'lib/adianti/validator/TNumericValidator.php';
         $classPath['TRequiredValidator']         = 'lib/adianti/validator/TRequiredValidator.php';
+        $classPath['TRequiredListValidator']     = 'lib/adianti/validator/TRequiredListValidator.php';
         $classPath['TElement']                   = 'lib/adianti/widget/base/TElement.php';
         $classPath['TScript']                    = 'lib/adianti/widget/base/TScript.php';
         $classPath['TStyle']                     = 'lib/adianti/widget/base/TStyle.php';

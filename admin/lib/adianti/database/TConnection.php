@@ -8,7 +8,7 @@ use Exception;
 /**
  * Singleton manager for database connections
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    database
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -156,24 +156,28 @@ class TConnection
                 }
                 else
                 {
+                    $charset = $char ? ";charset={$char}" : '';
+                    
                     if ($port)
                     {
-                        $conn = new PDO("dblib:host={$host}:{$port};dbname={$name}", $user, $pass);
+                        $conn = new PDO("dblib:host={$host}:{$port};dbname={$name}{$charset}", $user, $pass);
                     }
                     else
                     {
-                        $conn = new PDO("dblib:host={$host};dbname={$name}", $user, $pass);
+                        $conn = new PDO("dblib:host={$host};dbname={$name}{$charset}", $user, $pass);
                     }
                 }
                 break;
             case 'dblib':
+                $charset = $char ? ";charset={$char}" : '';
+                
                 if ($port)
                 {
-                    $conn = new PDO("dblib:host={$host}:{$port};dbname={$name}", $user, $pass);
+                    $conn = new PDO("dblib:host={$host}:{$port};dbname={$name}{$charset}", $user, $pass);
                 }
                 else
                 {
-                    $conn = new PDO("dblib:host={$host};dbname={$name}", $user, $pass);
+                    $conn = new PDO("dblib:host={$host};dbname={$name}{$charset}", $user, $pass);
                 }
                 break;
             case 'sqlsrv':

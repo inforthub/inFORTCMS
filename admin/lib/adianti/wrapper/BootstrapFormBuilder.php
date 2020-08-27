@@ -30,7 +30,7 @@ use Exception;
 /**
  * Bootstrap form builder for Adianti Framework
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    wrapper
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -78,6 +78,7 @@ class BootstrapFormBuilder implements AdiantiFormInterface
         $this->automatic_aria    = false;
         $this->client_validation = false;
         $this->csrf_validation   = false;
+        $this->hidden            = false;
         
         $this->column_classes = array();
         $this->column_classes[1]  = ['col-sm-12'];
@@ -116,6 +117,28 @@ class BootstrapFormBuilder implements AdiantiFormInterface
 		$this->addFields([$csrf_token]);
 		$csrf_token->setValue(TSession::getValue('csrf_token_'.$this->name));
 		$this->decorated->silentField('csrf_token');
+    }
+    
+    /**
+     * Add expand button
+     */
+    public function addExpandButton( $label = null, $icon = null, $start_hidden = true)
+    {
+        $form_name = $this->getName();
+        
+        $button = new TButton($form_name.'_show_hide');
+        $button->{'class'} = 'btn btn-info btn-sm active';
+        $button->setLabel($label ?? AdiantiCoreTranslator::translate('Expand'));
+        $button->setImage($icon ?? 'fa:search');
+        $button->addFunction("\$('[name={$form_name}]').slideToggle('fast'); $(this).toggleClass( 'active' )");
+        $this->addHeaderWidget($button);
+        
+        if ($start_hidden)
+        {
+            $this->decorated->setProperty('style', 'display:none');
+        }
+        
+        return $button;
     }
     
     /**
@@ -389,6 +412,8 @@ class BootstrapFormBuilder implements AdiantiFormInterface
                                 $this->decorated->addField($field);
                             }
                         }
+                        
+                        $content->setTagName('div');
                     }
                 }
             }
@@ -430,6 +455,7 @@ class BootstrapFormBuilder implements AdiantiFormInterface
                                 $this->addField($field);
                             }
                         }
+                        $slot->setTagName('div');
                     }
                 }
             }
@@ -625,7 +651,7 @@ class BootstrapFormBuilder implements AdiantiFormInterface
             }
         }
         
-        if (!empty($this->title))
+        if (!empty($this->title) || count($this->header_actions) > 0)
         {
             $heading = new TElement('div');
             $heading->{'class'} = 'card-header panel-heading';
@@ -877,7 +903,10 @@ class BootstrapFormBuilder implements AdiantiFormInterface
         {
             $this->render();
         }
-        $this->panel->show();
+        if (!$this->hidden)
+        {
+            $this->panel->show();
+        }
     }
     
     /**

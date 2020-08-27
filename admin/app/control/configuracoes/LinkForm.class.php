@@ -2,10 +2,12 @@
 /**
  * LinkForm Registration
  *
- * @version    1.0
- * @package    control
- * @author     André Ricardo Fort
- * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ * @version     1.0
+ * @package     control
+ * @subpackage  configuracoes
+ * @author      André Ricardo Fort
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class LinkForm extends TWindow
 {

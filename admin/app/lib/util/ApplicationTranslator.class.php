@@ -939,8 +939,10 @@ class ApplicationTranslator
         $this->messages['en'][] = 'Keywords';
         $this->messages['en'][] = 'Rename';
         $this->messages['en'][] = 'Create';
+        $this->messages['en'][] = 'Remake';
         $this->messages['en'][] = 'File deleted';
         $this->messages['en'][] = 'Folder deleted';
+        $this->messages['en'][] = 'Failed to save file';
         
         $this->messages['pt'][] = 'Esqueceu a senha?';
         $this->messages['pt'][] = 'Mover a cima';
@@ -955,8 +957,10 @@ class ApplicationTranslator
         $this->messages['pt'][] = 'Palavras-chave';
         $this->messages['pt'][] = 'Renomear';
         $this->messages['pt'][] = 'Criar';
+        $this->messages['pt'][] = 'Refazer';
         $this->messages['pt'][] = 'Arquivo deletado';
         $this->messages['pt'][] = 'Pasta deletada';
+        $this->messages['pt'][] = 'Falha ao salvar o arquivo';
 
         //fim
         foreach ($this->messages as $lang => $messages)

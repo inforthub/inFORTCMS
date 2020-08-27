@@ -2,19 +2,23 @@
 /**
  * Artigo Active Record
  *
- * @version     1.0
- * @package     model
- * @author      André Ricardo Fort
- * @copyright   Copyright (c) 2019 (https://www.infort.eti.br)
+ * @version    1.0
+ * @package    model
+ * @subpackage site
+ * @author     André Ricardo Fort
+ * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class Artigo extends TRecord
 {
     const TABLENAME = 'artigo';
     const PRIMARYKEY= 'id';
     const IDPOLICY =  'serial'; // {max, serial}
+    
+    const CREATEDAT = 'dt_cadastro';
+    const UPDATEDAT = 'dt_edicao';
 
     private $tipo;
-    private $modulos;
     private $arquivos;
 
     /**
@@ -36,10 +40,12 @@ class Artigo extends TRecord
         parent::addAttribute('visitas');
         parent::addAttribute('usuario_id');
         parent::addAttribute('destaque');
+        parent::addAttribute('parametros');
         parent::addAttribute('ativo');
         parent::addAttribute('modo');
         parent::addAttribute('tipo_id');
         parent::addAttribute('categoria_id');
+        parent::addAttribute('modelo_html_id');
     }
     
     /**
@@ -50,6 +56,16 @@ class Artigo extends TRecord
     public function get_categoria()
     {
         return Artigo::find($this->categoria_id);
+    }
+    
+    /**
+     * Method get_modelo_html
+     * Sample of usage: $artigo->modelo_html->attribute;
+     * @returns ModeloHTML instance
+     */
+    public function get_modelo_html()
+    {
+        return ModeloHTML::find($this->modelo_html_id);
     }
     
     
@@ -81,26 +97,6 @@ class Artigo extends TRecord
     
     
     /**
-     * Method addModulo
-     * Add a Modulo to the Artigo
-     * @param $object Instance of Modulo
-     */
-    public function addModulo(Modulo $object)
-    {
-        $this->modulos[] = $object;
-    }
-    
-    /**
-     * Method getModulos
-     * Return the Artigo' Modulo's
-     * @return Collection of Modulo
-     */
-    public function getModulos()
-    {
-        return $this->modulos;
-    }
-    
-    /**
      * Method addArquivo
      * Add a Arquivo to the Artigo
      * @param $object Instance of Arquivo
@@ -125,7 +121,6 @@ class Artigo extends TRecord
      */
     public function clearParts()
     {
-        $this->modulos = array();
         $this->arquivos = array();
     }
 
@@ -135,7 +130,6 @@ class Artigo extends TRecord
      */
     public function load($id)
     {
-        $this->modulos = parent::loadComposite('Modulo', 'artigo_id', $id);
         $this->arquivos = parent::loadComposite('Arquivo', 'artigo_id', $id);
     
         // load the object itself
@@ -150,7 +144,6 @@ class Artigo extends TRecord
         // store the object itself
         parent::store();
     
-        parent::saveComposite('Modulo', 'artigo_id', $this->id, $this->modulos);
         //parent::saveComposite('Arquivo', 'artigo_id', $this->id, $this->arquivos);
     }
     
@@ -170,9 +163,8 @@ class Artigo extends TRecord
     public function delete($id = NULL)
     {
         $id = isset($id) ? $id : $this->id;
-        parent::deleteComposite('Modulo', 'artigo_id', $id);
-        parent::deleteComposite('Arquivo', 'artigo_id', $id);
         
+        parent::deleteComposite('Arquivo', 'artigo_id', $id);
         parent::deleteComposite('Comentario', 'artigo_id', $id);
         parent::deleteComposite('Link', 'artigo_id', $id);
     
@@ -211,7 +203,7 @@ class Artigo extends TRecord
         if ($obj->tipo_id == 1)
         {
             $link->changefreq = 'monthly';
-            $link->priority   = '0,80';
+            $link->priority   = '0.80';
         }
         
         $link->store();
@@ -248,10 +240,10 @@ class Artigo extends TRecord
      * @param $busca    string
      * @param $skip     integer 
      */
-    public static function buscaPosts($busca,$skip=0)
+    public static function buscaPosts($busca,$take=10,$skip=0)
     {
         // listamos os ultimos 10 artigos
-        return Artigo::where('ativo','=','t')->where('titulo','like','%'.$busca.'%')->where('modo','=','a')->orderBy('dt_post','desc')->take(10)->skip($skip)->load();
+        return Artigo::where('titulo','like','%'.$busca.'%')->where('modo','=','a')->where('ativo','=','t')->orderBy('dt_post','desc')->take($take)->skip($skip)->load();
     }
     
     /**
@@ -259,10 +251,10 @@ class Artigo extends TRecord
      * @param $categoria_id    integer
      * @param $skip            integer 
      */
-    public static function getPostCategoria($categoria_id,$skip=0)
+    public static function getPostCategoria($categoria_id,$take=10,$skip=0)
     {
         // listamos os ultimos 10 artigos
-        return Artigo::where('categoria_id','=',$categoria_id)->where('modo','=','a')->where('ativo','=','t')->orderBy('dt_post','desc')->take(10)->skip($skip)->load();
+        return Artigo::where('categoria_id','=',$categoria_id)->where('modo','=','a')->where('ativo','=','t')->orderBy('dt_post','desc')->take($take)->skip($skip)->load();
     }
     
     /**

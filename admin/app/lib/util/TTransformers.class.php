@@ -4,10 +4,12 @@
  *
  * Classe com os métodos transformadores padrão do sistema
  *
- * @version    1.1
+ * @version    1.0
  * @package    util
+ * @subpackage lib
  * @author     André Ricardo Fort
- * @copyright  Copyright (c) 2019 inFORT (https://www.infort.eti.br)
+ * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class TTransformers
 {
@@ -167,22 +169,6 @@ class TTransformers
     public static function showUserName( $value, $object, $row )
     {
         return THelper::showUserName($value);
-    }
-
-    /**
-     * Método para retornar o nome de um Modelo de Módulo
-     */
-    public static function showModeloModulo( $value, $object, $row )
-    {
-        TTransaction::open('sistema');
-        $obj = ModeloModulo::find($value);
-        $ret = null;
-        if ( $obj )
-        {
-            $ret = $obj->nome;
-        }
-        TTransaction::close();
-        return $ret;
     }
     
     /**

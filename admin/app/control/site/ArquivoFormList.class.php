@@ -2,11 +2,11 @@
 /**
  * ArquivoFormList Registration
  *
- * @version     1.1
+ * @version     1.0
  * @package     control
  * @subpackage  site
  * @author      André Ricardo Fort
- * @copyright   Copyright (c) 2020 (https://www.infort.eti.br)
+ * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
  *
  */
 class ArquivoFormList extends TPage //TWindow
@@ -23,15 +23,7 @@ class ArquivoFormList extends TPage //TWindow
      */
     public function __construct( $param )
     {
-        parent::__construct();/*
-        //parent::setTitle('Formulário de Fotos');
-        parent::setSize(0.8, null);
-        parent::setMinWidth(0.9,900);
-        parent::removePadding();
-        parent::removeTitleBar();
-        //parent::disableEscape();
-        */
-        //parent::setTargetContainer('adianti_right_panel');
+        parent::__construct();
         
         $this->setDatabase('sistema');            // defines the database
         $this->setActiveRecord('Arquivo');   // defines the active record
@@ -52,16 +44,11 @@ class ArquivoFormList extends TPage //TWindow
         $this->form->setFormTitle('Galeria de Fotos');
         $this->form->setFieldSizes('100%');
         
-        // Mudando a cor do cabeçalho
-        //$this->form->setHeaderProperty('class','header bg-blue-grey');
-        
 
         // criando campos
         $id        = new TEntry('id');
-        //$nome      = new TSlim('nome'); //TFile('nome');
         $nome_web  = new TEntry('nome_web');
         $descricao = new TEntry('descricao');
-        //$formato   = new TCombo('formato');
         $artigo_id = new THidden('artigo_id');
         
         $btn = TButton::create('buscar_imagem',[$this,'onBuscaImagem'],'Procurar Imagem','fa:image');
@@ -69,34 +56,23 @@ class ArquivoFormList extends TPage //TWindow
         // criando o frame da logo
         $this->frame = new TElement('div');
         $this->frame->id = 'photo_frame';
-        $this->frame->style = 'width:100%;height:auto;border:1px solid gray;padding:4px;';
+        $this->frame->style = 'width:100%;height:auto;max-width:350px;border:1px solid gray;padding:4px;';
         
         // adicionando os campos ao formulário
         $this->form->addFields( [ new TLabel('Id') ], [ $id ] , [ $artigo_id ]);
-        //$this->form->addFields( [ new TLabel('Nome') ], [ $nome ] );
-        $this->form->addContent( [$this->frame] );
-        $this->form->addFields( [ new TLabel('Caminho') ], [ $nome_web , $btn] );
+        $this->form->addContent( [],[$this->frame] );
+        $this->form->addFields( [ new TLabel('Caminho') ], [ $nome_web, $btn ] );
         $this->form->addFields( [ new TLabel('Descrição') ], [ $descricao ] );
-        //$this->form->addFields( [ new TLabel('Formato') ], [ $formato ] );
 
         // criando validações
-        //$nome->addValidation('Nome', new TRequiredValidator);
         $nome_web->addValidation('Nome', new TRequiredValidator);
         $descricao->addValidation('Descrição', new TRequiredValidator);
 
 
         // configurando parâmetros dos campos
         $id->setEditable(FALSE);
-        //$artigo_id->setEditable(FALSE);
         $artigo_id->setValue($param['artigo_id']);
-        
-        /*
-        $nome->setDataProperties(['label'=>'Upload imagem']);//aqui eu seto o nome do label
-        //tamanho final no máximo 1500x1500 e proporção de 4:3 na janela de visualização
-        $nome->setDataProperties(['size'=>'1400,1200','ratio'=>'16:9','download'=>'true']);
-        $nome->setWatermark(THelper::getPreferences('pref_site_nome')); //'Jornal Folha de Araçoiaba');
-        //$nome->setImageWatermark('app/images/logo-infort.svg');
-        */
+
         
         // criando os botões do formulário
         $this->addActionButton(_t('Save'), new TAction([$this, 'onSave'],['artigo_id'=>$param['artigo_id']]), 'fa:save','btn-primary');
@@ -105,6 +81,7 @@ class ArquivoFormList extends TPage //TWindow
         
         $btn = $this->form->addHeaderAction(_t('Back'), new TAction([$this, 'onClose']), 'far:arrow-alt-circle-left blue');
         $btn->class = 'btn btn-sm btn-default waves-effect';
+        
         
         // creates a DataGrid
         $this->datagrid = new BootstrapDatagridWrapper(new TDataGrid);
@@ -117,9 +94,7 @@ class ArquivoFormList extends TPage //TWindow
         $column_id = new TDataGridColumn('id', '#', 'right', 30);
         $column_nome_web = new TDataGridColumn('nome_web', 'Foto', 'left', 100);
         $column_descricao = new TDataGridColumn('descricao', 'Descrição', 'left');
-        $column_destaque = new TDataGridColumn('destaque', '<i class="far fa-star gray"></i>', 'center');
-        //$column_formato = new TDataGridColumn('formato', 'Formato', 'left');
-        //$column_artigo_id = new TDataGridColumn('artigo_id', 'Artigo Id', 'left');
+        $column_destaque = new TDataGridColumn('destaque', '<i class="far fa-star gray"></i>', 'center', 20);
 
 
         // add the columns to the DataGrid
@@ -127,8 +102,6 @@ class ArquivoFormList extends TPage //TWindow
         $this->datagrid->addColumn($column_destaque);
         $this->datagrid->addColumn($column_nome_web);
         $this->datagrid->addColumn($column_descricao);
-        //$this->datagrid->addColumn($column_formato);
-        //$this->datagrid->addColumn($column_artigo_id);
         
         
         //função para mostrar a imagem no grid
@@ -160,6 +133,7 @@ class ArquivoFormList extends TPage //TWindow
         // create the datagrid model
         $this->datagrid->createModel();
         
+        
         // create the page navigation
         $this->pageNavigation = new TPageNavigation;
         $this->pageNavigation->enableCounters();
@@ -171,7 +145,7 @@ class ArquivoFormList extends TPage //TWindow
         $container->style = 'width: 100%';
         // $container->add(new TXMLBreadCrumb('menu.xml', __CLASS__));
         $container->add($this->form);
-        $container->add(TPanelGroup::pack('', $this->datagrid, $this->pageNavigation));
+        $container->add(TPanelGroup::pack('', $this->datagrid, $this->pageNavigation)); //$this->cards, $this->pageNavigation));
         
         parent::add($container);
     }
@@ -220,9 +194,10 @@ class ArquivoFormList extends TPage //TWindow
     }
     
     
-    public function onBuscaImagem($param)
+    public static function onBuscaImagem($param)
     {
-        TSession::setValue('Classe_Retorno_Busca_Imagem','form_Arquivo');
+        $arr = ['form'=>'form_Arquivo','campo'=>'nome_web','imagem'=>'photo_frame'];
+        TSession::setValue('Classe_Retorno_Busca_Imagem',$arr);
         AdiantiCoreApplication::loadPage('SelecaoImagem');
     }
     
@@ -242,72 +217,6 @@ class ArquivoFormList extends TPage //TWindow
             $object = new Arquivo;  // create an empty object
             $object->fromArray( (array) $data); // load the object with data
             
-            /*
-            $object2 = Arquivo::find($data->id); //objeto criado para testar se imagem foi repetida
-            
-            $images = Slim::getImages();
-            
-            // No image found under the supplied input name
-            if ($images)
-            {            
-                $image = $images[0];
-                // save output data if set
-                if (isset($image['output']['data']))
-                {
-                    $arquivo = pathinfo($image['output']['name']);
-                    
-                    // geramos um hash com o nome do arquivo concatenado com o tempo
-                    $name = time().'-'.md5($arquivo['filename']).'.'.$arquivo['extension'];
-                    
-                    // We'll use the output crop data
-                    $output_data = $image['output']['data'];
-                    
-                    // prepara a zona (sempre UTF-8)
-                    setlocale( LC_TIME, 'pt_BR.UTF-8', 'pt_BR', 'pt_BR.utf-8', 'portuguese' );
-                    date_default_timezone_set( 'America/Sao_Paulo' );
-                    
-                    $artigo = Artigo::find($data->artigo_id);
-                    $categoria = $artigo->getURLCategoriaPai();
-                    
-                    // definindo o path com a categoria pai'
-                    $target_path = '..'.CMS_IMAGE_PATH.'/'.$artigo->getURLCategoriaPai().'/';
-                    
-                    // salva o arquivo
-                    $output = Slim::saveFile($output_data, $name, $target_path, false);
-                    
-                    if ($output)
-                    {
-                        if( file_exists ($output['path']) )// se existir apaga o anterior
-                        {
-                            // pegamos o arquivo salvo e convertemos para webp
-                            $webp_file = str_replace('.'.$arquivo['extension'],'.webp',$output['path']);
-                            THelper::toWebP($output['path'],$webp_file);
-                            
-                            $object->nome_web = $webp_file;
-                        }
-                    }
-                    
-                    if( $object2 )//teste de imagem repetida
-                    {
-                        if( file_exists ($object2->nome))// se existir apaga o anterior
-                        {
-                            unlink( $object2->nome ); //apaga
-                        }
-                        if( file_exists ($object2->nome_web))// se existir apaga o anterior
-                        {
-                            unlink( $object2->nome_web ); //apaga
-                        }
-                    }
-                    $object->nome = $output['path'];//recebe o caminho para salvar
-                    
-                }
-            }
-            else
-            { 
-               //$object2 = new Arquivo($data->id); 
-               $object->nome =  $object2->nome;
-            }
-            */
             $object->formato = 'F';
             
             $object->store(); // save the object

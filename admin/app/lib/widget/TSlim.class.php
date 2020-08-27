@@ -1,6 +1,13 @@
 <?php
 /**
  * TSlim Container
+ *
+ * @version    1.0
+ * @package    widget
+ * @subpackage lib
+ * @author     André Ricardo Fort
+ * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  * Copyright (c) 2006-2010 Nataniel Rabaioli
  * @author  Nataniel Rabaioli
  * @version 2.0, 2007-08-01
@@ -121,10 +128,38 @@ class TSlim extends TField implements AdiantiWidgetInterface
     }
     
     /**
+     * Método para alterar o formato da imagem
+     * @param $select    string, ex: '4:3','16:9','3:4','1:1', etc
+     */
+    public function setInitRatioSelect($select)
+    {
+        if (!empty($select))
+        {
+            $this->setDataProperties(['did-init'=>'initRatioSelect']);
+            $this->scripts[] = "
+                    function initRatioSelect() {
+                        
+                        var slim = this;
+                        document.getElementById('".$select."').addEventListener('change', function(e) {
+
+                            var index = e.target.selectedIndex;
+                            var value = e.target.options[index].value;
+
+                            slim.setRatio(value, function() {
+                                console.log(value);
+                            });
+                        });
+                    }";
+        }
+    }
+    
+    /**
      * Shows the widget at the screen
      */
     public function show()
     {
+        //$this->tag->id = $this->id;
+        $this->container->setProperty('id',$this->id);
         $this->container->add($this->tag);
         
         if ($this->value)
@@ -133,8 +168,7 @@ class TSlim extends TField implements AdiantiWidgetInterface
         $js = TScript::create('',false);
         $js->src = 'app/lib/include/slim/slim.kickstart.min.js';
         $this->container->add($js);
-        
-        $this->container->show();
+
         
         if (!empty($this->scripts))
         {
@@ -143,5 +177,7 @@ class TSlim extends TField implements AdiantiWidgetInterface
                 TScript::create($val);
             }
         }
+        
+        $this->container->show();
     }
 }

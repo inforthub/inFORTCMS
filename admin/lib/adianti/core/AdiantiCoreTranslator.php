@@ -4,7 +4,7 @@ namespace Adianti\Core;
 /**
  * Framework translation class for internal messages
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    core
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -132,6 +132,8 @@ class AdiantiCoreTranslator
         $this->messages['en'][] = 'Return is not a valid JSON. Check the URL';
         $this->messages['en'][] = 'Required fields';
         $this->messages['en'][] = 'CSRF Error';
+        $this->messages['en'][] = 'Add';
+        $this->messages['en'][] = 'Expand';
         
         
         $this->messages['pt'][] = 'Carregando';
@@ -245,6 +247,8 @@ class AdiantiCoreTranslator
         $this->messages['pt'][] = 'Retorno não é JSON válido. Verifique a URL';
         $this->messages['pt'][] = 'Campos obrigatórios';
         $this->messages['pt'][] = 'Erro de CSRF';
+        $this->messages['pt'][] = 'Adicionar';
+        $this->messages['pt'][] = 'Expandir';
 		
         $this->messages['es'][] = 'Cargando';
         $this->messages['es'][] = 'Archivo no encontrado';
@@ -357,6 +361,8 @@ class AdiantiCoreTranslator
         $this->messages['es'][] = 'El retorno no es un JSON válido. Verifique la URL';
         $this->messages['es'][] = 'Campos requeridos';
         $this->messages['es'][] = 'Error de CSRF';
+        $this->messages['es'][] = 'Agregar';
+        $this->messages['es'][] = 'Expandir';
     }
     
     /**

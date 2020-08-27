@@ -31,7 +31,6 @@ class SiteRender extends HtmlBase
         $this->_replaces['resumo']          = $artigo->resumo;
         $this->_replaces['mensagem']        = '';
         $this->_replaces['titulo_listagem'] = 'Últimos Artigos';
-        $this->_replaces['buscar-action']   = $this->_pref['pref_site_dominio'].'/blog';
         
         // verifico se é um artigo ou uma categoria
         if ($artigo->modo === 'c')
@@ -54,13 +53,13 @@ class SiteRender extends HtmlBase
             
             if (!empty($_POST["query"]))
             {
-                $posts = Artigo::buscaPosts($_POST["query"]);
+                $posts = Artigo::buscaPosts($_POST["query"],0);
                 $this->_replaces['titulo_listagem'] = 'Resultado da Busca por: "'.$_POST["query"].'"';
             }
             else
             {
-                // pegamos os ultimos 10 artigos da Categoria
-                $posts = Artigo::getPostCategoria($artigo->id);
+                // pegamos os artigos da Categoria
+                $posts = Artigo::getPostCategoria($artigo->id,0);
             }
             
             if ($posts)
@@ -364,7 +363,7 @@ class SiteRender extends HtmlBase
             $this->_replaces['meta_tags'] = $this->setMetaTags($pagina);
             
             // carregando os módulos da página
-            $modulos = PaginaModulo::where('pagina_id','=',$pagina->id)->orderBy('ordem')->load();
+            $modulos = Modulo::where('artigo_id','=',$pagina->id)->orderBy('ordem')->load();
             
             // montando array dos módulos
             foreach ($modulos as $modulo)

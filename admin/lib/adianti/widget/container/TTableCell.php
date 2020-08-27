@@ -6,7 +6,7 @@ use Adianti\Widget\Base\TElement;
 /**
  * TableCell: Represents a cell inside a table
  *
- * @version    7.1
+ * @version    7.2.2
  * @package    widget
  * @subpackage container
  * @author     Pablo Dall'Oglio

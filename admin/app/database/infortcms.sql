@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 30-Maio-2020 às 23:31
+-- Tempo de geração: 22-Jul-2020 às 23:42
 -- Versão do servidor: 5.7.30-0ubuntu0.18.04.1
--- versão do PHP: 7.4.6
+-- versão do PHP: 7.4.8
 
 --
 -- Banco de dados: `infortcms`
@@ -49,11 +49,137 @@ CREATE TABLE `artigo` (
   `visitas` int(11) NOT NULL DEFAULT '0',
   `usuario_id` int(11) NOT NULL,
   `destaque` char(1) NOT NULL DEFAULT 'f',
+  `parametros` text COMMENT 'Parametros referente ao modelo de html',
   `ativo` char(1) NOT NULL DEFAULT 't' COMMENT '''t'' ou ''f''',
   `modo` char(1) NOT NULL DEFAULT 'a' COMMENT 'Indica se é um artigo ou uma categoria: ''a''- artigo, ''c''- categoria',
   `tipo_id` int(11) NOT NULL,
-  `categoria_id` int(11) DEFAULT NULL
+  `categoria_id` int(11) DEFAULT NULL,
+  `modelo_html_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabela de artigos e blogs do sistema';
+
+--
+-- Extraindo dados da tabela `artigo`
+--
+
+INSERT INTO `artigo` VALUES (1,'Home','home',NULL,' <div class="section section-hero section-shaped">
+      <div class="shape shape-style-3 shape-default">
+        <span class="span-150"></span>
+        <span class="span-50"></span>
+        <span class="span-50"></span>
+        <span class="span-75"></span>
+        <span class="span-100"></span>
+        <span class="span-75"></span>
+        <span class="span-50"></span>
+        <span class="span-100"></span>
+        <span class="span-50"></span>
+        <span class="span-100"></span>
+      </div>
+      <div class="page-header">
+        <div class="container shape-container d-flex align-items-center py-lg">
+          <div class="col px-0">
+            <div class="row align-items-center justify-content-center">
+              <div class="col-lg-6 text-center">
+                <h1 class="text-white display-1">People stories</h1>
+                <h2 class="display-4 font-weight-normal text-white">The time is right now!</h2>
+                <div class="btn-wrapper mt-4">
+                  <a href="https://www.creative-tim.com/product/argon-design-system" class="btn btn-warning btn-icon mt-3 mb-sm-0">
+                    <span class="btn-inner--icon"><i class="ni ni-button-play"></i></span>
+                    <span class="btn-inner--text">Play more</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="separator separator-bottom separator-skew zindex-100">
+        <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+        </svg>
+      </div>
+    </div>
+    <div class="section features-6">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="info info-horizontal info-hover-primary">
+              <div class="description pl-4">
+                <h5 class="title">For Developers</h5>
+                <p>The time is now for it to be okay to be great. People in this world shun people for being great. For being a bright color. For standing out. But the time is now.</p>
+                <a href="#" class="text-info">Learn more</a>
+              </div>
+            </div>
+            <div class="info info-horizontal info-hover-primary mt-5">
+              <div class="description pl-4">
+                <h5 class="title">For Designers</h5>
+                <p>Thereâs nothing I really wanted to do in life that I wasnât able to get good at. Thatâs my skill. Iâm not really specifically talented at anything except for the ability to learn.</p>
+                <a href="#" class="text-info">Learn more</a>
+              </div>
+            </div>
+            <div class="info info-horizontal info-hover-primary mt-5">
+              <div class="description pl-4">
+                <h5 class="title">For Beginners</h5>
+                <p>Thatâs what I do. Thatâs what Iâm here for. Donât be afraid to be wrong because you canât learn anything from a compliment. If everything I did failed - which it doesn''t.</p>
+                <a href="#" class="text-info">Learn more</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-10 mx-md-auto">
+            <img class="ml-lg-5" src="{root}/templates/{theme}/assets/img/ill/ill.png" width="100%">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section features-1">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 mx-auto text-center">
+            <span class="badge badge-primary badge-pill mb-3">Insight</span>
+            <h3 class="display-3">Full-Funnel Social Analytics</h3>
+            <p class="lead">The time is now for it to be okay to be great. For being a bright color. For standing out.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="info">
+              <div class="icon icon-lg icon-shape icon-shape-primary shadow rounded-circle">
+                <i class="ni ni-settings-gear-65"></i>
+              </div>
+              <h6 class="info-title text-uppercase text-primary">Social Conversations</h6>
+              <p class="description opacity-8">We get insulted by others, lose trust for those others. We get back stabbed by friends. It becomes harder for us to give others a hand.</p>
+              <a href="javascript:;" class="text-primary">More about us
+                <i class="ni ni-bold-right text-primary"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="info">
+              <div class="icon icon-lg icon-shape icon-shape-success shadow rounded-circle">
+                <i class="ni ni-atom"></i>
+              </div>
+              <h6 class="info-title text-uppercase text-success">Analyze Performance</h6>
+              <p class="description opacity-8">Don''t get your heart broken by people we love, even that we give them all we have. Then we lose family over time. As we live, our hearts turn colder.</p>
+              <a href="javascript:;" class="text-primary">Learn about our products
+                <i class="ni ni-bold-right text-primary"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="info">
+              <div class="icon icon-lg icon-shape icon-shape-warning shadow rounded-circle">
+                <i class="ni ni-world"></i>
+              </div>
+              <h6 class="info-title text-uppercase text-warning">Measure Conversions</h6>
+              <p class="description opacity-8">What else could rust the heart more over time? Blackgold. The time is now for it to be okay to be great. or being a bright color. For standing out.</p>
+              <a href="javascript:;" class="text-primary">Check our documentation
+                <i class="ni ni-bold-right text-primary"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br /><br />','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer libero erat, auctor eget lorem vitae, sagittis elementum urna. Nullam consequat mauris in vestibulum commodo.','Home',NULL,'2020-08-27 01:06:36','2020-08-27 01:06','2020-08-27 01:46:36',0,1,'f',NULL,'t','a',1,NULL,NULL);
 
 -- --------------------------------------------------------
 
@@ -143,6 +269,14 @@ CREATE TABLE `link` (
   `template_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabela de Links do site';
 
+--
+-- Extraindo dados da tabela `link`
+--
+
+INSERT INTO `link` VALUES
+(1,'/home','2020-08-27 01:46:36','monthly','0.80',NULL,1,1,NULL),
+(2,'/','2020-08-27 01:07:05','hourly','1,00',NULL,1,1,NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -162,6 +296,12 @@ CREATE TABLE `menu` (
   `artigo_id` int(11) DEFAULT NULL COMMENT 'Este campo, obrigatoriamente, será igual ao artigo que esteja relacionado'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `menu`
+--
+
+INSERT INTO `menu` VALUES (1,'Home','home','1','t',NULL,NULL,0,'t',1);
+
 -- --------------------------------------------------------
 
 --
@@ -176,18 +316,28 @@ CREATE TABLE `midia` (
   `ativo` char(1) NOT NULL DEFAULT 'f'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabela das midias sociais ativas (facebook, whatsapp, instagram,etc)';
 
+--
+-- Extraindo dados da tabela `midia`
+--
+
+INSERT INTO `midia` VALUES
+(1,'WhatsApp','https://wa.me/5599999999999','fab fa-whatsapp','f'),
+(2,'Facebook','#','fab fa-facebook','t'),
+(3,'Instagram','#','fab fa-instagram','t'),
+(4,'YouTube','#','fab fa-youtube','t');
+
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `modelo_modulo`
+-- Estrutura da tabela `modelo_html`
 --
 
-CREATE TABLE `modelo_modulo` (
+CREATE TABLE `modelo_html` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
   `parametros` text NOT NULL,
   `html` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabela de modelos de html';
 
 -- --------------------------------------------------------
 
@@ -198,13 +348,35 @@ CREATE TABLE `modelo_modulo` (
 CREATE TABLE `modulo` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
-  `variavel` varchar(100) DEFAULT NULL,
+  `html` text COMMENT 'HTML gerado pelo módulo',
   `parametros` text NOT NULL,
+  `posicao` varchar(45) DEFAULT NULL,
   `ordem` varchar(2) NOT NULL,
   `ativo` char(1) NOT NULL DEFAULT 't',
-  `modelo_modulo_id` int(11) NOT NULL,
-  `artigo_id` int(11) NOT NULL
+  `modelo_html_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `posicao`
+--
+
+CREATE TABLE `posicao` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(45) NOT NULL,
+  `ativo` char(1) NOT NULL DEFAULT 't',
+  `template_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabela de posições de uma template';
+
+--
+-- Extraindo dados da tabela `posicao`
+--
+
+INSERT INTO `posicao` (`id`, `nome`, `ativo`, `template_id`) VALUES
+(1, 'top1', 't', 1),
+(2, 'bottom1', 't', 1),
+(3, 'footer1', 't', 1);
 
 -- --------------------------------------------------------
 
@@ -371,12 +543,15 @@ INSERT INTO `system_program` (`id`, `name`, `controller`) VALUES
 (69, 'Blog Post Form', 'BlogPostForm'),
 (70, 'Blog Post List', 'BlogPostList'),
 (71, 'Arquivo Form List', 'ArquivoFormList'),
-(72, 'Modelo Modulo Form', 'ModeloModuloForm'),
-(73, 'Modelo Modulo List', 'ModeloModuloList'),
-(74, 'Arquivos List', 'ArquivosList'),
-(75, 'Arquivos Form View', 'ArquivosFormView'),
-(76, 'Template File View', 'TemplateFileView'),
-(77, 'Selecao Imagem', 'SelecaoImagem');
+(72, 'Robots Form', 'RobotsForm'),
+(73, 'Arquivos List', 'ArquivosList'),
+(74, 'Arquivos Form View', 'ArquivosFormView'),
+(75, 'Template File View', 'TemplateFileView'),
+(76, 'Selecao Imagem', 'SelecaoImagem'),
+(77, 'Modelo Html Form', 'ModeloHtmlForm'),
+(78, 'Modelo Html List', 'ModeloHtmlList'),
+(79, 'Modulo Form', 'ModuloForm'),
+(80, 'Modulo List', 'ModuloList');
 
 -- --------------------------------------------------------
 
@@ -466,11 +641,14 @@ INSERT INTO `system_group_program` (`id`, `system_group_id`, `system_program_id`
 (72, 3, 70),
 (73, 3, 71),
 (74, 3, 72),
-(75, 3, 73),
-(76, 3, 74),
-(77, 3, 75),
-(78, 3, 76),
-(79, 3, 77);
+(76, 3, 73),
+(77, 3, 74),
+(78, 3, 75),
+(79, 3, 76),
+(80, 3, 77),
+(81, 3, 78),
+(82, 3, 79),
+(83, 3, 80);
 
 -- --------------------------------------------------------
 
@@ -527,8 +705,14 @@ INSERT INTO `system_preference` (`id`, `value`) VALUES
 ('pref_site_manutencao', '0'),
 ('pref_site_language', 'pt-br'),
 ('pref_site_mensagem', 'Este site está em manutenção.'),
-('cache_control', '0'),
-('pref_emp_nome', 'Empresa');
+('pref_cache_control', '0'),
+('pref_emp_nome', 'Empresa'),
+('pref_site_imglargura', '1000'),
+('pref_site_imgaltura', '1000'),
+('pref_emp_cnpj','00.000.000/0000-00'),
+('pref_emp_fone','(99) 9999-9999'),
+('pref_emp_celular','(99) 99999.9999');
+('pref_emp_whatsapp','https://wa.me/5599999999999');
 
 -- --------------------------------------------------------
 
@@ -567,7 +751,7 @@ CREATE TABLE `system_user` (
 --
 
 INSERT INTO `system_user` (`id`, `name`, `login`, `password`, `email`, `frontpage_id`, `system_unit_id`, `active`, `reset_pass`, `data_pass`, `uid_pass`) VALUES
-(1, 'Administrator', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin@admin.net', 41, NULL, 'Y', NULL, NULL, NULL);
+(1, 'Administrator', 'admin', '50bb18ccf1aa5da431b58c8c7114d7037f7dec29a79f583d0640cca8c9d09cf4', 'admin@dominio.com.br', 41, NULL, 'Y', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -635,7 +819,7 @@ CREATE TABLE `template` (
 --
 
 INSERT INTO `template` (`id`, `nome`, `nome_fisico`, `script_head`, `script_body`, `dt_cadastro`, `padrao`) VALUES
-(1, 'Tic Tac', 'tictac', NULL, NULL, '2020-04-17 03:57:21', 't');
+(1, 'inFORT CMS', 'infortcms', NULL, NULL, '2020-07-22 23:57:21', 't');
 
 -- --------------------------------------------------------
 
@@ -696,7 +880,8 @@ ALTER TABLE `artigo`
   ADD UNIQUE KEY `url_UNIQUE` (`url`),
   ADD KEY `fk_artigo_tipo1_idx` (`tipo_id`),
   ADD KEY `titulo_idx` (`titulo`) USING BTREE,
-  ADD KEY `fk_artigo_artigo1_idx` (`categoria_id`);
+  ADD KEY `fk_artigo_artigo1_idx` (`categoria_id`),
+  ADD KEY `fk_artigo_modelo_html1_idx` (`modelo_html_id`);
 
 --
 -- Índices para tabela `click`
@@ -751,9 +936,9 @@ ALTER TABLE `midia`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `modelo_modulo`
+-- Índices para tabela `modelo_html`
 --
-ALTER TABLE `modelo_modulo`
+ALTER TABLE `modelo_html`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -761,8 +946,15 @@ ALTER TABLE `modelo_modulo`
 --
 ALTER TABLE `modulo`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_ioasu_modulo_ioasu_modelo_modulo1_idx` (`modelo_modulo_id`),
-  ADD KEY `fk_modulo_artigo1_idx` (`artigo_id`);
+  ADD KEY `fk_modulo_modelo_html1_idx` (`modelo_html_id`);
+
+--
+-- Índices para tabela `posicao`
+--
+ALTER TABLE `posicao`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_posicao_template1_idx` (`template_id`),
+  ADD KEY `idx_posicao_nome` (`nome`);
 
 --
 -- Índices para tabela `system_document`
@@ -890,13 +1082,13 @@ ALTER TABLE `trafego`
 -- AUTO_INCREMENT de tabela `artigo`
 --
 ALTER TABLE `artigo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `click`
 --
 ALTER TABLE `click`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `comentario`
@@ -920,31 +1112,37 @@ ALTER TABLE `form_mensagem`
 -- AUTO_INCREMENT de tabela `link`
 --
 ALTER TABLE `link`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `midia`
 --
 ALTER TABLE `midia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de tabela `modelo_modulo`
+-- AUTO_INCREMENT de tabela `modelo_html`
 --
-ALTER TABLE `modelo_modulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `modelo_html`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `modulo`
 --
 ALTER TABLE `modulo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `posicao`
+--
+ALTER TABLE `posicao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `template`
@@ -979,6 +1177,7 @@ ALTER TABLE `arquivo`
 --
 ALTER TABLE `artigo`
   ADD CONSTRAINT `fk_artigo_artigo1` FOREIGN KEY (`categoria_id`) REFERENCES `artigo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_artigo_modelo_html1` FOREIGN KEY (`modelo_html_id`) REFERENCES `modelo_html` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_artigo_tipo1` FOREIGN KEY (`tipo_id`) REFERENCES `tipo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -1017,8 +1216,13 @@ ALTER TABLE `menu`
 -- Limitadores para a tabela `modulo`
 --
 ALTER TABLE `modulo`
-  ADD CONSTRAINT `fk_ioasu_modulo_ioasu_modelo_modulo1` FOREIGN KEY (`modelo_modulo_id`) REFERENCES `modelo_modulo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_modulo_artigo1` FOREIGN KEY (`artigo_id`) REFERENCES `artigo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_modulo_modelo_html1` FOREIGN KEY (`modelo_html_id`) REFERENCES `modelo_html` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Limitadores para a tabela `posicao`
+--
+ALTER TABLE `posicao`
+  ADD CONSTRAINT `fk_posicao_template1` FOREIGN KEY (`template_id`) REFERENCES `template` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `system_document`

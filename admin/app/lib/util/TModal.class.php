@@ -11,8 +11,10 @@ use Adianti\Widget\Util\TImage;
  *
  * @version    1.0
  * @package    util
+ * @subpackage lib
  * @author     André Ricardo Fort
- * @copyright  Copyright (c) 2014-2019 inFORT Ltd. (https://www.infort.eti.br)
+ * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class TModal extends TElement
 {

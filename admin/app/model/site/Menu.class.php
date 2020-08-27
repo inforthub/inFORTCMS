@@ -1,7 +1,13 @@
 <?php
 /**
  * Menu Active Record
- * @author  <your-name-here>
+ *
+ * @version    1.0
+ * @package    model
+ * @subpackage site
+ * @author     André Ricardo Fort
+ * @copyright  Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ *
  */
 class Menu extends TRecord
 {
@@ -115,88 +121,13 @@ class Menu extends TRecord
             $link->url        = '/';
             $link->lastmod    = date('Y-m-d H:i:s');
             $link->artigo_id  = $this->artigo_id;
-            $link->tipo_id    = 1; // site
+            $link->tipo_id    = ($this->tipo_id) ?: 1; // site
             $link->changefreq = 'hourly';
             $link->priority   = '1,00';
             
             $link->store();
         }
     }
-    
-    /**
-     * Verifica e atualiza a tabela de Links
-     *
-    public function updateLink($data)
-    {
-        $url = '/';
-        $priority = '0.90';
-        $changefreq = 'monthly';
-        
-        switch ($this->tipo)
-        {
-            case '1': // site
-                if (empty($this->menu_pai_id))
-                    $url .= $this->apelido;
-                else
-                {
-                    $pai = $this->get_menu_pai();
-                    $url .= $pai->apelido.'/'.$this->apelido;
-                }
-                break;
-            case '2': // blog
-                // pegar os dados do blog
-                // pode ser: /blog ; /blog/categoria ; /blog/categoria/post
-                if ( !empty($data->blog_cat) )
-                {
-                    if ( !empty($data->blog_post) )
-                    {
-                        //$object->destino = 'BlogPost:blog_post:'.$data->blog_post;
-                    }
-                    else
-                    {
-                        //$object->destino = 'BlogCategoria:blog_categoria:'.$data->blog_cat;
-                    }
-                }
-                else
-                {
-                    //$object->apelido = 'blog'; // garantindo o apelido como "blog"
-                    //$object->destino = 'BlogPost:blog_post:0';
-                }
-                
-                //$cat = $this->get_blog_categoria();
-                //$url .= 'blog/'.$cat->apelido.'/'.$this->apelido;
-                $priority = '0.80';
-                $changefreq = 'yearly';
-                break;
-            case '3': // geo
-            case '0': // outro
-            default:
-                break;
-        }
-
-        $link = Link::findURL($url);
-        if ($link)
-        {
-            // atualizando tabela de Links
-            $link->url     = $url; 
-            $link->destino = $this->destino;
-            $link->lastmod = date('Y-m-d H:i:s'); 
-            $link->store();
-        }
-        else
-        {
-            $link = new Link;
-            $link->url               = $url;
-            $link->destino           = $this->destino;
-            $link->tipo              = $this->tipo;
-            $link->system_modules_id = $this->tipo;
-            //$link->lastmod           = 
-            $link->changefreq        = $changefreq;
-            $link->priority          = $priority;
-            $link->store();
-        }
-    }
-    */
 
 
 }
