@@ -711,7 +711,7 @@ INSERT INTO `system_preference` (`id`, `value`) VALUES
 ('pref_site_imgaltura', '1000'),
 ('pref_emp_cnpj','00.000.000/0000-00'),
 ('pref_emp_fone','(99) 9999-9999'),
-('pref_emp_celular','(99) 99999.9999');
+('pref_emp_celular','(99) 99999.9999'),
 ('pref_emp_whatsapp','https://wa.me/5599999999999');
 
 -- --------------------------------------------------------
