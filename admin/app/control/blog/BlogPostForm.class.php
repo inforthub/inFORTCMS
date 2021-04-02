@@ -175,7 +175,7 @@ class BlogPostForm extends TWindow
             // garantindo outras informações
             $object->tipo_id    = Tipo::getIdByNome('Blog');
             $object->modo       = 'a'; // artigo
-            $object->usuario_id = TSession::getValue('userid');
+            $object->usuario_id = empty($object->usuario_id) ? TSession::getValue('userid') : $object->usuario_id;
 
             $object->store(); // save the object
             

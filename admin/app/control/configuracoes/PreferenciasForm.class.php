@@ -86,12 +86,18 @@ class PreferenciasForm extends TStandardForm
         // apis sociais
         $pref_instagram_token = new TEntry('pref_instagram_token');
         $pref_instagram_userid = new TEntry('pref_instagram_userid');
+        // google recaptcha v3
+        $pref_recaptcha_sitekey   = new TEntry('pref_recaptcha_sitekey');
+        $pref_recaptcha_secretkey = new TEntry('pref_recaptcha_secretkey');
+        // hCaptcha
+        $pref_hcaptcha_sitekey   = new TEntry('pref_hcaptcha_sitekey');
+        $pref_hcaptcha_secretkey = new TEntry('pref_hcaptcha_secretkey');
         
         // parametros dos campos
         $pref_smtp_host->placeholder = 'ssl://smtp.gmail.com, tls://server.company.com';
         $pref_emp_cnpj->setMask('99.999.999/9999-99');
         //$pref_emp_fone->setMask('(99) 9999.9999');
-        $pref_emp_celular->setMask('(99) 99999.9999');
+        $pref_emp_celular->setMask('(99) 9 9999.9999');
         
         $yesno = array();
         $yesno['1'] = _t('Yes');
@@ -163,6 +169,10 @@ class PreferenciasForm extends TStandardForm
         $this->form->addFields( [new TLabel('E-mail de destino')], [$pref_mail_to], [],[] );
         $this->form->addFields( [new TFormSeparator('APIs Sociais')] );
         $this->form->addFields( [new TLabel('Instagram UserID')], [$pref_instagram_userid], [new TLabel('Instagram TOKEN')], [$pref_instagram_token] );
+        $this->form->addFields( [new TFormSeparator('Google reCAPTCHA v3')] );
+        $this->form->addFields( [new TLabel('Site Key')], [$pref_recaptcha_sitekey], [new TLabel('Secret Key')], [$pref_recaptcha_secretkey] );
+        $this->form->addFields( [new TFormSeparator('hCaptcha')] );
+        $this->form->addFields( [new TLabel('Site Key')], [$pref_hcaptcha_sitekey], [new TLabel('Secret Key')], [$pref_hcaptcha_secretkey] );
 
 
         // ajustando o tamanho

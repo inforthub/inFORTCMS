@@ -36,27 +36,30 @@ class PaginaForm extends TPage
         $criteria2 = TCriteria::create(['active'=>'Y']);
 
         // criando campos do formulário
-        $id           = new TEntry('id');
-        $titulo       = new TEntry('titulo');
-        $url          = new TEntry('url');
-        //$resumo      = new TText('resumo');
-        $artigo       = new TTextSourceCode('artigo');
-        $metadesc     = new TText('metadesc');
-        $metakey      = new TMultiEntry('metakey');
-        $dt_post      = new TDateTime('dt_post');
-        $dt_edicao    = new TDateTime('dt_edicao');
-        $visitas      = new TEntry('visitas');
-        $usuario_id   = new TDBCombo('usuario_id','sistema','SystemUser','id','name','name',$criteria2);
-        $ativo        = new TRadioGroup('ativo');
+        $id             = new TEntry('id');
+        $titulo         = new TEntry('titulo');
+        $url            = new TEntry('url');
+        //$resumo        = new TText('resumo');
+        $artigo         = new TTextSourceCode('artigo');
+        $metadesc       = new TText('metadesc');
+        $metakey        = new TMultiEntry('metakey');
+        $dt_post        = new TDateTime('dt_post');
+        $dt_edicao      = new TDateTime('dt_edicao');
+        $visitas        = new TEntry('visitas');
+        $usuario_id     = new TDBCombo('usuario_id','sistema','SystemUser','id','name','name',$criteria2);
+        $ativo          = new TRadioGroup('ativo');
         // nesse caso, devemos buscar por categorias
-        $categoria_id = new TDBCombo('categoria_id', 'sistema', 'Artigo', 'id', 'titulo', 'titulo', $criteria);
+        $categoria_id   = new TDBCombo('categoria_id', 'sistema', 'Artigo', 'id', 'titulo', 'titulo', $criteria);
         $modelo_html_id = new TDBCombo('modelo_html_id','sistema','ModeloHTML','id','nome','nome');
+        $script_head    = new TTextSourceCode('script_head');
+        $script_body    = new TTextSourceCode('script_body');
         
         // criando frame para os campos dinâmicos
         $this->campos = TElement::tag('div', '', ['id'=>'campos_modulo']);
 
 
         // adicionando os campos ao formulário
+        $this->form->appendPage('Dados da Página');
         $this->form->addFields( [ new TLabel('ID') ], [$id], [ new TLabel('Usuário') ], [ $usuario_id ] );
         $this->form->addFields( [ new TLabel('Título') ], [$titulo] , [ new TLabel('URL')], [$url]);
         //$this->form->addFields( [ new TLabel('Resumo')], [$resumo] );
@@ -65,10 +68,17 @@ class PaginaForm extends TPage
         $this->form->addContent( [$this->campos] );
         $this->form->addFields( [ new TLabel('HTML') ], [ $artigo ] );
         $this->form->addContent( [ new TFormSeparator('Outros Campos') ] );
-        $this->form->addFields( [ new TLabel('Meta Descrição') ], [$metadesc] );
-        $this->form->addFields( [ new TLabel('Palavras Chave') ], [$metakey] );
         $this->form->addFields( [ new TLabel('Data Post') ], [ $dt_post ] , [ new TLabel('Data Edição') ], [ $dt_edicao ] );
         $this->form->addFields( [ new TLabel('Ativo')], [$ativo] , [ new TLabel('Visitas') ], [ $visitas ] );
+        //$this->form->appendPage('Estilos e Scripts');
+        $this->form->addFields( [new TFormSeparator('Estilos e Scripts')] );
+        $this->form->addFields( [new TLabel('<b>'.htmlentities('Início do HTML - antes do </head>').'</b>')] );
+        $this->form->addFields( [ $script_head ] );
+        $this->form->addFields( [new TLabel('<b>'.htmlentities('Final do HTML - antes do </body>').'</b>')] );
+        $this->form->addFields( [ $script_body ] );
+        $this->form->appendPage('SEO');
+        $this->form->addFields( [ new TLabel('Meta Descrição') ], [$metadesc] );
+        $this->form->addFields( [ new TLabel('Palavras Chave') ], [$metakey] );
 
         
 	// definindo as validações
@@ -304,7 +314,7 @@ class PaginaForm extends TPage
                                         $btn_imagem = $key;
                                         $conteudo->setEditable(false);
                                         break;
-                                    case '5': //file
+                                    case '6': //file
                                         break;
                                     case '3':
                                     case '2':
@@ -338,7 +348,9 @@ class PaginaForm extends TPage
                                 switch ($value)
                                 {
                                     //case '0': //loop
-                                    case '5': //file
+                                    case '5': //icone
+                                        $conteudo = new TIcon('conteudo[]');
+                                        $conteudo->setSize('100%');
                                         break;
                                     case '4': //imagem
                                         // criando o frame da imagem

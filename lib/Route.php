@@ -181,10 +181,10 @@ class Route
                                     header("content-type:application/json");
                                     
                                     // faz o 'post' de um formulário e envia o e-mail
-                                    $ret = FormMensagem::Enviar($this->_explode[1]);
-                                    
+                                    //$ret = FormMensagem::Enviar($this->_explode[1]);
+                                    //var_dump($ret);
                                     // retorna a resposta ao site
-                                    echo json_encode($ret); //['titulo'=>'Esse é o Título', 'mensagem'=>'Essa é a mensagem!']);
+                                    echo json_encode(FormMensagem::Enviar($this->_explode[1])); //['titulo'=>'Esse é o Título', 'mensagem'=>'Essa é a mensagem!']);
                                 }
                                 break;
                             default :
@@ -192,18 +192,6 @@ class Route
                                 throw new Exception("Página não encontrada!");
                                 break;
                         }
-                        /*
-                        if ( $this->_url === '/click')
-                        {
-                            // registra um clique
-                            Click::registrar();
-                        }
-                        else
-                        {
-                            // Criamos uma exceção
-                            throw new Exception("Página não encontrada!");
-                        }
-                        */
                     }
                 }
             }

@@ -51,7 +51,8 @@ class ModeloHtmlForm extends TWindow
             '2'=>'Área de Texto - Textarea',
             '3'=>'Área de Texto HTML - Textarea',
             '4'=>'Arquivo - Imagem',
-            //'5'=>'Arquivo - File',
+            '5'=>'Icone',
+            //'6'=>'Arquivo - File',
             '0'=>'Loop'
         ]);
         

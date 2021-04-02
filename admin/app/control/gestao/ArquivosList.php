@@ -72,12 +72,21 @@ class ArquivosList extends TPage
         $form = new BootstrapFormBuilder('input_file_form');
         $form->setFieldSizes('100%');
         
+        // campos
         $file = new TMultiFile('file');
+        $convert = new TRadioGroup('convert');
         
+        // parametros
         $file->enableFileHandling();
         $file->setAllowedExtensions(['jpg','jpeg','png','gif','webp','svg']);
+        $convert->setSize(60);
+        $convert->addItems(['t'=>'Sim','f'=>'Não']);
+        $convert->setLayout('horizontal');
+        $convert->setUseButton();
+        $convert->setValue('f');
         
         $form->addFields( [ $file] );
+        $form->addFields( [ new TLabel('<b>Converter todas as imagens para o formato ".webp"?</b>') ],[ $convert ] )->layout = ['col-sm-12 col-lg-8', 'col-sm-12 col-lg-4'];
         
         $btn = $form->addAction(_t('Save'), new TAction([__CLASS__, 'UploadMulti']), 'fa:save');
         $btn->class = 'btn btn-sm btn-primary waves-effect';
@@ -104,10 +113,26 @@ class ArquivosList extends TPage
                 {
                     $source_file   = $dados_file->fileName;
                     $target_file   = $target_path . pathinfo($dados_file->fileName, PATHINFO_BASENAME); //current(array_reverse(explode('/', $dados_file->fileName)));
+                    $extension     = pathinfo($dados_file->fileName, PATHINFO_EXTENSION);
                     
                     if (file_exists($source_file))
                     {
                         rename($source_file,$target_file);
+                        
+                        $file = pathinfo($target_file);
+                        if ( isset($param['convert']) && $param['convert'] == 't' && in_array($file['extension'], ['jpg','jpeg','png','gif']) )
+                        {
+                            if( file_exists ($target_file) )// se existir apaga o anterior
+                            {
+                                $webp_file = $target_path.THelper::urlAmigavel($file['filename']).'.webp';
+                                
+                                // pegamos o arquivo salvo e convertemos para webp
+                                THelper::toWebP($target_file,$webp_file);
+                                
+                                // apagando o arquivo original
+                                unlink( $target_file ); //apaga
+                            }
+                        }
                     }
                 }
             }
@@ -245,7 +270,7 @@ class ArquivosList extends TPage
             }
 
             //new TMessage('info', TAdiantiCoreTranslator::translate('Record saved'), new TAction([__CLASS__,'onReload']));
-            TToast::show('info', _t('File saved'), 'bottom right', 'far:check-circle' );
+            TToast::show('success', _t('File saved'), 'bottom right', 'far:check-circle' );
             TApplication::loadPage(__CLASS__);
         }
         catch (Exception $e) // in case of exception
@@ -292,7 +317,7 @@ class ArquivosList extends TPage
             mkdir(TSession::getValue(__CLASS__.'_opendir') . DIRECTORY_SEPARATOR . $nome, 0755);
 
             //new TMessage('info', TAdiantiCoreTranslator::translate('Record saved'), new TAction([__CLASS__,'onReload']));
-            TToast::show('info', 'Pasta criada com sucesso!', 'bottom right', 'far:check-circle' );
+            TToast::show('success', 'Pasta criada com sucesso!', 'bottom right', 'far:check-circle' );
             TApplication::loadPage(__CLASS__);
         }
         catch (Exception $e) // in case of exception
@@ -302,6 +327,79 @@ class ArquivosList extends TPage
     }
     
     
+    /**
+     * Cria formulário para converter um arquivo em "webp"
+     */
+    public static function onConverter($param)
+    {
+        $file = pathinfo($param['name']);
+        
+        if (in_array($file['extension'], ['jpg','jpeg','png','gif']))
+        {
+            $form = new BootstrapFormBuilder('converter_form');
+            $form->setFieldSizes('100%');
+            
+            $atual = new TEntry('atual');
+            $novo  = new TEntry('novo');
+            //$type  = new THidden('type');
+            
+            $form->addFields( [ new TLabel('Arquivo atual') , $atual ] );
+            //$form->addFields( [ $type ] );
+            
+            $atual->setEditable(false);
+            $atual->setValue($param['name']);
+            //$type->setValue($param['type']);
+            
+            $btn = $form->addAction(_t('Save'), new TAction([__CLASS__, 'Converte']), 'fa:save');
+            $btn->class = 'btn btn-sm btn-primary waves-effect';
+            $form->addAction(_t('Cancel'), new TAction([__CLASS__, 'onReload']), 'fa:times red');
+            
+            // show the input dialog
+            new TInputDialog('Converter Arquivo para ".webp"', $form);
+        }
+        else
+        {
+            TToast::show('warning', 'Este arquivo não pode ser convertido para "webp"', 'bottom right', 'fas:exclamation-triangle' );
+        }
+    }
+    
+    /**
+     * Converte o arquivo
+     */
+    public static function Converte($param)
+    {
+        try
+        {
+            // validando os campos
+            if ( empty($param['atual']) )
+            {
+                throw new Exception('Ouve um erro ao tentar converter o arquivo!');
+            }
+            
+            $atual = pathinfo($param['atual']);
+            $dir   = TSession::getValue(__CLASS__.'_opendir') . DIRECTORY_SEPARATOR;
+            
+            if( file_exists ($dir.$param['atual']) )// se existir apaga o anterior
+            {
+                $webp_file = $dir.THelper::urlAmigavel($atual['filename']).'.webp';
+                
+                // pegamos o arquivo salvo e convertemos para webp
+                THelper::toWebP($dir.$param['atual'],$webp_file);
+                
+                // apagando o arquivo original
+                unlink( $dir.$param['atual'] ); //apaga
+            
+                //new TMessage('info', _t('File saved'), new TAction([__CLASS__,'onReload']));
+                TToast::show('success', _t('File saved'), 'bottom right', 'far:check-circle' );
+                TApplication::loadPage(__CLASS__);
+            }
+            
+        }
+        catch (Exception $e) // in case of exception
+        {
+            new TMessage('error', $e->getMessage()); // shows the exception error message
+        }
+    }
     
     
     /**
@@ -377,7 +475,7 @@ class ArquivosList extends TPage
             rename($dir.$param['atual'], $dir.$novo);
         
             //new TMessage('info', _t('File saved'), new TAction([__CLASS__,'onReload']));
-            TToast::show('info', _t('File saved'), 'bottom right', 'far:check-circle' );
+            TToast::show('success', _t('File saved'), 'bottom right', 'far:check-circle' );
             TApplication::loadPage(__CLASS__);
         }
         catch (Exception $e) // in case of exception
@@ -573,9 +671,9 @@ class ArquivosList extends TPage
         $this->iconview->addContextMenuOption('Ações');
         $this->iconview->addContextMenuOption('');
         $this->iconview->addContextMenuOption(_t('Open'),   new TAction([$this, 'onOpen']),   'far:folder-open blue');
+        $this->iconview->addContextMenuOption(_t('Convert'), new TAction([$this, 'onConverter']), 'fas:recycle gray');
         $this->iconview->addContextMenuOption(_t('Rename'), new TAction([$this, 'onRename']), 'far:edit green');
         $this->iconview->addContextMenuOption(_t('Delete'), new TAction([$this, 'onDelete']), 'far:trash-alt red'); //, $display_condition);
-        
         //***
         
         $this->loaded = true;

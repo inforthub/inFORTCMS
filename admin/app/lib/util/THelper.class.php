@@ -784,7 +784,7 @@ class THelper // extends TElement
         {
             TTransaction::open('sistema');
             
-            $url = (isset($_GET['url']) ? '/'.$_GET['url'] : '/');
+            $url = (isset($_GET['url']) ? $_GET['url'] : '/');
             $link = Link::findURL($url);
             if ( $link )
             {

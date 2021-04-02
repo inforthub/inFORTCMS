@@ -100,25 +100,30 @@ class TemplateFile extends TPage
     {
         try
         {
-            $target_path = TSession::getValue(__CLASS__.'_opendir') . DIRECTORY_SEPARATOR;
-            
-            foreach ($param['file'] as $arq)
+            if (!empty($param['file']))
             {
-                $dados_file = json_decode(urldecode($arq));
+                $target_path = TSession::getValue(__CLASS__.'_opendir') . DIRECTORY_SEPARATOR;
                 
-                if (isset($dados_file->fileName))
+                foreach ($param['file'] as $arq)
                 {
-                    $source_file   = $dados_file->fileName;
-                    $target_file   = $target_path . pathinfo($dados_file->fileName, PATHINFO_BASENAME); //current(array_reverse(explode('/', $dados_file->fileName)));
+                    $dados_file = json_decode(urldecode($arq));
                     
-                    if (file_exists($source_file))
+                    if (isset($dados_file->fileName))
                     {
-                        rename($source_file,$target_file);
+                        $source_file   = $dados_file->fileName;
+                        $target_file   = $target_path . pathinfo($dados_file->fileName, PATHINFO_BASENAME); //current(array_reverse(explode('/', $dados_file->fileName)));
+                        
+                        if (file_exists($source_file))
+                        {
+                            rename($source_file,$target_file);
+                        }
                     }
                 }
+                
+                new TMessage('info', TAdiantiCoreTranslator::translate('Record saved'), new TAction([__CLASS__,'onReload']));
             }
             
-            new TMessage('info', TAdiantiCoreTranslator::translate('Record saved'), new TAction([__CLASS__,'onReload']));
+            throw new Exception('Houve um erro ao tentar fazer um upload!');
         }
         catch (Exception $e) // in case of exception
         {

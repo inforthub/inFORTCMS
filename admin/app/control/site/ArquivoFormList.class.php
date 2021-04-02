@@ -137,7 +137,7 @@ class ArquivoFormList extends TPage //TWindow
         // create the page navigation
         $this->pageNavigation = new TPageNavigation;
         $this->pageNavigation->enableCounters();
-        $this->pageNavigation->setAction(new TAction([$this, 'onReload']));
+        $this->pageNavigation->setAction(new TAction([$this, 'onReload'],['artigo_id'=>$param['artigo_id'],'formato'=>'F']));
         //$this->pageNavigation->setWidth($this->datagrid->getWidth());
         
         // vertical box container

@@ -13,6 +13,7 @@ class HtmlBase
     protected $_pref;
     protected $_replaces;
     protected $_url;
+    protected $_template;
     
     /**
      * Monta o array de substituições
@@ -68,6 +69,9 @@ class HtmlBase
             $replaces['header_class'] = '';
             $replaces['buscar-action']  = $this->_pref['pref_site_dominio'].$this->_url;
             
+            // Captchas
+            $replaces['recaptcha_key'] = $this->_pref['pref_recaptcha_sitekey'];
+            $replaces['hcaptcha_key'] = $this->_pref['pref_hcaptcha_sitekey'];
             
             // parseando os scripts da template
             $parse = new TParser;
@@ -82,13 +86,14 @@ class HtmlBase
             $replaces['&nbsp;'] = ' ';
             
             $this->_replaces = $replaces;
+            $this->_template = $template;
             
             // criando o menu do site
             $this->renderMenu();
-            
+            /*
             // renderiando as posições da template
             $this->renderPosicoes($template->getPosicoes());
-            
+            */
             TTransaction::close();
         }
         catch (Exception $e) // in case of exception
@@ -124,11 +129,28 @@ class HtmlBase
     }
     
     /**
-     * Retorna um array com a galeria de imagens do um artigo
-     *
-    public function getGaleria()
+     * Retorna um array com a galeria de imagens de um artigo
+     */
+    public function getGaleria($artigo)
     {
-        //$obj = 
+        // carregano galeria de imagens
+        $arquivos = $artigo->getArquivos();
+        if ($arquivos)
+        {
+            $arr_galeria = [];
+            foreach ($arquivos as $img)
+            {
+                if ($img->formato == 'F')
+                {
+                    $link['imagem_url'] = $this->_pref['pref_site_dominio'].str_replace('..','', $img->nome_web);
+                    $link['imagem_alt'] = $img->descricao;
+                    
+                    $arr_galeria[] = $link;
+                }
+            }
+            return $arr_galeria;
+        }
+        return FALSE;
     }
     
     /**

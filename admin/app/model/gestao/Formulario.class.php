@@ -29,6 +29,7 @@ class Formulario extends TRecord
         parent::addAttribute('msg_sucesso');
         parent::addAttribute('email_destino');
         parent::addAttribute('script');
+        parent::addAttribute('recaptcha');
         parent::addAttribute('ativo');
     }
     
@@ -65,85 +66,164 @@ class Formulario extends TRecord
         //file_put_contents('/tmp/log.txt', 'onBeforeStore:' . json_encode($object)."\n", FILE_APPEND);
         $root = THelper::getPreferences('pref_site_dominio');
         
-        // criando o script e o modal
-        $object->script = '<script type="text/javascript">
-            $(document).ready(function(){
+        $script = '';
             
-                // validando os campos
-                var valida = $("#'.$object->url.'").validate({
-                   submitHandler: function (form) {
-                      // Impedindo o form de submeter
-                      event.preventDefault();
-                
-                      // desabilitando botao enviar
-                      $("#enviar").attr("disabled","disabled");
-                      
-                      var frm = $( "#'.$object->url.'" );
-                
-                      // limpando a div result
-                      //$("#result").html("");
-                
-                      // pegando os valores do form
-                      var values = frm.serialize();
-                
-                      // enviando os dados via post e exibindo o resultado na div
-                      $.ajax({
-                          url: "'.$root.'/enviar/'.$object->url.'",
-                          type: "post",
-                          data: values,
-                          dataType: "json",
-                          success: function(e){
-                              console.log(e);
-                              frm[0].reset();
-                              $( ".modalHeader h2" ).html( e.titulo );
-                              $( ".modalContent" ).html( e.mensagem );
-                              window.location.replace("'.$root.'/#openModal");
-                              $("#enviar").removeAttr("disabled");
-                          },
-                          error: function(e){
-                              console.log(e);
-                              $( ".modalHeader h2" ).html( e.titulo );
-                              $( ".modalContent" ).html( e.mensagem );
-                              window.location.replace("'.$root.'/#openModal");
-                              $("#enviar").removeAttr("disabled");
+        switch ($object->recaptcha)
+        {
+            case 'r':
+                $script = '<script src="https://www.google.com/recaptcha/api.js"></script>
+                    <script type="text/javascript">
+                        $(document).ready(function()
+                        {
+                            window.verifyRecaptchaCallback = function (response) {
+                                $("input[data-recaptcha]").val(response).trigger("change");
+                            }
+                        
+                            window.expiredRecaptchaCallback = function () {
+                                $("input[data-recaptcha]").val("").trigger("change");
+                            }
+                            
+                            // validando os campos
+                            var valida = $("#'.$object->url.'").validate({
+                               submitHandler: function (form) {
+                                  // Impedindo o form de submeter
+                                  event.preventDefault();
+                            
+                                  // desabilitando botao enviar
+                                  $("#enviar").attr("disabled","disabled");
+                                  
+                                  var frm = $( "#'.$object->url.'" );
+                            
+                                  // pegando os valores do form
+                                  var values = frm.serialize();
+                            
+                                  // enviando os dados via post e exibindo o resultado na div
+                                  $.ajax({
+                                      url: "'.$root.'/enviar/'.$object->url.'",
+                                      type: "post",
+                                      data: values,
+                                      dataType: "json",
+                                      success: function(e)
+                                      {
+                                          $( ".modalContent" ).html( e.mensagem );
+                                          window.location.replace("'.$root.'/#openModal");
+                                          $("#enviar").removeAttr("disabled");
+                                          frm[0].reset();
+                                          grecaptcha.reset();
+                                      }
+                                  });
+                              }
+                            });
+                            
+                            $("#limpar").click(function(){
+                                valida.resetForm();
+                                // reabilita botão enviar
+                                $("#enviar").removeAttr("disabled");
+                            });
+                            
+                        });
+                    </script>';
+                break;
+            case 'h':
+                $script = '<script src="https://www.hCaptcha.com/1/api.js" async defer></script>
+                    <script type="text/javascript">
+                        $(document).ready(function()
+                        {
+                            var hcaptchaVal = $("[name=h-captcha-response]").value;
+                            if (hcaptchaVal === "") {
+                               event.preventDefault();
+                               $( ".modalContent" ).html( "Complete o hCaptcha" );
+                            }
+                            
+                            // validando os campos
+                            var valida = $("#'.$object->url.'").validate({
+                               submitHandler: function (form) {
+                                  // Impedindo o form de submeter
+                                  event.preventDefault();
+                            
+                                  // desabilitando botao enviar
+                                  $("#enviar").attr("disabled","disabled");
+                                  
+                                  var frm = $( "#'.$object->url.'" );
+                            
+                                  // pegando os valores do form
+                                  var values = frm.serialize();
+                            
+                                  // enviando os dados via post e exibindo o resultado na div
+                                  $.ajax({
+                                      url: "'.$root.'/enviar/'.$object->url.'",
+                                      type: "post",
+                                      data: values,
+                                      dataType: "json",
+                                      success: function(e)
+                                      {
+                                          $( ".modalContent" ).html( e.mensagem );
+                                          window.location.replace("'.$root.'/#openModal");
+                                          $("#enviar").removeAttr("disabled");
+                                          frm[0].reset();
+                                      }
+                                  });
+                              }
+                            });
+                            
+                            $("#limpar").click(function(){
+                                valida.resetForm();
+                                // reabilita botão enviar
+                                $("#enviar").removeAttr("disabled");
+                            });
+                            
+                        });
+                    </script>';
+                break;
+            default:
+                $script = '<script type="text/javascript">
+                    $(document).ready(function()
+                    {
+                        // validando os campos
+                        var valida = $("#'.$object->url.'").validate({
+                           submitHandler: function (form) {
+                              // Impedindo o form de submeter
+                              event.preventDefault();
+                        
+                              // desabilitando botao enviar
+                              $("#enviar").attr("disabled","disabled");
+                              
+                              var frm = $( "#'.$object->url.'" );
+                        
+                              // pegando os valores do form
+                              var values = frm.serialize();
+                        
+                              // enviando os dados via post e exibindo o resultado na div
+                              $.ajax({
+                                  url: "'.$root.'/enviar/'.$object->url.'",
+                                  type: "post",
+                                  data: values,
+                                  dataType: "json",
+                                  success: function(e){
+                                      
+                                      $( ".modalHeader h2" ).html( e.titulo );
+                                      $( ".modalContent" ).html( e.mensagem );
+                                      window.location.replace("'.$root.'/#openModal");
+                                      $("#enviar").removeAttr("disabled");
+                                      frm[0].reset();
+                                      grecaptcha.reset();
+                                  }
+                              });
                           }
-                      });
-                  }
-                });
-                
-                $("#limpar").click(function(){
-                    valida.resetForm();
-                    // reabilita botão enviar
-                    $("#enviar").removeAttr("disabled");
-                });
-                
-                /*
-                $("#'.$object->url.'").submit( function() {
-                    var frm = $( "#'.$object->url.'" );
-
-                    $.ajax({ type:"POST", url:"'.$root.'/enviar/'.$object->url.'", data:frm.serialize(), dataType: "json",
-                        success: function(data){
-                            console.log(data);
-                            $( ".modalHeader h2" ).html( data.titulo );
-                            $( ".modalContent" ).html( data.mensagem );
-                            window.location.replace("'.$root.'/#openModal");
-                            frm[0].reset();
-                        },
-                        error: function(data){
-                            console.log(data);
-                            window.location.replace("'.$root.'/#openModal");
-                            frm[0].reset();
-                        }
-                    }).done(function(e){
-            			frm[0].reset();
-            		}).fail(function(e){
-            			frm[0].reset();
-            		});
-                    return false;
-                });
-                */
-            });
-        </script>';
+                        });
+                        
+                        $("#limpar").click(function(){
+                            valida.resetForm();
+                            // reabilita botão enviar
+                            $("#enviar").removeAttr("disabled");
+                        });
+                        
+                    });
+                </script>';
+                break;
+        }
+        
+        $object->script = $script;
         
         // aplicando o id na tag FORM
         $dom = new DOMDocument();

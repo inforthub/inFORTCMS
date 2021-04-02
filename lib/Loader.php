@@ -185,6 +185,8 @@ class Loader
         //****
         $classPath['Route']                      = '../lib/Route.php';
         $classPath['Cache']                      = '../lib/Cache.php';
+        //$classPath['PHPMailer']                  = 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
+        
         
         return $classPath;
     }

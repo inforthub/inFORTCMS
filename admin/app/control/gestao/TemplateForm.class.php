@@ -212,7 +212,7 @@ class TemplateForm extends TWindow
                         $detail = new Posicao;
                         $detail->template_id = $master->id;
                         $detail->nome = $param['list_nome'][$row];
-                        $detail->ativo = $param['list_ativo'][$row];
+                        $detail->ativo = empty($param['list_ativo'][$row]) ? 'f' : $param['list_ativo'][$row];
                         
                         $master->addPosicao($detail);
                     }

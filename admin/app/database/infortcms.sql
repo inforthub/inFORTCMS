@@ -52,6 +52,8 @@ CREATE TABLE `artigo` (
   `parametros` text COMMENT 'Parametros referente ao modelo de html',
   `ativo` char(1) NOT NULL DEFAULT 't' COMMENT '''t'' ou ''f''',
   `modo` char(1) NOT NULL DEFAULT 'a' COMMENT 'Indica se é um artigo ou uma categoria: ''a''- artigo, ''c''- categoria',
+  `script_head` TEXT NULL DEFAULT NULL,
+  `script_body` TEXT NULL DEFAULT NULL,
   `tipo_id` int(11) NOT NULL,
   `categoria_id` int(11) DEFAULT NULL,
   `modelo_html_id` int(11) DEFAULT NULL

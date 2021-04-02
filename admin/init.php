@@ -1,4 +1,9 @@
 <?php
+if (version_compare(PHP_VERSION, '7.2.0') == -1)
+{
+    die(AdiantiCoreTranslator::translate('The minimum version required for PHP is ^1', '7.2.0'));
+}
+
 ini_set('error_log', 'tmp/php_errors.log');
 
 // define the autoloader
@@ -30,8 +35,3 @@ define('CMS_IMAGE_PATH', $ini['cms']['image_path']);
 
 // custom session name
 session_name('PHPSESSID_'.$ini['general']['application']);
-
-if (version_compare(PHP_VERSION, '7.2.0') == -1)
-{
-    die(AdiantiCoreTranslator::translate('The minimum version required for PHP is ^1', '7.2.0'));
-}

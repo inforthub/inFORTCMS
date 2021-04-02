@@ -52,7 +52,7 @@ class SystemSupportForm extends TWindow
             $id->setEditable(FALSE);
         }
         
-        // defininda as validações
+        // definindo as validações
         $subject->addValidation(_t('Title'), new TRequiredValidator);
         $message->addValidation(_t('Message'), new TRequiredValidator);
         

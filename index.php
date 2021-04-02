@@ -5,7 +5,7 @@ require_once 'lib/Loader.php';
 
 define('ROOT', getcwd());
 chdir('admin');
-ini_set('error_log', 'tmp/php_errors.log');
+//ini_set('error_log', 'tmp/php_errors.log');
 
 // iniciando o core
 spl_autoload_register(array('Infort\Core\Loader', 'autoload'));

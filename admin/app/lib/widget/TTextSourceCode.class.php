@@ -3,11 +3,11 @@
 /**
  * TTextSourceCode View
  *
- * @version     1.0
+ * @version     1.1
  * @package     widget
  * @subpackage  lib
  * @author      André Ricardo Fort
- * @copyright   Copyright (c) 2020 inFORT (https://www.infort.eti.br)
+ * @copyright   Copyright (c) 2021 inFORT (https://www.infort.eti.br)
  *
  */
 class TTextSourceCode extends TText
@@ -61,7 +61,7 @@ class TTextSourceCode extends TText
                 $mode = 'text/css';
                 break;
             case 'php':
-                $mode = 'text/x-php';
+                $mode = 'application/x-httpd-php'; //'text/x-php';
                 break;
         }
         
@@ -122,12 +122,15 @@ class TTextSourceCode extends TText
             $(document).ready(function(){
                 var editor = CodeMirror.fromTextArea(document.getElementById('".$this->id."'), {
                     mode: '".$this->mode."',
+                    keyMap: 'sublime',
                     extraKeys: {'Ctrl-Space': 'autocomplete'},
                     lineNumbers: true,
                     lineWrapping: true,
                     tabMode: 'indent',
+                    autoCloseBrackets: true,
                     styleActiveLine: true,
                     matchBrackets: true,
+                    showCursorWhenSelecting: true,
                     theme: 'monokai'
                 }).on('change', editor => {
                     $('#".$this->id."').val(editor.getValue());

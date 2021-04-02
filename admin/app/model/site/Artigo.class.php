@@ -41,6 +41,8 @@ class Artigo extends TRecord
         parent::addAttribute('usuario_id');
         parent::addAttribute('destaque');
         parent::addAttribute('parametros');
+        parent::addAttribute('script_head');
+        parent::addAttribute('script_body');
         parent::addAttribute('ativo');
         parent::addAttribute('modo');
         parent::addAttribute('tipo_id');
@@ -372,7 +374,7 @@ class Artigo extends TRecord
             return $img;
         }
         
-        // caso não encontre, retornamos qualuqer imagem
+        // caso não encontre, retornamos qualquer imagem
         $img = Arquivo::where('artigo_id','=',$this->id)->where('formato','=','F')->first();
         if ($img)
         {

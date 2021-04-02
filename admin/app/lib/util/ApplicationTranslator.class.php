@@ -944,7 +944,8 @@ class ApplicationTranslator
         $this->messages['en'][] = 'Folder deleted';
         $this->messages['en'][] = 'Failed to save file';
         $this->messages['en'][] = 'Upload Multiple Files';
-        
+        $this->messages['en'][] = 'Convert';
+
         $this->messages['pt'][] = 'Esqueceu a senha?';
         $this->messages['pt'][] = 'Mover a cima';
         $this->messages['pt'][] = 'Mover a baixo';
@@ -963,6 +964,7 @@ class ApplicationTranslator
         $this->messages['pt'][] = 'Pasta deletada';
         $this->messages['pt'][] = 'Falha ao salvar o arquivo';
         $this->messages['pt'][] = 'Enviar Vários Arquivos';
+        $this->messages['pt'][] = 'Converter';
 
         //fim
         foreach ($this->messages as $lang => $messages)

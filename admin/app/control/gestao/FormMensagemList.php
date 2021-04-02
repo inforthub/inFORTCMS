@@ -69,6 +69,7 @@ class FormMensagemList extends TPage
 
 
         // definindo parâmetros
+        $enviada->addItems(['t'=>'Sim','f'=>'Não']);
         $formulario_id->setMinLength(1);
         $data_de->setMask( 'dd/mm/yyyy' );
         //$data_de->setOption('triggerEvent', 'dblclick'); // exibe o popup do calendáio somente dando 2 cliques
