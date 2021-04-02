@@ -120,9 +120,11 @@ class SystemMenuEditor extends TPage
                     $icon = true;
                     $value = str_replace('far fa-', 'far:', $value);
                     $value = str_replace('fas fa-', 'fas:', $value);
+                    $value = str_replace('fab fa-', 'fab:', $value);
                     $value = str_replace('fa-', 'fa:', $value);
                     $value = str_replace('far-', 'far:', $value);
                     $value = str_replace('fas-', 'fas:', $value);
+                    $value = str_replace('fab-', 'fab:', $value);
                     $value .= ' fa-fw';
                 }
             }

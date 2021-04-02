@@ -16,7 +16,7 @@ use stdClass;
 /**
  * Create a field list
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    widget
  * @subpackage form
  * @author     Pablo Dall'Oglio
@@ -45,6 +45,9 @@ class TFieldList extends TTable
     private $remove_icon;
     private $remove_title;
     private $field_prefix;
+    private $thead;
+    private $tfoot;
+    private $tbody;
     
     /**
      * Class Constructor
@@ -306,7 +309,7 @@ class TFieldList extends TTable
      */
     public function addHeader()
     {
-        $section = parent::addSection('thead');
+        $this->thead = $section = parent::addSection('thead');
         
         if ($this->fields)
         {
@@ -370,7 +373,7 @@ class TFieldList extends TTable
         
         if (!$this->body_created)
         {
-            parent::addSection('tbody');
+            $this->tbody = parent::addSection('tbody');
             $this->body_created = true;
         }
         
@@ -483,7 +486,7 @@ class TFieldList extends TTable
                     
                     $btn = new TElement('div');
                     $btn->{'class'} = 'btn btn-default btn-sm';
-                    $btn->{'onclick'} = "__adianti_ajax_exec('{$string_action}'+'&'+$.param(tfieldlist_get_row_data(this)))";
+                    $btn->{'onclick'} = "__adianti_post_exec('{$string_action}', tfieldlist_get_row_data(this), null, undefined, '1')";
                     $btn->{'title'} = $row_action[2];
                     $btn->add(new TImage($row_action[1]));
                     $row->addCell( $btn );
@@ -512,7 +515,7 @@ class TFieldList extends TTable
                 if (isset($this->remove_action))
                 {
                     $string_action = $this->remove_action->serialize(FALSE);
-                    $del->{'onclick'} .= ";__adianti_ajax_exec('{$string_action}'+'&'+$.param(tfieldlist_get_row_data(this)))";
+                    $del->{'onclick'} .= ";__adianti_post_exec('{$string_action}', tfieldlist_get_row_data(this), null, undefined, '1')";
                 }
                 
                 $del->{'title'} = $this->remove_title ? $this->remove_title : AdiantiCoreTranslator::translate('Delete');
@@ -536,7 +539,7 @@ class TFieldList extends TTable
             throw new Exception(AdiantiCoreTranslator::translate('You must call ^1 before ^2', 'addDetail', 'addCloneAction'));
         }
         
-        parent::addSection('tfoot');
+        $this->tfoot = parent::addSection('tfoot');
         
         $row = parent::addRow();
         
@@ -594,7 +597,7 @@ class TFieldList extends TTable
         if ($clone_action)
         {
             $string_action = $clone_action->serialize(FALSE);
-            $add->{'onclick'} = "__adianti_ajax_exec('{$string_action}'+'&'+$.param(tfieldlist_get_last_row_data(this)));".$add->{'onclick'};
+            $add->{'onclick'} = "__adianti_post_exec('{$string_action}', tfieldlist_get_last_row_data(this), null, undefined, '1');".$add->{'onclick'};
         }
         
         $add->add($icon ? new TImage($icon) : '<i class="fa fa-plus green"></i>');
@@ -632,6 +635,24 @@ class TFieldList extends TTable
     public static function addRows($name, $rows)
     {
         TScript::create( "tfieldlist_add_rows('{$name}', {$rows});" );
+    }
+    
+    /**
+     * Enable scrolling
+     */
+    public function makeScrollable($height)
+    {
+        if (empty($this->tfoot))
+        {
+            throw new Exception(AdiantiCoreTranslator::translate('You must call ^1 before ^2', 'addCloneAction()', 'makeScrollable()'));
+        }
+        else
+        {
+            $this->thead->{'style'} .= ';display:block';
+            $this->tbody->{'style'} .= ';display:block;overflow-y: scroll;height:'.$height.'px';
+            $this->tbody->{'class'} .= ' thin-scroll';
+            $this->tfoot->{'style'} .= ';display:block;float:right;margin-right:10px';
+        }
     }
     
     /**

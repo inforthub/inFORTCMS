@@ -5,11 +5,12 @@ use Adianti\Database\TSqlStatement;
 use Adianti\Database\TTransaction;
 use Adianti\Database\TCriteria;
 use Exception;
+use PDO;
 
 /**
  * Provides an Interface to create an INSERT statement
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    database
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -136,6 +137,9 @@ class TSqlInsert extends TSqlStatement
      */
     public function getInstruction( $prepared = FALSE )
     {
+        $conn = TTransaction::get();
+        $driver = $conn->getAttribute(PDO::ATTR_DRIVER_NAME);
+        
         $this->preparedVars = array();
         $columnValues = $this->columnValues;
         if ($columnValues)
@@ -151,6 +155,12 @@ class TSqlInsert extends TSqlStatement
         $values  = implode(', ', array_values($columnValues)); // concatenates the column values
         $this->sql .= $columns . ')';
         $this->sql .= " VALUES ({$values})";
+        
+        if ($driver == 'firebird')
+        {
+            $this->sql .= " RETURNING {{primary_key}}";
+        }
+        
         // returns the string
         return $this->sql;
     }

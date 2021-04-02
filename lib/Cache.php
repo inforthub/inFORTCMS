@@ -43,8 +43,11 @@ class Cache
         $this->cacheControl = THelper::getPreferences('pref_cache_control');
         if (!empty($this->cacheControl))
         {
+            // colocar urls dos formulários ativos para impedir o cache
+            $formularios = [];
+            
             $sitemap = THelper::countSitemap();
-            $this->doNotCache = array_merge(['admin','click'],$sitemap['links']);
+            $this->doNotCache = array_merge(['admin','click'],$sitemap['links'],$formularios);
             
             $this->cacheFile = base64_encode($_SERVER['REQUEST_URI']);
             $this->cacheFileName = $this->cacheDir.'/'.$this->cacheFile.'.txt';
@@ -69,17 +72,22 @@ class Cache
                 {
                     $this->caching = false;
                     echo file_get_contents($this->cacheFileName);
-                    exit();
+                    //exit();
+                    return false;
                 }else{
                     $this->caching = true;
                     ob_start();
                 }
             }
         }
+        return true;
     }
 
     function end()
     {
+        // registramos o acesso com ou sem cache
+        THelper::setTrafego();
+        
         if (!empty($this->cacheControl))
         {
             if($this->caching)
@@ -91,8 +99,6 @@ class Cache
                     return true;
             }
         }
-        // registramos o acesso, com ou sem cache
-        THelper::setTrafego();
     }
 
     function purge($location)

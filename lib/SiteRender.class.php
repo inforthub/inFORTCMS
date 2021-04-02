@@ -38,11 +38,11 @@ class SiteRender extends HtmlBase
             // renderizamos uma listagem dos artigos da categoria "blog", "news", menos os sites
             // Ex: procuramos por blog_listagem.html, ou listagem.html
             
-            $file = ROOT.'/templates/'.$this->_replaces['theme'].'/partial/listagem.html';
-            if ( file_exists(ROOT.'/templates/'.$this->_replaces['theme'].'/partial/'.$artigo->getURLCategoriaPai().'_listagem.html') )
+            $file = ROOT.'/templates/'.$this->_replaces['theme'].'/partials/listagem.html';
+            if ( file_exists(ROOT.'/templates/'.$this->_replaces['theme'].'/partials/'.$artigo->getURLCategoriaPai().'_listagem.html') )
             {
                 // pegamos o modelo html de listagem correspondente
-        	    $file = ROOT.'/templates/'.$this->_replaces['theme'].'/partial/'.$artigo->getURLCategoriaPai().'_listagem.html';
+        	    $file = ROOT.'/templates/'.$this->_replaces['theme'].'/partials/'.$artigo->getURLCategoriaPai().'_listagem.html';
             }
             $listagem = new THtmlRenderer($file);
             $listagem->disableHtmlConversion();
@@ -176,11 +176,11 @@ class SiteRender extends HtmlBase
                 // pegar listagem de artigos relacionados
 
                 // pegamos o modelo html da postagem
-			    $file = ROOT.'/templates/'.$this->_replaces['theme'].'/partial/post.html';
-                if ( file_exists(ROOT.'/templates/'.$this->_replaces['theme'].'/partial/'.$artigo->getURLCategoriaPai().'_post.html') )
+			    $file = ROOT.'/templates/'.$this->_replaces['theme'].'/partials/post.html';
+                if ( file_exists(ROOT.'/templates/'.$this->_replaces['theme'].'/partials/'.$artigo->getURLCategoriaPai().'_post.html') )
                 {
                     // pegamos o modelo html de listagem correspondente
-            	    $file = ROOT.'/templates/'.$this->_replaces['theme'].'/partial/'.$artigo->getURLCategoriaPai().'_post.html';
+            	    $file = ROOT.'/templates/'.$this->_replaces['theme'].'/partials/'.$artigo->getURLCategoriaPai().'_post.html';
                 }
                 $postagem = new THtmlRenderer($file);
                 $postagem->disableHtmlConversion();

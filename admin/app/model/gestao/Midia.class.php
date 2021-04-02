@@ -80,6 +80,20 @@ class Midia extends TRecord
         }
     }
     
+    /**
+     * Delete the object and its aggregates
+     * @param $id object ID
+     */
+    public function delete($id = NULL)
+    {
+        $id = isset($id) ? $id : $this->id;
+        
+        parent::deleteComposite('Click', 'midia_id', $id);
+    
+        // delete the object itself
+        parent::delete($id);
+    }
+    
 
 
 }

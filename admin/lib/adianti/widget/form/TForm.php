@@ -15,7 +15,7 @@ use ReflectionClass;
 /**
  * Wrapper class to deal with forms
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    widget
  * @subpackage form
  * @author     Pablo Dall'Oglio
@@ -30,7 +30,7 @@ class TForm implements AdiantiFormInterface
     protected $js_function;
     protected $element;
     protected $silent_fields;
-    static private $forms;
+    private static $forms;
     
     /**
      * Class Constructor

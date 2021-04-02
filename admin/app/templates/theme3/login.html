@@ -4,7 +4,7 @@
     <title>Painel de Administração - inFORT CMS</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="manifest" href="manifest.json?appver=722">
+    <link rel="manifest" href="manifest.json?appver=730">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="apple-touch-icon" sizes="180x180" href="app/images/icon.png">
@@ -14,10 +14,17 @@
     {LIBRARIES}
     {HEAD}
     
-    <link href="app/lib/include/admin.min.css?appver=722" rel="stylesheet" type="text/css" media="screen">
+    <link href="app/lib/include/admin.min.css?appver=730" rel="stylesheet" type="text/css" media="screen">
     <link rel="stylesheet" href="app/templates/{template}/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="app/templates/{template}/css/skins/_all-skins.min.css">
+   <link rel="stylesheet" href="app/templates/{template}/css/skins/_all-skins.min.css">
+   
+    <script>
+    $(function() {
+        __adianti_set_language('{lang}');
+        __adianti_set_debug({debug});
+    });
+    </script>
   </head>
   <body class="login-page">
         <div class="logo text-center" >

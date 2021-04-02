@@ -71,23 +71,23 @@ class TemplateForm extends TWindow
         
         // detail fields
         $this->fieldlist = new TFieldList;
-        $this->fieldlist-> width = '100%';
+        $this->fieldlist->width = '100%';
         $this->fieldlist->enableSorting();
 
-        $nome = new TEntry('list_nome[]');
-        $ativo = new TCombo('list_ativo[]');
+        $list_nome = new TEntry('list_nome[]');
+        $list_ativo = new TCombo('list_ativo[]');
 
-        $nome->setSize('100%');
-        $ativo->setSize('100%');
-        $ativo->addItems(['t'=>_t('Yes'),'f'=>_t('No')]);
-        //$ativo->setLayout('horizontal');
-        //$ativo->setUseButton();
+        $list_nome->setSize('100%');
+        $list_ativo->setSize('100%');
+        $list_ativo->addItems(['t'=>_t('Yes'),'f'=>_t('No')]);
+        //$list_ativo->setLayout('horizontal');
+        //$list_ativo->setUseButton();
 
-        $this->fieldlist->addField( '<b>Nome</b>', $nome);
-        $this->fieldlist->addField( '<b>Ativo</b>', $ativo);
+        $this->fieldlist->addField( '<b>Nome</b>', $list_nome);
+        $this->fieldlist->addField( '<b>Ativo</b>', $list_ativo);
 
-        $this->form->addField($nome);
-        $this->form->addField($ativo);
+        $this->form->addField($list_nome);
+        $this->form->addField($list_ativo);
         
         $this->form->addFields( [new TFormSeparator('Posições') ] );
         $this->form->addFields( [$this->fieldlist] );
@@ -218,7 +218,6 @@ class TemplateForm extends TWindow
                     }
                 }
             }
-            
             
             $master->store(); // save master object
             

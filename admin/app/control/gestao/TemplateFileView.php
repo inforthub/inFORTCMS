@@ -98,25 +98,25 @@ class TemplateFileView extends TPage
             // largura
             $item = new StdClass;
             $item->pro = 'Largura';
-            $item->val = $parametros['image'][0] . ' px';
+            $item->val = (empty($parametros['image'])) ? '--' : $parametros['image'][0] . ' px';
             $this->detail_list->addItem($item);
             
             // altura
             $item = new StdClass;
             $item->pro = 'Altura';
-            $item->val = $parametros['image'][1] . ' px';
+            $item->val = (empty($parametros['image'])) ? '--' : $parametros['image'][1] . ' px';
             $this->detail_list->addItem($item);
             
             // bits
             $item = new StdClass;
             $item->pro = 'Bits';
-            $item->val = $parametros['image']['bits'];
+            $item->val = (empty($parametros['image'])) ? '--' : $parametros['image']['bits'];
             $this->detail_list->addItem($item);
             
             // mime
             $item = new StdClass;
             $item->pro = 'Mime type';
-            $item->val = $parametros['image']['mime'];
+            $item->val = (empty($parametros['image'])) ? '--' : $parametros['image']['mime'];
             $this->detail_list->addItem($item);
             
             // última modificação

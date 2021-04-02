@@ -48,6 +48,9 @@ Adianti.onAfterLoad = function(url, data)
 { 
     loading = false; 
     __adianti_unblock_ui( true );
+    
+    // Fill page tab title with breadcrumb
+    // window.document.title  = $('#div_breadcrumbs').text();
 };
 
 // set select2 language

@@ -27,7 +27,7 @@ class SystemModulesCheckView extends TPage
                              'pdo_oci' => 'PDO Oracle',
                              'pdo_dblib' => 'PDO Sql Server via dblib',
                              'pdo_sqlsrv' => 'PDO Sql Server via sqlsrv',
-                             'firebird' => 'PDO Firebird',
+                             'PDO_Firebird' => 'PDO Firebird',
                              'odbc' => 'PDO ODBC']];
             
             $framework_extensions = array_keys( array_merge( $extensions['general'], $extensions['database'] ));

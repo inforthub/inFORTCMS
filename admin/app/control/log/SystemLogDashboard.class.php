@@ -41,7 +41,7 @@ class SystemLogDashboard extends TPage
                                        ->where('log_day','=',date('d'))
                                        ->count();
                                    
-            $indicator1->enableSection('main', ['title' => _t('Accesses'),    'icon' => 'sign-in',  'background' => 'orange', 'value' => $accesses]);
+            $indicator1->enableSection('main', ['title' => _t('Accesses'),    'icon' => 'sign-in-alt',  'background' => 'orange', 'value' => $accesses]);
             $indicator2->enableSection('main', ['title' => _t('SQL Log'),     'icon' => 'database', 'background' => 'blue',   'value' => $sqllogs]);
             $indicator3->enableSection('main', ['title' => _t('Request Log'), 'icon' => 'globe',    'background' => 'purple', 'value' => $reqlogs]);
             

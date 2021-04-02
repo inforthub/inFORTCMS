@@ -1,6 +1,7 @@
 <?php
 namespace Adianti\Widget\Util;
 
+use Adianti\Core\AdiantiCoreTranslator;
 use Adianti\Control\TAction;
 use Adianti\Widget\Base\TElement;
 use Adianti\Widget\Base\TScript;
@@ -9,7 +10,7 @@ use Adianti\Widget\Util\TImage;
 /**
  * TDropDown Widget
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    widget
  * @subpackage util
  * @author     Pablo Dall'Oglio
@@ -115,12 +116,73 @@ class TDropDown extends TElement
     public function addAction($title, $action, $icon = NULL, $popover = '', $add = true)
     {
         $li = new TElement('li');
-        // $li->class = "dropdown-item";
+        // $li->{'class'} = "dropdown-item";
         $link = new TElement('a');
         
         if ($action instanceof TAction)
         { 
             $link->{'onclick'} = "__adianti_load_page('{$action->serialize()}');";
+        }
+        else if (is_string($action))
+        {
+            $link->{'onclick'} = $action;
+        }
+        $link->{'style'} = 'cursor: pointer';
+        
+        if ($popover)
+        {
+            $link->{'title'} = $popover;
+        }
+        
+        if ($icon)
+        {
+            $image = is_object($icon) ? clone $icon : new TImage($icon);
+            $image->{'style'} .= ';padding: 4px';
+            $link->add($image);
+        }
+        
+        $span = new TElement('span');
+        $span->add($title);
+        $link->add($span);
+        $li->add($link);
+        
+        if ($add)
+        {
+            $this->elements->add($li);
+        }
+        return $li;
+    }
+    
+    /**
+     * Add an action
+     * @param $title  Title
+     * @param $action Action (TAction or string Javascript action)
+     * @param $icon   Icon
+     */
+    public function addPostAction($title, $action, $form, $icon = NULL, $popover = '', $add = true)
+    {
+        $li = new TElement('li');
+        
+        $link = new TElement('a');
+        
+        if ($action instanceof TAction)
+        { 
+            $url = $action->serialize(FALSE);
+            
+            if ($action->isStatic())
+            {
+                $url .= '&static=1';
+            }
+            $url = htmlspecialchars($url);
+            $wait_message = AdiantiCoreTranslator::translate('Loading');
+            
+            // define the button's action (ajax post)
+            $action = "Adianti.waitMessage = '$wait_message';";
+            $action.= "{$this->functions}";
+            $action.= "__adianti_post_data('{$form}', '{$url}');";
+            $action.= "return false;";
+            
+            $link->{'onclick'} = $action;
         }
         else if (is_string($action))
         {

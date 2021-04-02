@@ -37,7 +37,7 @@ if (isset($_GET['file']) AND TSession::getValue('logged') )
     
     if (file_exists($file) AND in_array(strtolower($extension), array_keys($content_type_list)))
     {
-        $basename = basename($file);
+        $basename = !empty($_GET['basename']) ? $_GET['basename'] : basename($file);
         $filesize = filesize($file); // get the filesize
         
         header("Pragma: public");

@@ -13,7 +13,7 @@ use Adianti\Validator\TFieldValidator;
 /**
  * Checklist
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    widget
  * @subpackage form
  * @author     Pablo Dall'Oglio
@@ -31,6 +31,7 @@ class TCheckList implements AdiantiWidgetInterface
     protected $validations;
     protected $checkColumn;
     protected $checkAllButton;
+    protected $width;
     
     use AdiantiDatabaseWidgetTrait;
     
@@ -64,6 +65,32 @@ class TCheckList implements AdiantiWidgetInterface
         $this->setName($name);
         $this->value = [];
         $this->fields = [];
+        $this->width = '100%';
+    }
+    
+    /**
+     * Set checklist size
+     */
+    public function setSize($size)
+    {
+        $this->width = $size;
+        
+        if (strstr($size, '%') !== FALSE)
+        {
+            $this->datagrid->{'style'} .= ";width: {$size}";
+        }
+        else
+        {
+            $this->datagrid->{'style'} .= ";width: {$size}px";
+        }
+    }
+    
+    /**
+     * Returns checklist size
+     */
+    function getSize()
+    {
+        return [$this->width, $this->datagrid->getHeight()];
     }
     
     /**

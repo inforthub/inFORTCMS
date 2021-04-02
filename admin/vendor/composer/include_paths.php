@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    $vendorDir . '/adianti/pdfdesigner',
+    $vendorDir . '/pablodalloglio/fpdf',
     $vendorDir . '/pablodalloglio/ole',
     $vendorDir . '/pablodalloglio/spreadsheet_excel_writer',
 );

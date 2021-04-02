@@ -602,7 +602,7 @@ class ApplicationTranslator
         $this->messages['pt'][] = 'Salvar como CSV';
         $this->messages['pt'][] = 'Salvar como XML';
         $this->messages['pt'][] = 'Exportar';
-        $this->messages['pt'][] = 'Informações do sistema';
+        $this->messages['pt'][] = 'Informações do sistema';
         $this->messages['pt'][] = 'Memória RAM';
         $this->messages['pt'][] = 'Usando/Total';
         $this->messages['pt'][] = 'Disponível';
@@ -610,7 +610,7 @@ class ApplicationTranslator
         $this->messages['pt'][] = 'Uso da CPU';
         $this->messages['pt'][] = 'Fornecedor';
         $this->messages['pt'][] = 'Modelo';
-        $this->messages['pt'][] = 'Frequência atual';
+        $this->messages['pt'][] = 'Frequência atual';
         $this->messages['pt'][] = 'Servidor web e processos';
         $this->messages['pt'][] = 'Dispositivos de disco';
         $this->messages['pt'][] = 'Dispositivo';
@@ -943,6 +943,7 @@ class ApplicationTranslator
         $this->messages['en'][] = 'File deleted';
         $this->messages['en'][] = 'Folder deleted';
         $this->messages['en'][] = 'Failed to save file';
+        $this->messages['en'][] = 'Upload Multiple Files';
         
         $this->messages['pt'][] = 'Esqueceu a senha?';
         $this->messages['pt'][] = 'Mover a cima';
@@ -961,6 +962,7 @@ class ApplicationTranslator
         $this->messages['pt'][] = 'Arquivo deletado';
         $this->messages['pt'][] = 'Pasta deletada';
         $this->messages['pt'][] = 'Falha ao salvar o arquivo';
+        $this->messages['pt'][] = 'Enviar Vários Arquivos';
 
         //fim
         foreach ($this->messages as $lang => $messages)

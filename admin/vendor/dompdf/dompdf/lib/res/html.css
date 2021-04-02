@@ -48,7 +48,7 @@ summary {
 
 body {
   page-break-before: avoid;
-  display: block !important;
+  display: block;
   counter-increment: page;
 }
 
@@ -161,11 +161,7 @@ table[border] th {
 
 /* make sure backgrounds are inherited in tables  -- see bug 4510 */
 td, th, tr {
-  background-color: inherit;
-  background-image: inherit;
-  background-image-resolution: inherit;
-  background-position: inherit;
-  background-repeat: inherit;
+  background: inherit;
 }
 
 /* caption inherits from table not table-outer */
@@ -217,7 +213,6 @@ td {
 th {
   display: table-cell;
   vertical-align: inherit;
-  text-align: center;
   font-weight: bold;
   padding: 1px;
 }

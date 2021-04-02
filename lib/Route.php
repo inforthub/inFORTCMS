@@ -12,7 +12,7 @@ class Route
 {
     private $_url;
     private $_explode;
-    private $_class;
+    //private $_class;
     private $_pref;
 
     /**
@@ -29,7 +29,7 @@ class Route
         
         $this->setUrl();
         $this->setExplode();
-        $this->setClass();
+        //$this->setClass();
     }
     
     
@@ -75,7 +75,7 @@ class Route
     
     /**
      * Determina a classe a ser usada
-     */
+     *
     private function setClass()
     {
         $this->_class = is_null($this->_explode[0]) ? 'index' : $this->_explode[0];
@@ -124,6 +124,23 @@ class Route
                     $tema = empty($link->template_id) ? $tema : $link->template->nome_fisico;
                     $layout_content = file_get_contents(ROOT.'/templates/'.$tema.'/layout.html');
                     
+                    // verificamos se existem formulários na página à serem substituidos
+                    $formularios = Formulario::getFormulários();
+                    foreach ($formularios as $form)
+                    {
+                        $variavel = '{'.$form->url.'}';
+                        if ( strpos($layout_content, $variavel) !== false )
+                        {
+                            $layout_content = str_replace($variavel, $form->html_site, $layout_content);
+                            
+                            // pegamos o modal
+                            $modal = file_get_contents(ROOT.'/templates/'.$replaces['theme'].'/partials/modal.html');
+                            
+                            //$this->_replaces['scripts_head'] .= '';
+                            $replaces['scripts_body'] .= $form->script . $modal;
+                        }
+                    }
+                    
                     // rederiza a página
                     echo $parse->parse_string($layout_content, $replaces);
                 }
@@ -141,6 +158,41 @@ class Route
                     }
                     else
                     {
+                        
+                        switch ($this->_explode[0])
+                        {
+                            case 'click':
+                                // registra um clique
+                                Click::registrar();
+                                break;
+                            case 'busca':
+                                $pagina = new SiteRender($this->_url);
+                                $replaces = $pagina->renderBusca();
+                                
+                                $tema = empty($link->template_id) ? $tema : $link->template->nome_fisico;
+                                $layout_content = file_get_contents(ROOT.'/templates/'.$tema.'/layout.html');
+                                
+                                // rederiza a página
+                                echo $parse->parse_string($layout_content, $replaces);
+                                break;
+                            case 'enviar':
+                                if (isset($_POST))
+                                {
+                                    header("content-type:application/json");
+                                    
+                                    // faz o 'post' de um formulário e envia o e-mail
+                                    $ret = FormMensagem::Enviar($this->_explode[1]);
+                                    
+                                    // retorna a resposta ao site
+                                    echo json_encode($ret); //['titulo'=>'Esse é o Título', 'mensagem'=>'Essa é a mensagem!']);
+                                }
+                                break;
+                            default :
+                                // Criamos uma exceção
+                                throw new Exception("Página não encontrada!");
+                                break;
+                        }
+                        /*
                         if ( $this->_url === '/click')
                         {
                             // registra um clique
@@ -151,6 +203,7 @@ class Route
                             // Criamos uma exceção
                             throw new Exception("Página não encontrada!");
                         }
+                        */
                     }
                 }
             }

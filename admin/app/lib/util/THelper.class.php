@@ -651,7 +651,7 @@ class THelper // extends TElement
     {
         // implementar regra para não apagar pastas do sistema
         if (in_array($dir,['../lib','../templates','../admin','/app','/lib','/rest','/vendor','/']) && $dir !== '../images')
-            throw new Exception('error','Ação não permitida!');
+            throw new Exception('Ação não permitida!');
         
         if (is_dir($dir))
         {
@@ -672,11 +672,25 @@ class THelper // extends TElement
                         else
                         {
                             if (!in_array(pathinfo($file,PATHINFO_FILENAME),$exclude))
-                                unlink($file);
+                            {
+                                if (!unlink($file))
+                                    throw new Exception('Permissão negada!<br>Verifique as permissões antes de excluir o arquivo:<br>"'.$file.'"');
+                            }
                         }
                     }
                     else
-                        $file->isDir() ?  rmdir($file) : unlink($file);
+                    {
+                        //$file->isDir() ?  rmdir($file) : unlink($file);
+                        if ( $file->isDir() )
+                        {
+                            rmdir($file);
+                        }
+                        else
+                        {
+                            if (!unlink($file))
+                                throw new Exception('Permissão negada!<br>Verifique as permissões antes de excluir o arquivo:<br>"'.$file.'"');
+                        }
+                    }
                 }
             }
         }
@@ -746,10 +760,10 @@ class THelper // extends TElement
         try
         {
             TTransaction::open('sistema');
-            $template = Template::where('padrao','=','t')->load();
+            $template = Template::where('padrao','=','t')->first();
             TTransaction::close();
             
-            return $template[0]->nome_fisico;
+            return $template->nome_fisico;
         }
         catch (Exception $e) // in case of exception
         {

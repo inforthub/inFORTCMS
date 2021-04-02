@@ -16,7 +16,7 @@ use ApplicationTranslator;
 /**
  * Card
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    widget
  * @subpackage util
  * @author     Pablo Dall'Oglio
@@ -206,11 +206,12 @@ class TCardView extends TElement
             $item_wrapper->{'style'}   = 'border-top: 3px solid '.$item->$colorField;
         }
         
-        if ($titleField && $item->$titleField)
+        if ($titleField)
         {
             $item_title = new TElement('div');
             $item_title->{'class'} = 'panel-heading card-header card-item-title';
-            $item_title->add(AdiantiTemplateHandler::replace($item->$titleField, $item));
+            $titleField = (strpos($titleField, '{') === FALSE) ? ( '{' . $titleField . '}') : $titleField;
+            $item_title->add(AdiantiTemplateHandler::replace($titleField, $item));
         }
         
         if (!empty($this->titleTemplate))
@@ -220,11 +221,12 @@ class TCardView extends TElement
             $item_title->add(AdiantiTemplateHandler::replace($this->titleTemplate, $item));
         }
         
-        if ($contentField && $item->$contentField)
+        if ($contentField)
         {
             $item_content = new TElement('div');
             $item_content->{'class'} = 'panel-body card-body card-item-content';
-            $item_content->add(AdiantiTemplateHandler::replace($item->$contentField, $item));
+            $contentField = (strpos($contentField, '{') === FALSE) ? ( '{' . $contentField . '}') : $contentField;
+            $item_content->add(AdiantiTemplateHandler::replace($contentField, $item));
         }
         
         if (!empty($this->itemTemplate))

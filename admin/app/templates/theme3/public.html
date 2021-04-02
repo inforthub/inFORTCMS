@@ -4,7 +4,7 @@
     <title>Adianti Template III</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="manifest" href="manifest.json?appver=722">
+    <link rel="manifest" href="manifest.json?appver=730">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="apple-touch-icon" sizes="180x180" href="app/images/icon.png">
@@ -14,13 +14,18 @@
     {LIBRARIES}
     {HEAD}
     
-    <script src="app/lib/include/admin-all.min.js?appver=722" type="text/javascript"></script>
-    <link href="app/lib/include/admin.min.css?appver=722" rel="stylesheet" type="text/css" media="screen">
+    <script src="app/lib/include/admin-all.min.js?appver=730" type="text/javascript"></script>
+    <link href="app/lib/include/admin.min.css?appver=730" rel="stylesheet" type="text/css" media="screen">
 
     <link href="app/templates/{template}/css/AdminLTE.min.css" rel="stylesheet" type="text/css" media="screen">
     <link href="app/templates/{template}/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" media="screen">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+    <script>
+    $(function() {
+        __adianti_set_language('{lang}');
+        __adianti_set_debug({debug});
+    });
+    </script>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">

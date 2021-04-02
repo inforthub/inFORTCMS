@@ -23,6 +23,7 @@ use Adianti\Widget\Wrapper\TDBRadioGroup;
 use Adianti\Widget\Wrapper\TDBCheckGroup;
 use Adianti\Widget\Wrapper\TDBSeekButton;
 use Adianti\Registry\TSession;
+use Adianti\Widget\Form\TCheckList;
 
 use stdClass;
 use Exception;
@@ -30,7 +31,7 @@ use Exception;
 /**
  * Bootstrap form builder for Adianti Framework
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    wrapper
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -552,6 +553,16 @@ class BootstrapFormBuilder implements AdiantiFormInterface
     }
     
     /**
+     * Add a form footer widget
+     * @param $widget Widget
+     */
+    public function addFooterWidget($widget)
+    {
+        $this->actions[] = $widget;
+        return $widget;
+    }
+    
+    /**
      * Add a form header action
      * @param $label Button label
      * @param $action Button action
@@ -933,7 +944,7 @@ class BootstrapFormBuilder implements AdiantiFormInterface
             }
         }
         
-        if ($field instanceof TField)
+        if ($field instanceof TField || $field instanceof TCheckList)
         {
             if (is_array($field_size))
             {
@@ -953,7 +964,7 @@ class BootstrapFormBuilder implements AdiantiFormInterface
                     }
                 }
             }
-            else if ($field_size && !$object instanceof TRadioGroup AND !$object instanceof TCheckGroup AND (!$object instanceof TSeekButton OR !empty($default_field_size)))
+            else if ($field_size && !$object instanceof TRadioGroup AND !$object instanceof TCheckGroup)
             {
                 $field_wrapper->{'style'} .= ( (strpos($field_size, '%') !== FALSE) ? ';width: '.$field_size : ';width: '.$field_size.'px');
             }
@@ -980,19 +991,11 @@ class BootstrapFormBuilder implements AdiantiFormInterface
         
         if (is_object($object) && (method_exists($object, 'setSize')))
         {
-            if ($object instanceof TSeekButton)
-            {
-                $extra_size = $object->getExtraSize();
-                if (!$object->hasAuxiliar())
-                {
-                    $object->setSize("calc(100% - {$extra_size}px)");
-                }
-            }
-            else if (in_array($object->getProperty('widget'), ['tmultisearch', 'tdbmultisearch', 'thtmleditor', 'tmultientry']))
+            if (in_array($object->getProperty('widget'), ['tmultisearch', 'tdbmultisearch', 'thtmleditor', 'tmultientry']))
             {
                 $object->setSize('100%', $field_size[1] - 3);
             }
-            else if ( ($field_size) AND !($object instanceof TRadioGroup OR $object instanceof TCheckGroup))
+            else if ( ($field_size) AND !($object instanceof TRadioGroup || $object instanceof TCheckGroup))
             {
                 $object->setSize('100%', '100%');
             }

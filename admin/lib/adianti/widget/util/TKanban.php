@@ -14,7 +14,7 @@ use ApplicationTranslator;
 /**
  * Kanban
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    widget
  * @subpackage util
  * @author     Artur Comunello
@@ -344,17 +344,19 @@ class TKanban extends TElement
         $div            = new TElement('div');
         $div->{'class'} = 'kanban-item-actions';
         
-        foreach ($this->itemActions as $key => $action)
+        foreach ($this->itemActions as $key => $actionTemplate)
         {
-            if (empty($action->condition) OR call_user_func($action->condition, $object))
+            $itemAction = $actionTemplate->action->prepare($object);
+            
+            if (empty($actionTemplate->condition) OR call_user_func($actionTemplate->condition, $object))
             {
-                $action->action->setParameter('id', $itemId);
-                $action->action->setParameter('key', $itemId);
-                $url = $action->action->serialize();
+                $itemAction->setParameter('id', $itemId);
+                $itemAction->setParameter('key', $itemId);
+                $url = $itemAction->serialize();
                 
-                $icon                = new TImage($action->icon);
-                $icon->{'style'}     = 'cursor:pointer;margin-right:4px;';
-                $icon->{'title'}     = $action->label;
+                $icon                = new TImage($actionTemplate->icon);
+                $icon->{'style'}    .= ';cursor:pointer;margin-right:4px;';
+                $icon->{'title'}     = $actionTemplate->label;
                 $icon->{'generator'} = 'adianti';
                 $icon->{'href'}      = $url;
                 
@@ -376,22 +378,24 @@ class TKanban extends TElement
         $ul = new TElement('ul');
         $ul->{'class'} = 'dropdown-menu pull-right';
         
-        foreach ($this->stageActions as $key => $stageAction)
+        foreach ($this->stageActions as $key => $stageActionTemplate)
         {
-            if (empty($stageAction->condition) OR call_user_func($stageAction->condition, $stage))
+            $stageAction = $stageActionTemplate->action->prepare($stage);
+            
+            if (empty($stageActionTemplate->condition) OR call_user_func($stageActionTemplate->condition, $stage))
             {
-                $stageAction->action->setParameter('id',  $stage_id);
-                $stageAction->action->setParameter('key', $stage_id);
-                $url = $stageAction->action->serialize();
+                $stageAction->setParameter('id',  $stage_id);
+                $stageAction->setParameter('key', $stage_id);
+                $url = $stageAction->serialize();
                 
                 $action                = new TElement('a');
                 $action->{'generator'} = 'adianti';
                 $action->{'href'}      = $url;
-                if (!empty($stageAction->icon))
+                if (!empty($stageActionTemplate->icon))
                 {
-                    $action->add(new TImage($stageAction->icon));
+                    $action->add(new TImage($stageActionTemplate->icon));
                 }
-                $action->add($stageAction->label);
+                $action->add($stageActionTemplate->label);
                 
                 $li = new TElement('li');
                 $li->add($action);

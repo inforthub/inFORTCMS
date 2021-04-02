@@ -62,7 +62,7 @@ class MidiaList extends TPage
 
         
         // keep the form filled during navigation with session data
-        $this->form->setData( TSession::getValue('Midia_filter_data') );
+        $this->form->setData( TSession::getValue(__CLASS__.'_filter_data') );
         
         // add the search form actions
         $this->addActionButton(_t('Find'), new TAction(array($this, 'onSearch')), 'fa:search','btn-primary');

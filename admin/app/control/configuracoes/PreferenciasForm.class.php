@@ -58,20 +58,31 @@ class PreferenciasForm extends TStandardForm
         $pref_emp_geolat      = new TEntry('pref_emp_geolat');   // latitude
         $pref_emp_geolong     = new TEntry('pref_emp_geolong');  // longitude
         $pref_emp_cnpj        = new TEntry('pref_emp_cnpj');
+        // logo e favicon
+        $pref_emp_logo        = new TEntry('pref_emp_logo');
+        $pref_emp_favicon     = new TEntry('pref_emp_favicon');
+        $btn_logo             = new TButton('buscar_imagem_logo');
+        $btn_logo->setAction( new TAction([$this,'onBuscaImagem'], ['origem'=>'logo']), 'Procurar Imagem' );
+        $btn_logo->setImage('fa:image');
+        $btn_logo->addStyleClass('mb-3');
+        $btn_favicon          = new TButton('buscar_imagem_favicon');
+        $btn_favicon->setAction( new TAction([$this,'onBuscaImagem'], ['origem'=>'favicon']), 'Procurar Imagem' );
+        $btn_favicon->setImage('fa:image');
+        $btn_favicon->addStyleClass('mb-3');
         // dados do Blog
         $pref_blog_titulo     = new TEntry('pref_blog_titulo');
         $pref_blog_subtitulo  = new TEntry('pref_blog_subtitulo');
         $pref_blog_metadesc   = new TText('pref_blog_metadesc');
         $pref_blog_metakey    = new TMultiEntry('pref_blog_metakey');
         // configurações de email
-        $pref_mail_domain     = new TEntry('pref_mail_domain');
-        $pref_smtp_auth       = new TCombo('pref_smtp_auth');
-        $pref_smtp_host       = new TEntry('pref_smtp_host');
-        $pref_smtp_port       = new TEntry('pref_smtp_port');
-        $pref_smtp_user       = new TEntry('pref_smtp_user');
-        $pref_smtp_pass       = new TPassword('pref_smtp_pass');
-        $pref_mail_from       = new TEntry('pref_mail_from');
-        $pref_mail_to         = new TEntry('pref_mail_to');
+        $pref_mail_domain     = new TEntry('mail_domain');
+        $pref_smtp_auth       = new TCombo('smtp_auth');
+        $pref_smtp_host       = new TEntry('smtp_host');
+        $pref_smtp_port       = new TEntry('smtp_port');
+        $pref_smtp_user       = new TEntry('smtp_user');
+        $pref_smtp_pass       = new TPassword('smtp_pass');
+        $pref_mail_from       = new TEntry('mail_from');
+        $pref_mail_to         = new TEntry('mail_to');
         // apis sociais
         $pref_instagram_token = new TEntry('pref_instagram_token');
         $pref_instagram_userid = new TEntry('pref_instagram_userid');
@@ -99,11 +110,23 @@ class PreferenciasForm extends TStandardForm
         $pref_site_dominio->forceLowerCase();
         $pref_site_imglargura->setMaxLength(4);
         $pref_site_imgaltura->setMaxLength(4);
-        
         $pref_site_imglargura->setValue('1000');
         $pref_site_imgaltura->setValue('1000');
         $pref_site_trafego->addItems($yesno);
         $pref_site_trafego->setLayout('horizontal');
+        $pref_emp_logo->setEditable(false);
+        $pref_emp_favicon->setEditable(false);
+        
+        
+        // criando o frame da logo
+        $frame_logo = new TElement('div');
+        $frame_logo->id = 'frame_logo';
+        $frame_logo->style = 'width:100%;height:auto;max-width:300px;border:1px solid gray;padding:4px;';
+        
+        // criando o frame da logo
+        $frame_favicon = new TElement('div');
+        $frame_favicon->id = 'frame_favicon';
+        $frame_favicon->style = 'width:100%;height:auto;max-width:150px;border:1px solid gray;padding:4px;';
         
         
         // adicionando os campos ao formulário
@@ -125,6 +148,8 @@ class PreferenciasForm extends TStandardForm
         $this->form->addFields( [new TLabel('Cidade')], [$pref_emp_cidade], [new TLabel('Estado')], [$pref_emp_estado] );
         $this->form->addFields( [new TLabel('País')], [$pref_emp_pais], [new TLabel('Postal')], [$pref_emp_postal] );
         $this->form->addFields( [new TLabel('Latitude')], [$pref_emp_geolat], [new TLabel('Longitude')], [$pref_emp_geolong] );
+        $this->form->appendPage('Logo');
+        $this->form->addFields( [new TLabel('Logo')], [$frame_logo, $pref_emp_logo , $btn_logo] ,  [new TLabel('Favicon')], [$frame_favicon, $pref_emp_favicon, $btn_favicon] );
         $this->form->appendPage('Ajustes do Blog');
         $this->form->addFields( [new TFormSeparator('Configurações do Blog')] );
         $this->form->addFields( [new TLabel('Título')], [$pref_blog_titulo] , [new TLabel('Subtitulo')], [$pref_blog_subtitulo] );
@@ -247,6 +272,20 @@ class PreferenciasForm extends TStandardForm
     }
     
     /**
+     * Chama a tela de seleção de imagem
+     */
+    public static function onBuscaImagem($param)
+    {
+        // arrumar aqui !!!
+        if ( !empty($param['origem']) )
+        {
+            $arr = ['form'=>'form_Preferencias','campo'=>'pref_emp_'.$param['origem'],'imagem'=>'frame_'.$param['origem']];
+            TSession::setValue('Classe_Retorno_Busca_Imagem',$arr);
+            AdiantiCoreApplication::loadPage('SelecaoImagem');
+        }
+    }
+    
+    /**
      * Carrega o formulário de preferências
      */
     public function onEdit($param)
@@ -271,6 +310,13 @@ class PreferenciasForm extends TStandardForm
             
             // close the transaction
             TTransaction::close();
+            
+            $logo = empty($preferences['pref_emp_logo']) ? '' : $preferences['pref_emp_logo'];
+            $favicon = empty($preferences['pref_emp_favicon']) ? '' : $preferences['pref_emp_favicon']; 
+            
+            // atualizando frames
+            TScript::create("$('#frame_logo').append(\"<img style='width:100%' src='{$logo}'>\");");
+            TScript::create("$('#frame_favicon').append(\"<img style='width:100%' src='{$favicon}'>\");");
         }
         catch (Exception $e) // in case of exception
         {
@@ -303,16 +349,21 @@ class PreferenciasForm extends TStandardForm
             
             foreach ($data_array as $property => $value)
             {
-                if ($property == 'pref_site_keywords' || $property == 'pref_blog_metakey')
+                switch ($property)
                 {
-                    // preparando as palavras chave
-                    $value = implode(',',$value);
+                    case 'pref_site_keywords' :
+                    case 'pref_blog_metakey' :
+                        // preparando as palavras chave
+                        $value = implode(',',$value);
+                        break;
+                    case 'pref_site_dominio' :
+                        if ( substr($value, -1) == '/' )
+                            $value = substr($value, 0, -1);
+                        break;
+                    default :
+                        break;
                 }
-                if ( $property == 'pref_site_dominio' )
-                {
-                    if ( substr($value, -1) == '/' )
-                        $value = substr($value, 0, -1);
-                }
+
                 $object = new SystemPreference;
                 $object->{'id'}    = $property;
                 $object->{'value'} = $value;
@@ -338,7 +389,10 @@ class PreferenciasForm extends TStandardForm
             
             // shows the success message
             new TMessage('info', AdiantiCoreTranslator::translate('Record saved'));
-            // reload the listing
+            
+            // atualizando frames
+            TScript::create("$('#frame_logo').append(\"<img style='width:100%' src='{$data_array['pref_emp_logo']}'>\");");
+            TScript::create("$('#frame_favicon').append(\"<img style='width:100%' src='{$data_array['pref_emp_favicon']}'>\");");
         }
         catch (Exception $e) // in case of exception
         {

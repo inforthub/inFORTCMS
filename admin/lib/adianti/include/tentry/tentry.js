@@ -221,7 +221,7 @@ function tentry_autocomplete_by_name(field, list, options)
 	tentry_autocomplete(objectId, list, options)
 }
 
-function tentry_numeric_mask(field, decimals, decimal_sep, thousand_sep)
+function tentry_numeric_mask(field, decimals, decimal_sep, thousand_sep, reverse)
 {
     var selector = 'input[name="'+field+'"]';
 
@@ -236,12 +236,13 @@ function tentry_numeric_mask(field, decimals, decimal_sep, thousand_sep)
         thousands: thousand_sep,
         decimal: decimal_sep,
         precision: decimals,
-        allowZero: false,
+        allowZero: true,
         allowNegative: true,
-        formatOnBlur: false,
-        reverse: false,
+        formatOnBlur: reverse, // need for reverse mode
+        reverse: reverse,
+        bringCaretAtEndOnFocus: ! reverse,
         selectAllOnFocus: false,
-        allowEmpty: false,
+        allowEmpty: true,
     });
 }
 

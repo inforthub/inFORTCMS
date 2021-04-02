@@ -9,12 +9,14 @@ class AdiantiRestServer
     public static function run($request)
     {
         $ini      = AdiantiApplicationConfig::get();
-        $input    = json_decode(file_get_contents("php://input"));
+        $input    = json_decode(file_get_contents("php://input"), true);
         $request  = array_merge($request, (array) $input);
         $class    = isset($request['class']) ? $request['class']   : '';
         $method   = isset($request['method']) ? $request['method'] : '';
         $headers  = AdiantiCoreApplication::getHeaders();
         $response = NULL;
+        
+        $headers['Authorization'] = $headers['Authorization'] ?? ($headers['authorization'] ?? null); // for clientes that send in lowercase (Ex. futter)
         
         try
         {
@@ -47,7 +49,10 @@ class AdiantiRestServer
             }
             
             $response = AdiantiCoreApplication::execute($class, $method, $request, 'rest');
-            array_walk_recursive($response, ['AdiantiStringConversion', 'assureUnicode']);
+            if (is_array($response))
+            {
+                array_walk_recursive($response, ['AdiantiStringConversion', 'assureUnicode']);
+            }
             return json_encode( array('status' => 'success', 'data' => $response));
         }
         catch (Exception $e)

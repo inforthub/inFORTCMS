@@ -42,6 +42,7 @@ class ArquivosList extends TPage
         $this->addActionButton(_t('Clear'), new TAction(array($this, 'onClear')), 'fa:eraser red');
         $this->addActionButton('Criar Pasta', new TAction(array($this, 'onCreateFolder')), 'fas:folder-plus white', 'btn-warning white');
         $this->addActionButton(_t('Upload'), new TAction(array($this, 'onUpload')), 'fas:cloud-upload-alt', 'btn-success');
+        $this->addActionButton(_t('Upload Multiple Files'), new TAction(array($this, 'onUploadMulti')), 'fas:upload', 'btn-info');
         
         // criando campo de ícones
         $this->iconview = new TIconView;
@@ -61,6 +62,66 @@ class ArquivosList extends TPage
         
         parent::add($container);
     }
+    
+    
+    /**
+     * Cria formulário para upload de multiplos arquivos
+     */
+    public function onUploadMulti($param)
+    {
+        $form = new BootstrapFormBuilder('input_file_form');
+        $form->setFieldSizes('100%');
+        
+        $file = new TMultiFile('file');
+        
+        $file->enableFileHandling();
+        $file->setAllowedExtensions(['jpg','jpeg','png','gif','webp','svg']);
+        
+        $form->addFields( [ $file] );
+        
+        $btn = $form->addAction(_t('Save'), new TAction([__CLASS__, 'UploadMulti']), 'fa:save');
+        $btn->class = 'btn btn-sm btn-primary waves-effect';
+        $form->addAction(_t('Cancel'), new TAction([__CLASS__, 'onReload']), 'fa:times red');
+        
+        // show the input dialog
+        new TInputDialog('Upload de Arquivo', $form);
+    }
+    
+    /**
+     * Faz o upload do(s) arquivo(s)
+     */
+    public static function UploadMulti( $param )
+    {
+        try
+        {
+            $target_path = TSession::getValue(__CLASS__.'_opendir') . DIRECTORY_SEPARATOR;
+            
+            foreach ($param['file'] as $arq)
+            {
+                $dados_file = json_decode(urldecode($arq));
+                
+                if (isset($dados_file->fileName))
+                {
+                    $source_file   = $dados_file->fileName;
+                    $target_file   = $target_path . pathinfo($dados_file->fileName, PATHINFO_BASENAME); //current(array_reverse(explode('/', $dados_file->fileName)));
+                    
+                    if (file_exists($source_file))
+                    {
+                        rename($source_file,$target_file);
+                    }
+                }
+            }
+            
+            new TMessage('info', TAdiantiCoreTranslator::translate('Record saved'), new TAction([__CLASS__,'onReload']));
+        }
+        catch (Exception $e) // in case of exception
+        {
+            new TMessage('error', $e->getMessage()); // shows the exception error message
+        }
+    }
+    
+    
+    
     
     /**
      * Cria formulário para upload de arquivo
@@ -183,7 +244,9 @@ class ArquivosList extends TPage
                 }
             }
 
-            new TMessage('info', TAdiantiCoreTranslator::translate('Record saved'), new TAction([__CLASS__,'onReload']));
+            //new TMessage('info', TAdiantiCoreTranslator::translate('Record saved'), new TAction([__CLASS__,'onReload']));
+            TToast::show('info', _t('File saved'), 'bottom right', 'far:check-circle' );
+            TApplication::loadPage(__CLASS__);
         }
         catch (Exception $e) // in case of exception
         {
@@ -228,7 +291,9 @@ class ArquivosList extends TPage
             
             mkdir(TSession::getValue(__CLASS__.'_opendir') . DIRECTORY_SEPARATOR . $nome, 0755);
 
-            new TMessage('info', TAdiantiCoreTranslator::translate('Record saved'), new TAction([__CLASS__,'onReload']));
+            //new TMessage('info', TAdiantiCoreTranslator::translate('Record saved'), new TAction([__CLASS__,'onReload']));
+            TToast::show('info', 'Pasta criada com sucesso!', 'bottom right', 'far:check-circle' );
+            TApplication::loadPage(__CLASS__);
         }
         catch (Exception $e) // in case of exception
         {
@@ -261,7 +326,7 @@ class ArquivosList extends TPage
     
     
     /**
-     * Cria formulário para renomear um arquivo ou pasta
+     * Cria formulário para renomear um arquivo / pasta
      */
     public static function onRename($param)
     {
@@ -289,7 +354,7 @@ class ArquivosList extends TPage
     }
     
     /**
-     * Renomeia o arquivo
+     * Renomeia o arquivo / pasta
      */
     public static function Rename( $param )
     {
@@ -311,7 +376,9 @@ class ArquivosList extends TPage
             
             rename($dir.$param['atual'], $dir.$novo);
         
-            new TMessage('info', _t('File saved'), new TAction([__CLASS__,'onReload']));
+            //new TMessage('info', _t('File saved'), new TAction([__CLASS__,'onReload']));
+            TToast::show('info', _t('File saved'), 'bottom right', 'far:check-circle' );
+            TApplication::loadPage(__CLASS__);
         }
         catch (Exception $e) // in case of exception
         {
@@ -341,7 +408,7 @@ class ArquivosList extends TPage
     }
     
     /**
-     * Deleta o arquivo
+     * Deleta o arquivo / pasta
      */
     public static function Delete($param)
     {
@@ -353,15 +420,18 @@ class ArquivosList extends TPage
             {
                 unlink($caminho);
                 
-                new TMessage('info', _t('File deleted'), new TAction([__CLASS__,'onReload'])); // success message
+                //new TMessage('info', _t('File deleted'), new TAction([__CLASS__,'onReload'])); // success message
+                TToast::show('success', _t('File deleted'), 'bottom right', 'far:check-circle' );
             }
             else
             {
                 THelper::apagarTudo($caminho); // apagando todo o conteúdo da pasta
                 rmdir($caminho); // apagando a pasta
                 
-                new TMessage('info', _t('Folder deleted'), new TAction([__CLASS__,'onReload'])); // success message
+                //new TMessage('info', _t('Folder deleted'), new TAction([__CLASS__,'onReload'])); // success message
+                TToast::show('success', _t('Folder deleted'), 'bottom right', 'far:check-circle' );
             }
+            TApplication::loadPage(__CLASS__);
         }
         catch (Exception $e) // in case of exception
         {

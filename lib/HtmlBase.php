@@ -35,6 +35,8 @@ class HtmlBase
             $replaces['theme']    = $template->nome_fisico; //$template[0]->nome_fisico;
             $replaces['nome']     = $this->_pref['pref_site_nome'];
             $replaces['language'] = $this->_pref['pref_site_language'];
+            $replaces['logo']     = str_replace('../','/',$this->_pref['pref_emp_logo']);
+            $replaces['favicon']  = str_replace('../','/',$this->_pref['pref_emp_favicon']);
             
             // social
             $replaces['social']         = Midia::getArrayMidias();
@@ -123,7 +125,7 @@ class HtmlBase
     
     /**
      * Retorna um array com a galeria de imagens do um artigo
-     */
+     *
     public function getGaleria()
     {
         //$obj = 
@@ -185,13 +187,16 @@ class HtmlBase
 
         $tags  = '<meta name="language" content="'.$this->_pref['pref_site_language'].'" />';
         $tags .= '<meta name="author" content="'.$this->_pref['pref_site_nome'].'" />';
-        $tags .= '<meta name="creator" content="'.$this->_pref['pref_site_nome'].'" />';
+        $tags .= '<meta name="creator" content="inFORT CMS - www.infort.eti.br" />';
+        $tags .= '<meta name="owner" content="'.$this->_pref['pref_site_dominio'].'">';
 		$tags .= '<meta name="url" content="'.$this->_pref['pref_site_dominio'].$url.'" />';
         
         // SEO
         $tags .= '<meta name="description" content="'.$object->metadesc.'" />';
 		$tags .= '<meta name="keywords" content="'.$this->_pref['pref_site_keywords'].','.$object->metakey.'" />';
 		$tags .= '<meta name="robots" content="index, follow" />';
+		$tags .= '<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />';
+	    $tags .= '<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />';
 		$tags .= '<meta name="revisit-after" content="7 days">';
 		$tags .= '<meta name="distribution" content="web">';
 		
@@ -214,30 +219,30 @@ class HtmlBase
 		$tags .= '<meta http-equiv="imagetoolbar" content="no" />';
 		$tags .= '<meta name="MSSmartTagsPreventParsing" content="true" />';
 		
-		//<!-- Open Graph data -->
+		// Open Graph data
 		$tags .= '<meta name="og:locale" content="'.$this->_pref['pref_site_language'].'" />';
 		$tags .= '<meta name="og:region" content="'.$this->_pref['pref_emp_pais'].'" />';
 		$tags .= '<meta name="og:title" content="'.$object->titulo.'" />';
 		$tags .= '<meta name="og:type" content="article" />';
-		$tags .= '<meta name="og:image" content="'.$this->_pref['pref_site_dominio'].'/images/favicon.png" />';
+		$tags .= '<meta name="og:image" content="'.str_replace('../','/',$this->_pref['pref_emp_favicon']).'" />';
 		$tags .= '<meta name="og:url" content="'.$this->_pref['pref_site_dominio'].$url.'" />';
 		$tags .= '<meta name="og:description" content="'.$object->metadesc.'" />';
 		$tags .= '<meta name="og:site_name" content="'.$this->_pref['pref_site_nome'].'" />';
 		
-		//<!-- Twitter Card data -->
+		// Twitter Card data
 		$tags .= '<meta name="twitter:card" content="summary" />';
 		//$tags .= '<meta name="twitter:site" content="@creativetim">';
 		$tags .= '<meta name="twitter:title" content="'.$object->titulo.'" />';
 		$tags .= '<meta name="twitter:description" content="'.$object->metadesc.'" />';
 		//$tags .= '<meta name="twitter:creator" content="@creativetim">';
-		$tags .= '<meta name="twitter:image" content="'.$this->_pref['pref_site_dominio'].'/images/favicon.png">';
+		$tags .= '<meta name="twitter:image" content="'.str_replace('../','/',$this->_pref['pref_emp_favicon']).'">';
 		$tags .= '<meta name="twitter:url" content="'.$this->_pref['pref_site_dominio'].$url.'"/>';
 		
 		// Meta Tags para cache ( tags descontinuadas - sem efeito )
 		//$tags .= '<meta http-equiv="cache-control" content="public" />';
 		//$tags .= '<meta http-equiv="pragma" content="public" />';
 		
-		// canonical
+		// Canonical
 		$tags .= '<link rel="canonical" href="'.$this->_pref['pref_site_dominio'].$url.'" />';
 		
 		/*

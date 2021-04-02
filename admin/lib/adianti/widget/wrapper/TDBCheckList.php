@@ -12,7 +12,7 @@ use Exception;
 /**
  * Database Checklist
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    widget
  * @subpackage form
  * @author     Pablo Dall'Oglio

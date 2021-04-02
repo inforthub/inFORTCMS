@@ -326,6 +326,7 @@ function FileUploader(input_id, parent_container, service_action, complete_actio
             that.parent_container.find('[widget=tfile]').css('padding-left', '20px');
             that.parent_container.children('i').attr({ 'class' : 'fa fa-exclamation-circle red file-response-icon',
                                                        'title' : message });
+            __adianti_error('Error', message);
         }
     };
 }

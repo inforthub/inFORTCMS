@@ -2,7 +2,7 @@
 Um CMS opensource criado por <a href="https://www.infort.eti.br" target="_blank" rel="noopener">infort.eti.br</a> com Adianti Framework.
 
 <p align="center">
-<img src="https://img.shields.io/badge/VERSÃO-1.0.0-green">
+<img src="https://img.shields.io/badge/VERSÃO-1.1.0-green">
 <img src="https://img.shields.io/badge/Licença-GNU 3.0-success">
 <img src="https://img.shields.io/badge/PHP-inFORT-blue">
 <img src="https://img.shields.io/badge/PHP-Adianti-blue">
@@ -28,17 +28,31 @@ O inFORTCMS foi desenvolvido utilizando como base o Adianti Template, que é um 
 	* Gerenciador de templates HTML
 	* Gerenciador de módulos
 	* Gerenciador de modelos de HTML
+	* Gerenciador de Formulários e Mensagens
 	* Gerenciador de arquivos de imagem
 	* SEO
 		* Geração automática de sitemap (XML) e do robots.txt
 		* Geração automática de meta tags
 	* Geração de Cache com minificação do código HTML
 	* Tela de bloqueio
-    * Gestão de mídias sociais, com geração de estatísticas
-    * Dashboard com estatísticas de acesso
+    * Gestção de mí­dias sociais, com geração de estatí­sticas
+    * Dashboard com estatí­sticas de acesso
 
 
 ## Histórico (ChangeLog)
+
+### [1.1.0] - 2021-04-01
+    * [Secured] - Adianti Framework atualizado para a versão 7.3.0;
+    * [Secured] - Homologado para a versão 8.0 DO PHP;
+    * [Added] - Gerenciador de formulários com armazenamento das mensagens em banco de dados para consulta e reenvio de e-mails;
+    * [Added] - em "Preferências Globais", foi adicionado 2 campos para definição da "logo" e do "favicon";
+    * [Added] - em "Formulário de Página", foi adicionado 2 campos para a inserção de scripts e css exclusivos para a página;
+    * [Changed] - em "Formulário de Página", os campos de SEO (meta descrição e meta keys) agora estão em outra aba;
+    * [Changed] - em "Gestão de Imagens" agora é possí­vel fazer upload de multiplas imagens e já convertêlas para o formato "webp";
+    * [Changed] - em "Gestão de Imagens", todas as mensagens agora são exibidas usando a classe "TToast" no lugar do "TMessage", com isso melhoramos a usabilidade da tela;
+    * [Changed] - em "Preferências Globais", os campos referênte às "Configurações de E-mail" agora são exatamente os mesmos campos presentes na tela de "Preferências" da template do Adianti, com excessão do campo "E-mail de destino";
+    * [Changed] - Para melhor agilidade durante a inserção de imagens, os diálogos de avisos agora são exibidos por Toast;
+    * [Removed] - foram removidas dependências não utilizadas do composer;
 
 ### [1.0.0] - 2020-08-25
     * Primeira versão (first release)
@@ -50,10 +64,10 @@ O inFORTCMS foi desenvolvido utilizando como base o Adianti Template, que é um 
     * [Added] - em "Preferências Globais", ao sair do campo "Postal", o CEP será consultado e os campos de "Cidade", "Estado", "Pais", "latitude" e "longitude" serão preenchidos automáticamente.
     * [Added] - tela de "Módulos", para inserção de conteúdo em posições pré definidas da template.
     * [Added] - tela de "Modelos HTML", para criação de trechos de HTML que podem ser usados para criar um módulo ou uma página do site.
-    * [Added] - dados estatísticos de acesso agora estão no Dashboard.
+    * [Added] - dados estatí­sticos de acesso agora estão no Dashboard.
     * [Changed] - alterado o algoritimo de encriptação da senha, agora fazendo uso de salt-key.
     * [Changed] - o menu foi reorganizado.
-    * [Changed] - em Templates agora é possível criar e administrar "posições" que serão usadas na tela de "Módulos".
+    * [Changed] - em Templates agora é possí­vel criar e administrar "posições" que serão usadas na tela de "Módulos".
 	* [Changed] - na tela de "Gestão de Imagens", ao fazer um upload será possivel ajustar o formato da imagem (4:3, 16:9, 1:1, etc), e escolher se deve converter para o formato ".webp" ou não.
     * [Changed] - adicionado mais um serviço para busca de dados por IP.
     * [Changed] - BD: 2 novas tabelas criadas, sendo: "posicao" e "modelo_html". A tabela "modelo_modulo" foi removida.
@@ -72,5 +86,5 @@ O inFORTCMS foi desenvolvido utilizando como base o Adianti Template, que é um 
 
 ## Meta
 
-inFORT – [@inforthub] – contato@infort.eti.br<br>
-Distribuído sob a Licença Pública Geral GNU (GPLv3) 
+inFORT - [@inforthub] - contato@infort.eti.br<br>
+Distribuído sob a Licença Pública Geral GNU (GPLv3)

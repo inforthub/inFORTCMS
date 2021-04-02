@@ -4,7 +4,7 @@ namespace Adianti\Widget\Base;
 /**
  * Base class for all HTML Elements
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    widget
  * @subpackage base
  * @author     Pablo Dall'Oglio
@@ -157,7 +157,14 @@ class TElement
     {
         foreach ($properties as $property => $value)
         {
-            $this->properties[$property] = $value;
+            if (is_null($value))
+            {
+                unset($this->properties[$property]);
+            }
+            else
+            {
+                $this->properties[$property] = $value;
+            }
         }
     }
     
@@ -365,7 +372,7 @@ class TElement
     /**
      * Opens the tag
      */
-    public function open()
+    public function openTag()
     {
         // exibe a tag de abertura
         echo "<{$this->tagname}";
@@ -398,6 +405,14 @@ class TElement
     }
     
     /**
+     * BC only
+     */
+    public function open()
+    {
+        $this->openTag();
+    }
+    
+    /**
      * Shows the tag
      */
     public function show()
@@ -408,7 +423,7 @@ class TElement
         }
         
         // open the tag
-        $this->open();
+        $this->openTag();
         
         // verify if the tag has child elements
         if ($this->children)
@@ -444,7 +459,7 @@ class TElement
         if (!in_array($this->tagname, self::$voidelements))
         {
             // closes the tag
-            $this->close();
+            $this->closeTag();
         }
         
         if (!empty($this->afterElement))
@@ -456,13 +471,21 @@ class TElement
     /**
      * Closes the tag
      */
-    public function close()
+    public function closeTag()
     {
         echo "</{$this->tagname}>";
         if ($this->useLineBreaks)
         {
             echo "\n";
         }
+    }
+    
+    /**
+     * BC only
+     */
+    public function close()
+    {
+        $this->closeTag();
     }
     
     /**

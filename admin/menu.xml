@@ -57,6 +57,14 @@
         <action>ModeloHtmlList</action>
         <icon>fas:code fa-fw</icon>
       </menuitem>
+      <menuitem label="Mensagens">
+        <action>FormMensagemList</action>
+        <icon>fas:mail-bulk fa-fw</icon>
+      </menuitem>
+      <menuitem label="Formulários">
+        <action>FormularioList</action>
+        <icon>fab:wpforms fa-fw</icon>
+      </menuitem>
     </menu>
   </menuitem>
   <menuitem label="Configurações">

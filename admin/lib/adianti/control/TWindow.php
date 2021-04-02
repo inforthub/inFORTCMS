@@ -5,10 +5,12 @@ use Adianti\Control\TAction;
 use Adianti\Widget\Container\TJQueryDialog;
 use Adianti\Widget\Base\TScript;
 
+use ReflectionClass;
+
 /**
  * Window Container (JQueryDialog wrapper)
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    control
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -21,12 +23,21 @@ class TWindow extends TPage
     public function __construct()
     {
         parent::__construct();
+        
+        $rc = new ReflectionClass( $this );
+        $classname = $rc->getShortName();
+        
         $this->wrapper = new TJQueryDialog;
         $this->wrapper->setUseOKButton(FALSE);
         $this->wrapper->setTitle('');
         $this->wrapper->setSize(1000, 500);
         $this->wrapper->setModal(TRUE);
         $this->wrapper->{'widget'} = 'T'.'Window';
+        $this->wrapper->{'name'} = $classname;
+        
+        $this->{'id'} = 'window_' . mt_rand(1000000000, 1999999999);
+        $this->{'window_name'} = $this->wrapper->{'name'};
+        $this->{'role'} = 'window-wrapper';
         parent::add($this->wrapper);
     }
     
@@ -204,7 +215,15 @@ class TWindow extends TPage
         }
         else
         {
-            TJQueryDialog::closeAll();
+            TJQueryDialog::closeLatest();
         }
+    }
+    
+    /**
+     * Close window by name of controller
+     */
+    public static function closeWindowByName($name)
+    {
+        TScript::create( ' $(\'[window_name="'.$name.'"]\').remove(); ' );
     }
 }

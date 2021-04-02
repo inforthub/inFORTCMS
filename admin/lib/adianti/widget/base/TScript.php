@@ -6,7 +6,7 @@ use Adianti\Widget\Base\TElement;
 /**
  * Base class for scripts
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    widget
  * @subpackage base
  * @author     Pablo Dall'Oglio

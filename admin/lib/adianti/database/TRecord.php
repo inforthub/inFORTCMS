@@ -20,7 +20,7 @@ use ArrayIterator;
 /**
  * Base class for Active Records
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    database
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -543,13 +543,13 @@ abstract class TRecord implements IteratorAggregate
                 }
                 else if ((defined("{$class}::IDPOLICY")) AND (constant("{$class}::IDPOLICY") == 'uuid'))
                 {
-                    $this->$pk = sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-                                    mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
-                                    mt_rand( 0, 0xffff ),
-                                    mt_rand( 0, 0x0fff ) | 0x4000,
-                                    mt_rand( 0, 0x3fff ) | 0x8000,
-                                    mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
-                                );
+                    $this->$pk = implode('-', [
+                                     bin2hex(random_bytes(4)),
+                                     bin2hex(random_bytes(2)),
+                                     bin2hex(chr((ord(random_bytes(1)) & 0x0F) | 0x40)) . bin2hex(random_bytes(1)),
+                                     bin2hex(chr((ord(random_bytes(1)) & 0x3F) | 0x80)) . bin2hex(random_bytes(1)),
+                                     bin2hex(random_bytes(6))
+                                 ]);
                 }
                 else
                 {
@@ -640,26 +640,49 @@ abstract class TRecord implements IteratorAggregate
         // get the connection of the active transaction
         if ($conn = TTransaction::get())
         {
+            $driver = $conn->getAttribute(PDO::ATTR_DRIVER_NAME);
+            
             // register the operation in the LOG file
             TTransaction::log($sql->getInstruction());
             
             $dbinfo = TTransaction::getDatabaseInfo(); // get dbinfo
             if (isset($dbinfo['prep']) AND $dbinfo['prep'] == '1') // prepared ON
             {
-                $result = $conn-> prepare ( $sql->getInstruction( TRUE ) , array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+                $command = $sql->getInstruction( TRUE );
+                
+                if ($driver == 'firebird')
+                {
+                    $command = str_replace('{{primary_key}}', $pk, $command);
+                }
+                
+                $result = $conn-> prepare ( $command , array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
                 $result-> execute ( $sql->getPreparedVars() );
             }
             else
             {
+                $command = $sql->getInstruction();
+                
+                if ($driver == 'firebird')
+                {
+                    $command = str_replace('{{primary_key}}', $pk, $command);
+                }
+                
                 // execute the query
-                $result = $conn-> query($sql->getInstruction());
+                $result = $conn-> query($command);
             }
             
             if ((defined("{$class}::IDPOLICY")) AND (constant("{$class}::IDPOLICY") == 'serial'))
             {
                 if ( ($sql instanceof TSqlInsert) AND empty($this->data[$pk]) )
                 {
-                    $this->$pk = $conn->lastInsertId( $this->getSequenceName() );
+                    if ($driver == 'firebird')
+                    {
+                        $this->$pk = $result-> fetchColumn();
+                    }
+                    else
+                    {
+                        $this->$pk = $conn->lastInsertId( $this->getSequenceName() );
+                    }
                 }
             }
             

@@ -18,7 +18,7 @@ use Exception;
 /**
  * DataGrid Widget: Allows to create datagrids with rows, columns and actions
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    widget
  * @subpackage datagrid
  * @author     Pablo Dall'Oglio
@@ -156,7 +156,7 @@ class TDataGrid extends TTable
         
         if (isset($this->thead))
         {
-            $this->thead->style = 'display: block';
+            $this->thead->{'style'} = 'display: block';
         }
     }
     
@@ -199,6 +199,14 @@ class TDataGrid extends TTable
     public function setHeight($height)
     {
         $this->height = $height;
+    }
+    
+    /**
+     * Return datagrid height
+     */
+    public function getHeight()
+    {
+        return $this->height;
     }
     
     /**
@@ -1000,22 +1008,25 @@ class TDataGrid extends TTable
         }
         $this->tfoot->add($row);
         
-        if ($this->actions)
+        if ($this->actionSide == 'left')
         {
-            // iterate the actions
-            foreach ($this->actions as $action)
+            if ($this->actions)
             {
-                $cell = new TElement('td');
-                $row->add($cell);
+                // iterate the actions
+                foreach ($this->actions as $action)
+                {
+                    $cell = new TElement('td');
+                    $row->add($cell);
+                }
             }
-        }
-        
-        if ($this->action_groups)
-        {
-            foreach ($this->action_groups as $action_group)
+            
+            if ($this->action_groups)
             {
-                $cell = new TElement('td');
-                $row->add($cell);
+                foreach ($this->action_groups as $action_group)
+                {
+                    $cell = new TElement('td');
+                    $row->add($cell);
+                }
             }
         }
         

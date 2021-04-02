@@ -11,10 +11,6 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
         array (
             'voku\\' => 5,
         ),
-        'W' => 
-        array (
-            'WebPConvert\\' => 12,
-        ),
         'S' => 
         array (
             'Svg\\' => 4,
@@ -28,10 +24,6 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
         array (
             'Linfo\\' => 6,
         ),
-        'I' => 
-        array (
-            'ImageMimeTypeGuesser\\' => 21,
-        ),
         'F' => 
         array (
             'FontLib\\' => 8,
@@ -41,21 +33,17 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
         array (
             'Dompdf\\' => 7,
         ),
-        'C' => 
+        'A' => 
         array (
-            'Cocur\\Slugify\\' => 14,
+            'Adianti\\Plugins\\' => 16,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
         'voku\\' => 
         array (
-            0 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
-            1 => __DIR__ . '/..' . '/voku/stop-words/src/voku',
-        ),
-        'WebPConvert\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/rosell-dk/webp-convert/src',
+            0 => __DIR__ . '/..' . '/voku/stop-words/src/voku',
+            1 => __DIR__ . '/..' . '/voku/portable-ascii/src/voku',
         ),
         'Svg\\' => 
         array (
@@ -73,10 +61,6 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
         array (
             0 => __DIR__ . '/..' . '/linfo/linfo/src/Linfo',
         ),
-        'ImageMimeTypeGuesser\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/rosell-dk/image-mime-type-guesser/src',
-        ),
         'FontLib\\' => 
         array (
             0 => __DIR__ . '/..' . '/phenx/php-font-lib/src/FontLib',
@@ -89,9 +73,9 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
         array (
             0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
         ),
-        'Cocur\\Slugify\\' => 
+        'Adianti\\Plugins\\' => 
         array (
-            0 => __DIR__ . '/..' . '/cocur/slugify/src',
+            0 => __DIR__ . '/..' . '/adianti/plugins/src',
         ),
     );
 
@@ -101,6 +85,13 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
             'URLify' => 
             array (
                 0 => __DIR__ . '/..' . '/jbroadway/urlify',
+            ),
+        ),
+        'T' => 
+        array (
+            'TPDFDesigner' => 
+            array (
+                0 => __DIR__ . '/..' . '/adianti/pdfdesigner',
             ),
         ),
         'S' => 
@@ -128,6 +119,13 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
                 0 => __DIR__ . '/..' . '/pablodalloglio/ole',
             ),
         ),
+        'F' => 
+        array (
+            'FPDF' => 
+            array (
+                0 => __DIR__ . '/..' . '/pablodalloglio/fpdf',
+            ),
+        ),
         'B' => 
         array (
             'BaconQrCode' => 
@@ -135,10 +133,18 @@ class ComposerStaticInit9ca02ded2ffb55c884817c3c88c86343
                 0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
             ),
         ),
+        'A' => 
+        array (
+            'AdiantiPDFDesigner' => 
+            array (
+                0 => __DIR__ . '/..' . '/adianti/pdfdesigner',
+            ),
+        ),
     );
 
     public static $classMap = array (
-        'Dompdf\\Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
         'HTML5_Data' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/Data.php',
         'HTML5_InputStream' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/InputStream.php',
         'HTML5_Parser' => __DIR__ . '/..' . '/dompdf/dompdf/lib/html5lib/Parser.php',

@@ -4,7 +4,7 @@ namespace Adianti\Core;
 /**
  * Class map
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    core
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -126,6 +126,10 @@ class AdiantiClassMap
         $classPath['TFieldList']                 = 'lib/adianti/widget/form/TFieldList.php';
         $classPath['TFormSeparator']             = 'lib/adianti/widget/form/TFormSeparator.php';
         $classPath['TCheckList']                 = 'lib/adianti/widget/form/TCheckList.php';
+        $classPath['TBarCodeInputReader']        = 'lib/adianti/widget/form/TBarCodeInputReader.php';
+        $classPath['TQRCodeInputReader']         = 'lib/adianti/widget/form/TQRCodeInputReader.php';
+        $classPath['TImageCropper']              = 'lib/adianti/widget/form/TImageCropper.php';
+        $classPath['TImageCapture']              = 'lib/adianti/widget/form/TImageCapture.php';
         $classPath['TMenu']                      = 'lib/adianti/widget/menu/TMenu.php';
         $classPath['TMenuBar']                   = 'lib/adianti/widget/menu/TMenuBar.php';
         $classPath['TMenuItem']                  = 'lib/adianti/widget/menu/TMenuItem.php';
@@ -162,7 +166,6 @@ class AdiantiClassMap
         $classPath['TQuickForm']                 = 'lib/adianti/widget/wrapper/TQuickForm.php';
         $classPath['TQuickGrid']                 = 'lib/adianti/widget/wrapper/TQuickGrid.php';
         $classPath['TQuickNotebookForm']         = 'lib/adianti/widget/wrapper/TQuickNotebookForm.php';
-        $classPath['AdiantiPDFDesigner']         = 'lib/adianti/wrapper/AdiantiPDFDesigner.php';
         $classPath['BootstrapNotebookWrapper']   = 'lib/adianti/wrapper/BootstrapNotebookWrapper.php';
         $classPath['BootstrapDatagridWrapper']   = 'lib/adianti/wrapper/BootstrapDatagridWrapper.php';
         $classPath['BootstrapFormWrapper']       = 'lib/adianti/wrapper/BootstrapFormWrapper.php';
@@ -198,7 +201,6 @@ class AdiantiClassMap
         $classAlias = array();
         $classAlias['TAdiantiCoreTranslator'] = 'AdiantiCoreTranslator';
         $classAlias['TUIBuilder']             = 'AdiantiUIBuilder';
-        $classAlias['TPDFDesigner']           = 'AdiantiPDFDesigner';
         return $classAlias;
     }
 }

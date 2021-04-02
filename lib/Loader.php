@@ -182,7 +182,10 @@ class Loader
         $classPath['TElement']                   = 'lib/adianti/widget/base/TElement.php';
         $classPath['THtmlRenderer']              = 'lib/adianti/widget/template/THtmlRenderer.php';
         $classPath['THyperLink']                 = 'lib/adianti/widget/util/THyperLink.php';
-               
+        //****
+        $classPath['Route']                      = '../lib/Route.php';
+        $classPath['Cache']                      = '../lib/Cache.php';
+        
         return $classPath;
     }
     

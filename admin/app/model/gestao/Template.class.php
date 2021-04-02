@@ -132,20 +132,23 @@ class Template extends TRecord
      */
     private static function DeletaDir($DirFont)
 	{
-		if ($dd = opendir($DirFont)) {
-			while (false !== ($Arq = readdir($dd))) {
-				if($Arq != "." && $Arq != ".."){
-					$PathIn = "$DirFont/$Arq";
-					if(is_dir($PathIn)){
-						self::DeletaDir($PathIn);
-					}elseif(is_file($PathIn)){
-						unlink($PathIn);
-					}
-				}
-			}
-			closedir($dd);
-		}
-		rmdir($DirFont);
+		if (is_dir($DirFont))
+		{
+    		if ($dd = opendir($DirFont)) {
+    			while (false !== ($Arq = readdir($dd))) {
+    				if($Arq != "." && $Arq != ".."){
+    					$PathIn = "$DirFont/$Arq";
+    					if(is_dir($PathIn)){
+    						self::DeletaDir($PathIn);
+    					}elseif(is_file($PathIn)){
+    						unlink($PathIn);
+    					}
+    				}
+    			}
+    			closedir($dd);
+    		}
+    		rmdir($DirFont);
+    	}
 	}
 	
     /**

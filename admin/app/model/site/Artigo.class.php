@@ -268,10 +268,12 @@ class Artigo extends TRecord
     private static function pegaURL($id,$url='')
     {
         $obj = self::find($id);
-        $url = '/'.$obj->url . $url;
-        if (!empty($obj->categoria_id))
-            $url = self::pegaURL($obj->id,$url);
-            
+        if ($obj)
+        {
+            $url = '/'.$obj->url . $url;
+            if (!empty($obj->categoria_id))
+                $url = self::pegaURL($obj->id,$url);
+        }
         return $url;
     }
     

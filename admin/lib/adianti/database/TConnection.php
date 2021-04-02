@@ -8,7 +8,7 @@ use Exception;
 /**
  * Singleton manager for database connections
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    database
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -111,6 +111,7 @@ class TConnection
                 $db_string = empty($port) ? "{$host}:{$name}" : "{$host}/{$port}:{$name}";
                 $charset = $char ? ";charset={$char}" : '';
                 $conn = new PDO("firebird:dbname={$db_string}{$charset}", $user, $pass);
+                $conn->setAttribute( PDO::ATTR_AUTOCOMMIT, 0);
                 break;
             case 'oracle':
                 $port    = $port ? $port : '1521';

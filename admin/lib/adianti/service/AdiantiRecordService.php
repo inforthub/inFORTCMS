@@ -9,7 +9,7 @@ use Adianti\Database\TFilter;
 /**
  * Record rest service
  *
- * @version    7.2.2
+ * @version    7.3
  * @package    service
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
@@ -67,7 +67,7 @@ class AdiantiRecordService
         
         $object = new $activeRecord;
         $pk = $object->getPrimaryKey();
-        $param['data'][$pk] = $param['data']['id'];
+        $param['data'][$pk] = $param['data']['id'] ?? NULL;
         $object->fromArray( (array) $param['data']);
         $object->store();
         
