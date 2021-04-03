@@ -52,8 +52,8 @@ CREATE TABLE `artigo` (
   `parametros` text COMMENT 'Parametros referente ao modelo de html',
   `ativo` char(1) NOT NULL DEFAULT 't' COMMENT '''t'' ou ''f''',
   `modo` char(1) NOT NULL DEFAULT 'a' COMMENT 'Indica se é um artigo ou uma categoria: ''a''- artigo, ''c''- categoria',
-  `script_head` TEXT NULL DEFAULT NULL,
-  `script_body` TEXT NULL DEFAULT NULL,
+  `script_head` TEXT DEFAULT NULL,
+  `script_body` TEXT DEFAULT NULL,
   `tipo_id` int(11) NOT NULL,
   `categoria_id` int(11) DEFAULT NULL,
   `modelo_html_id` int(11) DEFAULT NULL
@@ -228,12 +228,15 @@ CREATE TABLE `comentario` (
 CREATE TABLE `formulario` (
   `id` int(11) NOT NULL,
   `nome` varchar(45) NOT NULL,
+  `url` varchar(45) NOT NULL,
   `html_email` text NOT NULL COMMENT 'HTML base do email a ser enviado',
   `html_site` text NOT NULL COMMENT 'HTML a ser renderizado no site',
   `msg_erro` varchar(255) NOT NULL COMMENT 'Mensagem de erro ao tentar enviar',
   `msg_sucesso` varchar(255) NOT NULL COMMENT 'Mensagem de sucesso ao enviar',
   `email_destino` varchar(200) NOT NULL,
-  `ativo` varchar(1) NOT NULL DEFAULT 't'
+  `script` text DEFAULT NULL,
+  `recaptcha` char(1) NOT NULL DEFAULT 'f',
+  `ativo` char(1) NOT NULL DEFAULT 't'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabela de formulários customizados';
 
 -- --------------------------------------------------------
@@ -553,7 +556,11 @@ INSERT INTO `system_program` (`id`, `name`, `controller`) VALUES
 (77, 'Modelo Html Form', 'ModeloHtmlForm'),
 (78, 'Modelo Html List', 'ModeloHtmlList'),
 (79, 'Modulo Form', 'ModuloForm'),
-(80, 'Modulo List', 'ModuloList');
+(80, 'Modulo List', 'ModuloList'),
+(81, 'Form Mensagem Form View', 'FormMensagemFormView'),
+(82, 'Form Mensagem List', 'FormMensagemList'),
+(83, 'Formulario Form', 'FormularioForm'),
+(84, 'Formulario List', 'FormularioList');
 
 -- --------------------------------------------------------
 
@@ -650,7 +657,11 @@ INSERT INTO `system_group_program` (`id`, `system_group_id`, `system_program_id`
 (80, 3, 77),
 (81, 3, 78),
 (82, 3, 79),
-(83, 3, 80);
+(83, 3, 80),
+(84, 3, 81),
+(85, 3, 82),
+(86, 3, 83),
+(87, 3, 84);
 
 -- --------------------------------------------------------
 
