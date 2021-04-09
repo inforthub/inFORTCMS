@@ -81,7 +81,7 @@ class TemplateFile extends TPage
         $file = new TMultiFile('file');
         
         $file->enableFileHandling();
-        $file->setAllowedExtensions(['.html','css','js','php','jpg','jpeg','png','gif','webp','svg']);
+        $file->setAllowedExtensions(['.html','css','map','js','php','jpg','jpeg','png','gif','webp','svg']);
         
         $form->addFields( [ $file] );
         

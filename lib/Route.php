@@ -126,18 +126,21 @@ class Route
                     
                     // verificamos se existem formulários na página à serem substituidos
                     $formularios = Formulario::getFormulários();
-                    foreach ($formularios as $form)
+                    if ($formularios)
                     {
-                        $variavel = '{'.$form->url.'}';
-                        if ( strpos($layout_content, $variavel) !== false )
+                        foreach ($formularios as $form)
                         {
-                            $layout_content = str_replace($variavel, $form->html_site, $layout_content);
-                            
-                            // pegamos o modal
-                            $modal = file_get_contents(ROOT.'/templates/'.$replaces['theme'].'/partials/modal.html');
-                            
-                            //$this->_replaces['scripts_head'] .= '';
-                            $replaces['scripts_body'] .= $form->script . $modal;
+                            $variavel = '{'.$form->url.'}';
+                            if ( strpos($layout_content, $variavel) !== false )
+                            {
+                                $layout_content = str_replace($variavel, $form->html_site, $layout_content);
+                                
+                                // pegamos o modal
+                                $modal = file_get_contents(ROOT.'/templates/'.$replaces['theme'].'/partials/modal.html');
+                                
+                                //$this->_replaces['scripts_head'] .= '';
+                                $replaces['scripts_body'] .= $form->script . $modal;
+                            }
                         }
                     }
                     

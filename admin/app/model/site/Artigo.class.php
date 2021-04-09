@@ -125,6 +125,14 @@ class Artigo extends TRecord
     {
         $this->arquivos = array();
     }
+    
+    /**
+     * Método get_menu
+     */
+    public function get_menu()
+    {
+        return Menu::where('artigo_id','=',$this->id)->first();
+    }
 
     /**
      * Load the object and its aggregates
@@ -179,11 +187,12 @@ class Artigo extends TRecord
      */
     public function onAfterStore($obj)
     {
-        $link = Link::where('artigo_id','=',$obj->id)->first();
+        //$link = Link::where('artigo_id','=',$obj->id)->first();
+        $links = Link::where('artigo_id','=',$obj->id)->load();
         
-        if (!$link)
+        if (!$links)
         {
-            $link = new Link;
+            $links[] = new Link;
         }
         
         $url = '/'.$obj->url;
@@ -196,19 +205,33 @@ class Artigo extends TRecord
             $url = self::getURL($obj->categoria_id).$url;
         }
         
-        // atualizando os campos
-        $link->url        = $url;
-        $link->lastmod    = date('Y-m-d H:i:s');
-        $link->artigo_id  = $obj->id;
-        $link->tipo_id    = $obj->tipo_id;
-        
-        if ($obj->tipo_id == 1)
+        foreach ($links as $link)
         {
-            $link->changefreq = 'monthly';
-            $link->priority   = '0.80';
+            // verifica se é a página inicial
+            if ($link->url === '/' )
+            {
+                // atualizando os campos
+                $link->lastmod    = date('Y-m-d H:i:s');
+                $link->artigo_id  = $obj->id;
+                $link->tipo_id    = $obj->tipo_id;
+            }
+            else
+            {
+                // atualizando os campos
+                $link->url        = $url;
+                $link->lastmod    = date('Y-m-d H:i:s');
+                $link->artigo_id  = $obj->id;
+                $link->tipo_id    = $obj->tipo_id;
+                
+                if ($obj->tipo_id == 1)
+                {
+                    $link->changefreq = 'monthly';
+                    $link->priority   = '0.80';
+                }
+            }
+            
+            $link->store();
         }
-        
-        $link->store();
     }
     
     /**

@@ -53,7 +53,7 @@ class SiteRender extends HtmlBase
             $listagem = new THtmlRenderer($file);
             $listagem->disableHtmlConversion();
     	    
-    	    // pode ser uma busca...
+    	        // pode ser uma busca...
             // se for, buscar os ultimos 10 artigos filtrados pelo valor vindo do post
             // então, verificamos se existe algum POST ...
             
@@ -78,8 +78,8 @@ class SiteRender extends HtmlBase
                     
                     if ($img)
                     {
-                        $link['imagem']        = $this->_pref['pref_site_dominio'].str_replace('..','', $img->nome_web);
-        				$link['imagem_alt']    = $img->descricao;
+                        $link['imagem']     = $this->_pref['pref_site_dominio'].str_replace('..','', $img->nome_web);
+                        $link['imagem_alt'] = $img->descricao;
                     }
                     else
                     {

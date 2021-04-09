@@ -1,4 +1,5 @@
-    <div class="position-relative">
+  <!--[main]-->
+	<div class="position-relative">
       <section class="section section-lg section-shaped">
         <!-- Background circles -->
         <div class="shape shape-style-1 shape-dark">
@@ -17,8 +18,8 @@
           <div class="col px-0">
             <div class="row align-items-center justify-content-center">
               <div class="col-lg-6 text-center">
-                <h1 class="display-3 text-white">{titulo}</h1>
-                <p class="lead text-white">{titulotexto}</p>
+                <h1 class="display-3 text-white">{$titulo}</h1>
+                <p class="lead text-white">{$titulotexto}</p>
               </div>
             </div>
           </div>
@@ -36,25 +37,86 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-12">
-              <h2 class="display-2">{titulo_listagem}</h2>
-              {categorias}
-              <div class="row justify-content-md-between">
-                <div class="col-md-8">
-                  <div class="">
-                    <h3>{categoria}</h3>
-                    <div class="row">
-                        {links_artigos}
-                        <div class="col-12"><a href="{link}"> {titulo}</a></div>
-                        {/links_artigos}
+              <div class="d-lg-none pb-4">
+                <form method="post" action="{$blog-buscar-action}">
+                    <div class="form-group">
+                      <div class="input-group ">
+                        <input name="query" id="query" class="form-control" placeholder="Busca" type="text">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+				</form>
+              </div>
+              <h2 class="display-2">{$titulo_listagem}</h2>
+              <div class="row justify-content-md-between">
+                <div class="col-lg-9 pb-5">
+                  {$mensagem}
+                  <!--[posts]-->
+                  <a href="{$btn_link}">
+                    <div class="card bg-blue shadow border-0 mb-5">
+                      <img src="{$imagem}" alt="{$imagem_alt}" title="{$imagem_title}" class="card-img-top">
+                      <blockquote class="card-blockquote">
+                        <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="svg-bg">
+                          <polygon points="0,52 583,95 0,95" class="fill-primary"></polygon>
+                          <polygon points="0,42 583,95 683,0 0,95" opacity=".2" class="fill-primary"></polygon>
+                        </svg>
+                        <h2 class="text-white">{$titulo}</h2>
+                        <p class="text-italic text-white"><small>Por <b>{$autor}</b> - {$data} - <i class="fa fa-eye"></i> {$visitas}</small></p>
+                        <p class="lead text-italic text-white">{$resumo}</p>
+                      </blockquote>
+                    </div>
+                  </a>
+                  <!--[/posts]-->
                 </div>
-                <div class="col-md-4">
-                  <img class="card-img" src="{imagem}" alt="{imagem_alt}" title="{imagem_title}">
+                <div class="col-lg-3">
+                    
+                    <form method="post" action="{$blog-buscar-action}">
+                        <div class="form-group">
+                          <div class="input-group ">
+                            <input name="query" id="query" class="form-control" placeholder="Busca" type="text">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="ni ni-zoom-split-in"></i></span>
+                            </div>
+                          </div>
+                        </div>
+					</form>
+					<hr>
+					<h3>Categorias</h3>
+					<ul class="alt">
+                        <!--[categorias]-->
+					    <li><a href="{$link}">{$nome}</a></li>
+					    <!--[/categorias]-->
+					</ul>
+					
                 </div>
-              </div><hr>
-              {/categorias}
+              </div>
+              <hr>
           </div>
         </div>
       </div>
     </section>
+    
+    <section class="section bg-secondary">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+              <h3 class="display-3">Últimas Postagens</h3>
+              <hr>
+              <div class="row">
+                <!--[ultimos_artigos]-->
+                <div class="col-md-4 mb-md-0">
+                  <div class="card card-lift--hover shadow border-0 mb-3">
+                    <a href="{$btn_link}" title="{$titulo}">
+                      <img src="{$imagem}" alt="{$imagem_alt}" title="{$imagem_title}" class="card-img">
+                    </a>
+                  </div>
+                </div>
+                <!--[/ultimos_artigos]-->
+              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  <!--[/main]-->

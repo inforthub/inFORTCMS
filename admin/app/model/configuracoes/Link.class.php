@@ -178,28 +178,32 @@ class Link extends TRecord
         {
             foreach ( $paginas as $artigo )
             {
-                $url = $artigo->get_url();
-                if ( !self::findURL($url) )
+                // pulamos a homepage
+                if ($artigo->id != $homepage->artigo_id)
                 {
-                    $link = new Link;
-                    $link->id          = $id;
-                    $link->url         = $url;
-                    //$link->lastmod   = 
-                    $link->changefreq  = 'monthly';
-                    $link->priority    = '0.80';
-                    $link->tipo_id     = $artigo->tipo_id;
-                    $link->artigo_id   = $artigo->artigo_id;
-                    //$link->template_id = 
-                    $link->store();
-                    
-                    $id++;
-                    /*
-                    if ($artigo->tipo->nome == 'Categoria')
+                    $url = $artigo->get_url();
+                    if ( !self::findURL($url) )
                     {
-                        // adicionando 'filhos' e retorna o próximo id
-                        $id = self::setLink($url,$artigo->tipo->get_posts(),$id);
+                        $link = new Link;
+                        $link->id          = $id;
+                        $link->url         = $url;
+                        //$link->lastmod   = 
+                        $link->changefreq  = 'monthly';
+                        $link->priority    = '0.80';
+                        $link->tipo_id     = $artigo->tipo_id;
+                        $link->artigo_id   = $artigo->artigo_id;
+                        //$link->template_id = 
+                        $link->store();
+                        
+                        $id++;
+                        /*
+                        if ($artigo->tipo->nome == 'Categoria')
+                        {
+                            // adicionando 'filhos' e retorna o próximo id
+                            $id = self::setLink($url,$artigo->tipo->get_posts(),$id);
+                        }
+                        */
                     }
-                    */
                 }
             }
         }
