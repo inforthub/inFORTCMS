@@ -75,7 +75,7 @@ class Route
     
     /**
      * Determina a classe a ser usada
-     *
+     */
     private function setClass()
     {
         $this->_class = is_null($this->_explode[0]) ? 'index' : $this->_explode[0];
